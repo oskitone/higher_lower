@@ -2,7 +2,7 @@
 #include <ArduboyTones.h>
 
 # define MIN_TONE               20
-# define MAX_TONE               20000
+# define MAX_TONE               10000
 
 # define LAST_TONE_DURATION     400
 # define CURRENT_TONE_DURATION  (LAST_TONE_DURATION / 2)
@@ -16,26 +16,51 @@
 # define STARTING_INDEX         1
 
 uint16_t tones[TONES_COUNT];
-uint16_t index = STARTING_INDEX;
+uint8_t index = STARTING_INDEX;
 
 Arduboy2 arduboy;
 ArduboyTones arduboyTones(arduboy.audio.enabled);
 
-// TODO: decrease over time
-int16_t getInterval() {
-  return random(-1000, 1000 + 1);
+int16_t getInterval(uint16_t fromTone, uint8_t nextIndex) {
+  int8_t direction = random(0, 1) ? -1 : 1;
+
+  uint16_t desiredChange = 1000; // TODO: decrease over time
+
+  if (
+    direction == -1 &&
+    desiredChange <= fromTone - MIN_TONE
+  ) {
+    return fromTone - desiredChange;
+  } else if (
+    direction == 1 &&
+    desiredChange <= MAX_TONE - fromTone
+  ) {
+    return fromTone + desiredChange;
+  }
+
+  // TODO: fix infinite loop
+  return getInterval(fromTone, nextIndex);
 }
 
 void randomize() {
+  // TODO: later, only seed on first play
+  arduboy.initRandomSeed();
+
   tones[0] = random(MIN_TONE, MAX_TONE + 1);
 
   for (uint8_t i = 1; i < TONES_COUNT; i++) {
-    // TODO: ensure w/in min/max range
-    tones[i] = tones[i - 1] + getInterval();
+    tones[i] = tones[i - 1] + getInterval(tones[i - 1], i - 1);
   }
 }
 
-void playInterval() {
+void playIntervalTones() {
+  Serial.print(index);
+  Serial.print(F(": "));
+  Serial.print(tones[index - 1]);
+  Serial.print(F(" -> "));
+  Serial.print(tones[index]);
+  Serial.println();
+
   arduboyTones.tone(
     tones[index - 1], LAST_TONE_DURATION,
     tones[index], CURRENT_TONE_DURATION
@@ -45,7 +70,7 @@ void playInterval() {
 void reset() {
   index = STARTING_INDEX;
   randomize();
-  playInterval();
+  playIntervalTones();
 }
 
 void setup() {
@@ -55,6 +80,8 @@ void setup() {
   arduboy.setFrameRate(15);
 
   reset();
+
+  Serial.begin(9600);
 }
 
 void drawDisplay() {
@@ -78,7 +105,7 @@ void increment() {
     0, TONES_COUNT - 1
   );
 
-  playInterval();
+  playIntervalTones();
 }
 
 void loop() {

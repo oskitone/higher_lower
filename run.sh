@@ -6,7 +6,7 @@
 set -o errexit
 set -o errtrace
 
-ardens="/Applications/Ardens/ArdensPlayer.app/Contents/MacOS/ArdensPlayer"
+ardens="/Applications/Ardens/Ardens.app/Contents/MacOS/Ardens"
 
 fbqn="arduboy:avr:arduboy"
 port="/dev/cu.usbmodem143101"
