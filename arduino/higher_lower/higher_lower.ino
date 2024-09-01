@@ -4,45 +4,47 @@
 # define MIN_TONE               20
 # define MAX_TONE               20000
 
-# define LAST_TONE_DURATION     1000
-# define CURRENT_TONE_DURATION  250
+# define LAST_TONE_DURATION     400
+# define CURRENT_TONE_DURATION  (LAST_TONE_DURATION / 2)
 
 // TODO: increase
-# define TONE_COUNT             10
+# define TONES_COUNT            10
 
 // NOTE: Yes, we start at 1 instead of 0,
 // because we want an interval between tones.
 // Ya can't diff off nuthin, charlie!
 # define STARTING_INDEX         1
 
-// TODO: randomize
-const uint16_t TONE[] = {
-  map(0, 0, 100, MIN_TONE, MAX_TONE),
-  map(100, 0, 100, MIN_TONE, MAX_TONE),
-  map(40, 0, 100, MIN_TONE, MAX_TONE),
-  map(60, 0, 100, MIN_TONE, MAX_TONE),
-  map(50, 0, 100, MIN_TONE, MAX_TONE),
-  map(58, 0, 100, MIN_TONE, MAX_TONE),
-  map(55, 0, 100, MIN_TONE, MAX_TONE),
-  map(57, 0, 100, MIN_TONE, MAX_TONE),
-  map(56, 0, 100, MIN_TONE, MAX_TONE),
-  map(56, 0, 100, MIN_TONE, MAX_TONE),
-};
+uint16_t tones[TONES_COUNT];
+uint16_t index = STARTING_INDEX;
 
 Arduboy2 arduboy;
 ArduboyTones arduboyTones(arduboy.audio.enabled);
 
-uint16_t index = STARTING_INDEX;
+// TODO: decrease over time
+int16_t getInterval() {
+  return random(-1000, 1000 + 1);
+}
+
+void randomize() {
+  tones[0] = random(MIN_TONE, MAX_TONE + 1);
+
+  for (uint8_t i = 1; i < TONES_COUNT; i++) {
+    // TODO: ensure w/in min/max range
+    tones[i] = tones[i - 1] + getInterval();
+  }
+}
 
 void playInterval() {
   arduboyTones.tone(
-    TONE[index - 1], LAST_TONE_DURATION,
-    TONE[index], CURRENT_TONE_DURATION
+    tones[index - 1], LAST_TONE_DURATION,
+    tones[index], CURRENT_TONE_DURATION
   );
 }
 
 void reset() {
   index = STARTING_INDEX;
+  randomize();
   playInterval();
 }
 
@@ -62,10 +64,10 @@ void drawDisplay() {
   arduboy.print(index);
 
   arduboy.setCursor(2, 4 + (7 + 1) * 1);
-  arduboy.print(TONE[index - 1]);
+  arduboy.print(tones[index - 1]);
 
   arduboy.setCursor(2, 4 + (7 + 1) * 2);
-  arduboy.print(TONE[index]);
+  arduboy.print(tones[index]);
 
   arduboy.display();
 }
@@ -73,7 +75,7 @@ void drawDisplay() {
 void increment() {
   index = constrain(
     index + 1,
-    0, TONE_COUNT - 1
+    0, TONES_COUNT - 1
   );
 
   playInterval();
