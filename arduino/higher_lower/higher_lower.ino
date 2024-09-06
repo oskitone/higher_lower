@@ -6,6 +6,7 @@
 #define MIN_TONE 20
 #define MAX_TONE 1000
 
+// TODO: prevent crash when chunk is higher
 #define INTERVAL_CHUNK 100
 #define MIN_INTERVAL (INTERVAL_CHUNK / 2)
 
@@ -20,7 +21,7 @@
 // Ya can't diff off nuthin, charlie!
 #define STARTING_INDEX 1
 
-uint16_t tones[TONES_COUNT];
+int16_t tones[TONES_COUNT];
 uint8_t index = STARTING_INDEX;
 
 Arduboy2 arduboy;
@@ -31,10 +32,10 @@ inline int8_t getDirection()
   return random(0, 2) ? -1 : 1;
 }
 
-int16_t getNextTone(uint16_t fromTone, uint8_t nextIndex)
+int16_t getNextTone(int16_t fromTone, uint8_t nextIndex)
 {
   // TODO: tidy / understand why clang formatter thinks this is okay
-  uint16_t nextTone = fromTone + getDirection() * (random(MIN_INTERVAL, INTERVAL_CHUNK) * (TONES_COUNT - STARTING_INDEX - nextIndex));
+  int16_t nextTone = fromTone + getDirection() * (random(MIN_INTERVAL, INTERVAL_CHUNK) * (TONES_COUNT - STARTING_INDEX - nextIndex));
 
   if (nextTone >= MIN_TONE && nextTone <= MAX_TONE)
   {
@@ -54,28 +55,40 @@ void randomize()
   for (uint8_t i = 1; i < TONES_COUNT; i++)
   {
     tones[i] = getNextTone(tones[i - 1], i - 1);
+    printInterval(i);
   }
 }
 
-void playIntervalTones()
+void printInterval(uint8_t i)
 {
-  Serial.print(index);
+  Serial.print(i);
   Serial.print(F(": "));
-  Serial.print(tones[index - 1]);
+  Serial.print(tones[i - 1]);
   Serial.print(F(" -> "));
-  Serial.print(tones[index]);
+  Serial.print(tones[i]);
+  Serial.print(F(" ("));
+  Serial.print(tones[i] - tones[i - 1]);
+  Serial.print(F(")"));
   Serial.println();
+}
 
+void playInterval(uint8_t i)
+{
   arduboyTones.tone(
-      tones[index - 1], LAST_TONE_DURATION,
-      tones[index], CURRENT_TONE_DURATION);
+      tones[i - 1], LAST_TONE_DURATION,
+      tones[i], CURRENT_TONE_DURATION);
 }
 
 void reset()
 {
-  index = STARTING_INDEX;
+  Serial.println();
   randomize();
-  playIntervalTones();
+  Serial.println();
+
+  index = STARTING_INDEX;
+
+  playInterval(index);
+  printInterval(index);
 }
 
 void setup()
@@ -95,8 +108,6 @@ void increment()
   index = constrain(
       index + 1,
       0, TONES_COUNT - 1);
-
-  playIntervalTones();
 }
 
 void loop()
@@ -106,6 +117,9 @@ void loop()
   if (arduboy.justPressed(B_BUTTON))
   {
     increment();
+
+    playInterval(index);
+    printInterval(index);
   }
 
   if (arduboy.justPressed(A_BUTTON))
