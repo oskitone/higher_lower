@@ -90,22 +90,6 @@ void setup()
   Serial.begin(9600);
 }
 
-void drawDisplay()
-{
-  arduboy.clear();
-
-  arduboy.setCursor(2, 2);
-  arduboy.print(index);
-
-  arduboy.setCursor(2, 4 + (7 + 1) * 1);
-  arduboy.print(tones[index - 1]);
-
-  arduboy.setCursor(2, 4 + (7 + 1) * 2);
-  arduboy.print(tones[index]);
-
-  arduboy.display();
-}
-
 void increment()
 {
   index = constrain(
@@ -117,13 +101,7 @@ void increment()
 
 void loop()
 {
-  if (!arduboy.nextFrame())
-  {
-    return;
-  }
-
   arduboy.pollButtons();
-  drawDisplay();
 
   if (arduboy.justPressed(B_BUTTON))
   {
