@@ -1,8 +1,10 @@
 #include <Arduboy2.h>
 #include <ArduboyTones.h>
 
+// NOTES: max human-audible frequency is ~20k and max for int16_t is ~32k,
+// but this value is the max that doesn't hurt my ears.
 #define MIN_TONE 20
-#define MAX_TONE 10000
+#define MAX_TONE 1000
 
 #define INTERVAL_CHUNK 100
 #define MIN_INTERVAL (INTERVAL_CHUNK / 2)
