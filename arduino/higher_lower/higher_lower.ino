@@ -7,17 +7,18 @@
 #define MIN_TONE 60
 #define MAX_TONE 1000
 
+#define GUESSES_PER_ROUND 5
+#define TONES_COUNT (GUESSES_PER_ROUND + 1)
+
+// TODO: decrease/round
 #define LAST_TONE_DURATION 400
 #define CURRENT_TONE_DURATION (LAST_TONE_DURATION / 2)
 
-#define TONES_COUNT 11
-
+// TODO: decrease/round
 #define INTERVAL_CHUNK ((MAX_TONE - MIN_TONE) / TONES_COUNT)
 #define MIN_INTERVAL (INTERVAL_CHUNK / 2)
 
-// TODO: introduce rounds -> diminishing duration and chunk
-
-#define RESET_PAUSE 500
+#define RESET_PAUSE 400
 
 // NOTE: Yes, we start at 1 instead of 0,
 // because we want an interval between tones.
@@ -26,6 +27,7 @@
 
 int16_t tones[TONES_COUNT];
 uint8_t index = STARTING_INDEX;
+int8_t currentRound = 0;
 
 Arduboy2 arduboy;
 ArduboyTones arduboyTones(arduboy.audio.enabled);
@@ -36,7 +38,7 @@ int16_t getNextTone(int16_t fromTone, uint8_t nextIndex) {
   // TODO: try to prevent over-indexing on min/max. ditch constrain?
   int16_t nextTone = constrain(
       fromTone + getDirection() * (random(MIN_INTERVAL, INTERVAL_CHUNK) *
-                                   (TONES_COUNT - STARTING_INDEX - nextIndex)),
+                                   (GUESSES_PER_ROUND - nextIndex)),
       MIN_TONE, MAX_TONE);
 
   if (nextTone == fromTone) {
@@ -96,24 +98,20 @@ void setup() {
 
   arduboy.setFrameRate(15);
 
+  // TODO: theme?
+  playYouWinSound();
+
   reset();
 
   Serial.begin(9600);
-
-  // TODO: theme?
-  playYouWinSound();
 }
 
-// TODO: ha! rewrite
 void playYouWinSound() {
-  arduboyTones.tone(300, 100, 300 * 2, 100, 300 * 3, 100);
-  delay(100 * 3);
-
-  arduboyTones.tone(300, 100, 300 * 2, 100, 300 * 3, 100);
-  delay(100 * 3);
-
-  arduboyTones.tone(300, 100, 300 * 2, 100, 300 * 3, 100);
-  delay(100 * 3);
+  for (uint8_t i = 0; i <= currentRound; i++) {
+    // TODO: ha! rewrite
+    arduboyTones.tone(300, 100, 300 * 2, 100, 300 * 3, 100);
+    delay(100 * 3);
+  }
 
   delay(RESET_PAUSE);
 }
@@ -130,6 +128,8 @@ void increment() { index = constrain(index + 1, 0, TONES_COUNT - 1); }
 void handleGuess(bool success) {
   if (success) {
     if (index == TONES_COUNT - 1) {
+      currentRound++;
+
       playYouWinSound();
       reset();
 
