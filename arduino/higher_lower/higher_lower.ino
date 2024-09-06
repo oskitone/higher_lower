@@ -4,6 +4,9 @@
 #define MIN_TONE 20
 #define MAX_TONE 10000
 
+#define INTERVAL_CHUNK 100
+#define MIN_INTERVAL (INTERVAL_CHUNK / 2)
+
 #define LAST_TONE_DURATION 400
 #define CURRENT_TONE_DURATION (LAST_TONE_DURATION / 2)
 
@@ -21,27 +24,22 @@ uint8_t index = STARTING_INDEX;
 Arduboy2 arduboy;
 ArduboyTones arduboyTones(arduboy.audio.enabled);
 
-int16_t getInterval(uint16_t fromTone, uint8_t nextIndex)
+inline int8_t getDirection()
 {
-  int8_t direction = random(0, 1) ? -1 : 1;
+  return random(0, 2) ? -1 : 1;
+}
 
-  uint16_t desiredChange = 1000; // TODO: decrease over time
+int16_t getNextTone(uint16_t fromTone, uint8_t nextIndex)
+{
+  // TODO: tidy / understand why clang formatter thinks this is okay
+  uint16_t nextTone = fromTone + getDirection() * (random(MIN_INTERVAL, INTERVAL_CHUNK) * (TONES_COUNT - STARTING_INDEX - nextIndex));
 
-  if (
-      direction == -1 &&
-      desiredChange <= fromTone - MIN_TONE)
+  if (nextTone >= MIN_TONE && nextTone <= MAX_TONE)
   {
-    return fromTone - desiredChange;
-  }
-  else if (
-      direction == 1 &&
-      desiredChange <= MAX_TONE - fromTone)
-  {
-    return fromTone + desiredChange;
+    return nextTone;
   }
 
-  // TODO: fix infinite loop
-  return getInterval(fromTone, nextIndex);
+  return getNextTone(fromTone, nextIndex);
 }
 
 void randomize()
@@ -53,7 +51,7 @@ void randomize()
 
   for (uint8_t i = 1; i < TONES_COUNT; i++)
   {
-    tones[i] = tones[i - 1] + getInterval(tones[i - 1], i - 1);
+    tones[i] = getNextTone(tones[i - 1], i - 1);
   }
 }
 
