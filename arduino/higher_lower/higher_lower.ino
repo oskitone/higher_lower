@@ -9,13 +9,13 @@
 #define GUESSES_PER_ROUND 5
 #define TONES_COUNT (GUESSES_PER_ROUND + 1)
 
-// TODO: decrease/round
 #define LAST_TONE_DURATION 400
 #define CURRENT_TONE_DURATION (LAST_TONE_DURATION / 2)
 
-// TODO: decrease/round
 #define INTERVAL_CHUNK ((MAX_TONE - MIN_TONE) / TONES_COUNT)
-#define MIN_INTERVAL (INTERVAL_CHUNK / 2)
+#define MIN_INTERVAL 10
+
+#define DIMINISH .9
 
 #define RESET_PAUSE 500
 
@@ -45,8 +45,10 @@ const uint16_t LOSE_TONES_LENGTH = 136 * 8;
 int16_t getNextTone(int16_t fromTone, uint8_t nextIndex) {
   // TODO: try to prevent over-indexing on min/max. ditch constrain?
   int16_t nextTone = constrain(
-      fromTone + getDirection() * (random(MIN_INTERVAL, INTERVAL_CHUNK) *
-                                   (GUESSES_PER_ROUND - nextIndex)),
+      fromTone + getDirection() *
+                     (random(MIN_INTERVAL,
+                             INTERVAL_CHUNK * pow(DIMINISH, currentRound)) *
+                      (GUESSES_PER_ROUND - nextIndex)),
       MIN_TONE, MAX_TONE);
 
   if (nextTone == fromTone) {
@@ -85,8 +87,9 @@ void printInterval(uint8_t i) {
 }
 
 void playInterval(uint8_t i) {
-  arduboyTones.tone(tones[i - 1], LAST_TONE_DURATION, tones[i],
-                    CURRENT_TONE_DURATION);
+  arduboyTones.tone(tones[i - 1],
+                    LAST_TONE_DURATION * pow(DIMINISH, currentRound), tones[i],
+                    CURRENT_TONE_DURATION * pow(DIMINISH, currentRound));
 }
 
 void reset() {
@@ -156,6 +159,11 @@ void handleGuess(bool success) {
 
 void loop() {
   arduboy.pollButtons();
+
+  if (arduboy.justPressed(B_BUTTON)) {
+    index = TONES_COUNT - 1;
+    handleGuess(true);
+  }
 
   if (arduboy.justPressed(DOWN_BUTTON)) {
     handleGuess(tones[index] < tones[index - 1]);
