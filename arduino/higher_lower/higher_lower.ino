@@ -3,7 +3,6 @@
 
 // NOTES: max human-audible frequency is ~20k and max for int16_t is ~32k,
 // but this max is the max that doesn't hurt my ears.
-#define ERROR_TONE 40
 #define MIN_TONE 60
 #define MAX_TONE 1000
 
@@ -18,7 +17,7 @@
 #define INTERVAL_CHUNK ((MAX_TONE - MIN_TONE) / TONES_COUNT)
 #define MIN_INTERVAL (INTERVAL_CHUNK / 2)
 
-#define RESET_PAUSE 400
+#define RESET_PAUSE 500
 
 // NOTE: Yes, we start at 1 instead of 0,
 // because we want an interval between tones.
@@ -33,6 +32,15 @@ Arduboy2 arduboy;
 ArduboyTones arduboyTones(arduboy.audio.enabled);
 
 inline int8_t getDirection() { return random(0, 2) ? -1 : 1; }
+
+const uint16_t SUCCESS_TONES[] PROGMEM = {
+    NOTE_G3, 34, NOTE_C4, 68, NOTE_E4, 68, NOTE_C5, 136, TONES_END};
+const uint16_t SUCCESS_TONES_LENGTH = 306;
+
+const uint16_t LOSE_TONES[] PROGMEM = {
+    NOTE_G2, 136, NOTE_E2, 136, NOTE_B2, 136, NOTE_C2,  136, NOTE_G2, 136,
+    NOTE_E2, 136, NOTE_B2, 136, NOTE_C2, 136, TONES_END};
+const uint16_t LOSE_TONES_LENGTH = 136 * 8;
 
 int16_t getNextTone(int16_t fromTone, uint8_t nextIndex) {
   // TODO: try to prevent over-indexing on min/max. ditch constrain?
@@ -98,7 +106,6 @@ void setup() {
 
   arduboy.setFrameRate(15);
 
-  // TODO: theme?
   playYouWinSound();
 
   reset();
@@ -108,19 +115,18 @@ void setup() {
 
 void playYouWinSound() {
   for (uint8_t i = 0; i <= currentRound; i++) {
-    // TODO: ha! rewrite
-    arduboyTones.tone(300, 100, 300 * 2, 100, 300 * 3, 100);
-    delay(100 * 3);
+    arduboyTones.tones(SUCCESS_TONES);
+    delay(SUCCESS_TONES_LENGTH);
   }
 
   delay(RESET_PAUSE);
 }
 
 void playGameOverSound() {
-  arduboyTones.tone(ERROR_TONE, CURRENT_TONE_DURATION, ERROR_TONE,
-                    CURRENT_TONE_DURATION, ERROR_TONE, CURRENT_TONE_DURATION);
+  arduboyTones.tones(LOSE_TONES);
+  delay(LOSE_TONES_LENGTH);
 
-  delay(CURRENT_TONE_DURATION * 4);
+  delay(RESET_PAUSE);
 }
 
 void increment() { index = constrain(index + 1, 0, TONES_COUNT - 1); }
