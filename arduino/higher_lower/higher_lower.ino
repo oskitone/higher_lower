@@ -63,9 +63,6 @@ int16_t getNextTone(int16_t fromTone, uint8_t nextIndex) {
 }
 
 void randomize() {
-  // TODO: later, only seed on first play
-  arduboy.initRandomSeed();
-
   tones[0] = random(MIN_TONE, MAX_TONE + 1);
 
   for (uint8_t i = 1; i < TONES_COUNT; i++) {
@@ -93,6 +90,12 @@ void playInterval(uint8_t i) {
 }
 
 void reset() {
+  // NOTE: Yeah, we're seeding on the second round.
+  // Otherwise we'd need to delay the first til user input.
+  if (currentRound == 1) {
+    arduboy.initRandomSeed();
+  }
+
   Serial.println();
   randomize();
   Serial.println();
