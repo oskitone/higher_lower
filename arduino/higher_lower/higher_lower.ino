@@ -34,16 +34,17 @@ ArduboyTones arduboyTones(arduboy.audio.enabled);
 inline int8_t getDirection() { return random(0, 2) ? -1 : 1; }
 
 const uint16_t SUCCESS_TONES[] PROGMEM = {
-    NOTE_G3, 34, NOTE_C4, 68, NOTE_E4, 68, NOTE_C5, 136, TONES_END};
-const uint16_t SUCCESS_TONES_LENGTH = 306;
+    NOTE_G3, 17, NOTE_C4, 34, NOTE_E4, 34, NOTE_C5, 68, TONES_END};
+const uint16_t SUCCESS_TONES_LENGTH = 153;
 
 const uint16_t LOSE_TONES[] PROGMEM = {
-    NOTE_G2, 136, NOTE_E2, 136, NOTE_B2, 136, NOTE_C2,  136, NOTE_G2, 136,
-    NOTE_E2, 136, NOTE_B2, 136, NOTE_C2, 136, TONES_END};
+    NOTE_G2, 136, NOTE_E2,  136, NOTE_B2, 136, NOTE_C2, 136, NOTE_G2, 136,
+    NOTE_E2, 136, NOTE_B2,  136, NOTE_C2, 136, NOTE_G2, 136, NOTE_E2, 136,
+    NOTE_B2, 136, NOTE_C2,  136, NOTE_G2, 136, NOTE_E2, 136, NOTE_B2, 136,
+    NOTE_C2, 136, TONES_END};
 const uint16_t LOSE_TONES_LENGTH = 136 * 8;
 
 int16_t getNextTone(int16_t fromTone, uint8_t nextIndex) {
-  // TODO: try to prevent over-indexing on min/max. ditch constrain?
   int16_t nextTone = constrain(
       fromTone + getDirection() *
                      (random(MIN_INTERVAL,
@@ -65,10 +66,12 @@ int16_t getNextTone(int16_t fromTone, uint8_t nextIndex) {
 void randomize() {
   tones[0] = random(MIN_TONE, MAX_TONE + 1);
 
+  Serial.println();
   for (uint8_t i = 1; i < TONES_COUNT; i++) {
     tones[i] = getNextTone(tones[i - 1], i - 1);
     printInterval(i);
   }
+  Serial.println();
 }
 
 void printInterval(uint8_t i) {
@@ -89,17 +92,16 @@ void playInterval(uint8_t i) {
                     CURRENT_TONE_DURATION * pow(DIMINISH, currentRound));
 }
 
-void reset() {
-  // NOTE: Yeah, we're seeding on the second round.
+void setRound(int8_t r) {
+  currentRound = r;
+
+  // NOTE: Yeah, we're seeding at the start of the second round.
   // Otherwise we'd need to delay the first til user input.
   if (currentRound == 1) {
     arduboy.initRandomSeed();
   }
 
-  Serial.println();
   randomize();
-  Serial.println();
-
   index = STARTING_INDEX;
 
   playInterval(index);
@@ -109,17 +111,15 @@ void reset() {
 void setup() {
   arduboy.beginDoFirst();
   arduboy.waitNoButtons();
-
   arduboy.setFrameRate(15);
 
-  playYouWinSound();
-
-  reset();
-
   Serial.begin(9600);
+
+  playSuccessSound();
+  setRound(0);
 }
 
-void playYouWinSound() {
+void playSuccessSound() {
   for (uint8_t i = 0; i <= currentRound; i++) {
     arduboyTones.tones(SUCCESS_TONES);
     delay(SUCCESS_TONES_LENGTH);
@@ -140,10 +140,8 @@ void increment() { index = constrain(index + 1, 0, TONES_COUNT - 1); }
 void handleGuess(bool success) {
   if (success) {
     if (index == TONES_COUNT - 1) {
-      currentRound++;
-
-      playYouWinSound();
-      reset();
+      playSuccessSound();
+      setRound(currentRound + 1);
 
       return;
     }
@@ -157,7 +155,7 @@ void handleGuess(bool success) {
   }
 
   playGameOverSound();
-  reset();
+  setRound(0);
 }
 
 void loop() {
