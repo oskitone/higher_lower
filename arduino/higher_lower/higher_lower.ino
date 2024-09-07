@@ -1,6 +1,10 @@
 #include "common.h"
 
-#include "interface.h"
+#ifdef __AVR_ATtiny85__
+#include "interface_attiny85.h"
+#else
+#include "interface_arduboy.h"
+#endif
 
 #include "noise.h"
 
