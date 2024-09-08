@@ -1,10 +1,6 @@
 #include "common.h"
 
-#ifdef __AVR_ATtiny85__
-#include "interface_attiny85.h"
-#else
-#include "interface_arduboy.h"
-#endif
+#include "interface.h"
 
 #include "noise.h"
 
@@ -108,9 +104,7 @@ void handleGuess(bool success) {
 }
 
 void loop() {
-  pollButtons();
-
-  if (justPressed(B_BUTTON)) {
+  if (justPressed(RESET_BUTTON)) {
     index = TONES_COUNT - 1;
     handleGuess(true);
   }

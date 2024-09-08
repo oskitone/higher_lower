@@ -1,14 +1,10 @@
 #include "pitches.h"
 
-#ifdef __AVR_ATtiny85__
-#define SPKR_PIN 10 // TODO: replace
-#else
-#define SPKR_PIN 5
-#endif
-
 void _tone(int16_t t, int16_t duration) {
+  digitalWrite(LED_PIN, HIGH);
   tone(SPKR_PIN, t, duration);
   delay(duration);
+  digitalWrite(LED_PIN, LOW);
 }
 
 void playInterval(int16_t tone1, int16_t tone2, int8_t currentRound) {
@@ -17,6 +13,7 @@ void playInterval(int16_t tone1, int16_t tone2, int8_t currentRound) {
 }
 
 void playSuccessSound(int8_t currentRound) {
+  // TODO: bunch into groups so it's easier to hear/count score
   for (uint8_t i = 0; i <= currentRound; i++) {
     _tone(NOTE_G3, 17);
     _tone(NOTE_C4, 34);
@@ -26,6 +23,7 @@ void playSuccessSound(int8_t currentRound) {
 }
 
 void playGameOverSound() {
+  // play score
   for (uint8_t i = 0; i < 4; i++) {
     _tone(NOTE_G2, 136);
     _tone(NOTE_E2, 136);

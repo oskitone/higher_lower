@@ -1,3 +1,17 @@
+#ifdef __AVR_ATtiny85__
+#define SPKR_PIN 0
+#define LED_PIN 1
+#define UP_BUTTON 2
+#define DOWN_BUTTON 3
+#define RESET_BUTTON 5
+#else
+#define SPKR_PIN 5
+#define LED_PIN 9
+#define UP_BUTTON A0
+#define DOWN_BUTTON A3
+#define RESET_BUTTON 8
+#endif
+
 // NOTES: max human-audible frequency is ~20k and max for int16_t is ~32k,
 // but this max is the max that doesn't hurt my ears.
 #define MIN_TONE 60

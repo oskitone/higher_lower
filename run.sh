@@ -13,7 +13,8 @@ port="/dev/cu.usbmodem143101"
 
 stub=$(ls arduino | xargs)
 input_path="$PWD/arduino/${stub}/${stub}.ino"
-build_dir="$PWD/build"
+
+build_dir="$PWD/build/arduboy"
 build_path="${build_dir}/${stub}.ino.hex"
 
 function help() {
@@ -63,11 +64,8 @@ function upload() {
     echo "UPLOADING"
     echo
 
-    arduino-cli upload \
-        --fqbn "${fbqn}" \
-        --port "${port}" \
-        --verbose \
-        --input-file "${build_path}"
+    echo "jk, Ardens only"
+    # TODO: upload to digispark instead
 
     echo
 }
