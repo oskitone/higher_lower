@@ -68,8 +68,8 @@ void setRound(int8_t r) {
   randomize();
   index = STARTING_INDEX;
 
-  playInterval(tones[index - 1], tones[index], currentRound);
   printInterval(index);
+  playInterval(tones[index - 1], tones[index], currentRound);
 }
 
 void setup() {
@@ -96,8 +96,8 @@ void handleGuess(bool success) {
 
     increment();
 
-    playInterval(tones[index - 1], tones[index], currentRound);
     printInterval(index);
+    playInterval(tones[index - 1], tones[index], currentRound);
 
     return;
   }
