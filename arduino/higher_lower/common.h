@@ -20,6 +20,9 @@
 #define GUESSES_PER_ROUND 5
 #define TONES_COUNT (GUESSES_PER_ROUND + 1)
 
+#define SUCCESS_TONES_BUNCH 5
+#define SUCCESS_TONES_BREAK 125
+
 #define RESET_PAUSE 500
 
 // NOTE: Yes, we start at 1 instead of 0,

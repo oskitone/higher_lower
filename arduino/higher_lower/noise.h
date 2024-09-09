@@ -13,12 +13,15 @@ void playInterval(int16_t tone1, int16_t tone2, int8_t currentRound) {
 }
 
 void playSuccessSound(int8_t currentRound) {
-  // TODO: bunch into groups so it's easier to hear/count score
   for (uint8_t i = 0; i <= currentRound; i++) {
     _tone(NOTE_G3, 17);
     _tone(NOTE_C4, 34);
     _tone(NOTE_E4, 34);
     _tone(NOTE_C5, 68);
+
+    if ((i + 1) % SUCCESS_TONES_BUNCH == 0) {
+      delay(SUCCESS_TONES_BREAK);
+    }
   }
 }
 
