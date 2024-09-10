@@ -1,5 +1,9 @@
 #include "pitches.h"
 
+uint16_t scale[] = {
+    NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6,
+};
+
 void _tone(int16_t t, int16_t duration) {
   if (t == NOTE_REST) {
     noTone(SPKR_PIN);
@@ -14,6 +18,7 @@ void _tone(int16_t t, int16_t duration) {
 
 void _tone(int16_t t) { _tone(t, THEME_NOTE_LENGTH); }
 
+// TODO: make more interesting
 void playInterval(int16_t tone1, int16_t tone2, int8_t currentRound) {
   _tone(tone1, LAST_TONE_DURATION * pow(DIMINISH, currentRound));
   _tone(tone2, CURRENT_TONE_DURATION * pow(DIMINISH, currentRound));

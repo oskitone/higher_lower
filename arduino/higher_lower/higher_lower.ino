@@ -7,6 +7,7 @@
 int16_t tones[TONES_COUNT];
 uint8_t index = STARTING_INDEX;
 int8_t currentRound = 0;
+// TODO: guess countdown timer
 
 inline int8_t getDirection() { return random(0, 2) ? -1 : 1; }
 
@@ -30,17 +31,12 @@ int16_t getNextTone(int16_t fromTone, uint8_t nextIndex) {
 }
 
 void randomize() {
-  if (currentRound == 0) {
-    tones[0] = NOTE_C5;
-  } else {
-    tones[0] = tones[TONES_COUNT - 1];
-  }
+  // TODO: fix tones[TONES_COUNT - 1] == 0 after failure
+  tones[0] = currentRound == 0 ? NOTE_C5 : tones[TONES_COUNT - 1];
 
-  // TODO: try diatonic scale for intro round
-
-  Serial.println();
   for (uint8_t i = 1; i < TONES_COUNT; i++) {
-    tones[i] = getNextTone(tones[i - 1], i - 1);
+    tones[i] = currentRound == 0 ? scale[random(0, 8 + 1)]
+                                 : getNextTone(tones[i - 1], i - 1);
     printInterval(i);
   }
   Serial.println();
