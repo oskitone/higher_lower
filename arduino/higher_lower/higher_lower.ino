@@ -1,13 +1,13 @@
 #include "common.h"
 
-#include "interface.h"
-
 #include "noise.h"
 
 int16_t tones[TONES_COUNT];
 uint8_t index = STARTING_INDEX;
 int8_t currentRound = 0;
 // TODO: guess countdown timer
+
+#include "interface.h"
 
 inline int8_t getDirection() { return random(0, 2) ? -1 : 1; }
 
@@ -37,21 +37,10 @@ void randomize() {
   for (uint8_t i = 1; i < TONES_COUNT; i++) {
     tones[i] = currentRound == 0 ? scale[random(0, 8 + 1)]
                                  : getNextTone(tones[i - 1], i - 1);
-    printInterval(i);
+    printIntervalToSerial(i);
   }
-  Serial.println();
-}
 
-void printInterval(uint8_t i) {
-  Serial.print(i);
-  Serial.print(F(": "));
-  Serial.print(tones[i - 1]);
-  Serial.print(F(" -> "));
-  Serial.print(tones[i]);
-  Serial.print(F(" ("));
-  Serial.print(tones[i] - tones[i - 1]);
-  Serial.print(F(")"));
-  Serial.println();
+  printBlankLineToSerial();
 }
 
 void setRound(int8_t r) {
@@ -66,14 +55,14 @@ void setRound(int8_t r) {
   randomize();
   index = STARTING_INDEX;
 
-  printInterval(index);
+  printIntervalToSerial(index);
   playInterval(tones[index - 1], tones[index], currentRound);
 }
 
 void setup() {
   setupInterface();
 
-  Serial.begin(9600);
+  setupSerial();
 
   playIntro();
   delay(RESET_PAUSE);
@@ -87,6 +76,7 @@ void handleGuess(bool success) {
     if (index == TONES_COUNT - 1) {
       playSuccessSound(currentRound);
       delay(RESET_PAUSE);
+      printBlankLineToSerial();
       setRound(currentRound + 1);
 
       return;
@@ -94,7 +84,7 @@ void handleGuess(bool success) {
 
     increment();
 
-    printInterval(index);
+    printIntervalToSerial(index);
     playInterval(tones[index - 1], tones[index], currentRound);
 
     return;
@@ -102,11 +92,12 @@ void handleGuess(bool success) {
 
   playGameOverSound();
   delay(RESET_PAUSE);
+  printBlankLineToSerial();
   setRound(0);
 }
 
 void loop() {
-  if (justPressed(RESET_BUTTON)) {
+  if (justPressed(SKIP_BUTTON)) {
     index = TONES_COUNT - 1;
     handleGuess(true);
   }

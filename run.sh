@@ -8,14 +8,13 @@ set -o errtrace
 
 ardens="/Applications/Ardens/Ardens.app/Contents/MacOS/Ardens"
 
-fbqn="arduboy:avr:arduboy"
 port="/dev/cu.usbmodem143101"
 
 stub=$(ls arduino | xargs)
-input_path="$PWD/arduino/${stub}/${stub}.ino"
+input_path="$PWD/arduino/${stub}"
 
-build_dir="$PWD/build/arduboy"
-build_path="${build_dir}/${stub}.ino.hex"
+arduboy_build_dir="$PWD/build/arduboy"
+digispark_build_dir="$PWD/build/digispark"
 
 function help() {
     echo "\
@@ -42,30 +41,43 @@ if [ "$1" == '-h' ]; then
 fi
 
 function compile() {
-    mkdir -pv "${build_dir}" >/dev/null
-
-    echo "COMPILING"
+    echo "COMPILING FOR ARDUBOY"
     echo
 
+    mkdir -pv "${arduboy_build_dir}" >/dev/null
     arduino-cli compile \
-        --fqbn "${fbqn}" \
-        --build-path="${build_dir}" \
+        --fqbn "arduboy:avr:arduboy" \
+        --build-path="${arduboy_build_dir}" \
         --verbose \
+        "${input_path}"
+
+    echo "COMPILING FOR DIGISPARK"
+    echo
+
+    mkdir -pv "${digispark_build_dir}" >/dev/null
+    arduino-cli compile \
+        --fqbn "digistump:avr:digispark-tiny" \
+        --build-path="$digispark_build_dir" \
+        --build-property "compiler.cpp.extra_flags=-w" \
         "${input_path}"
 
     echo
 }
 
 function emulate() {
-    $ardens file="${build_path}"
+    $ardens file="${arduboy_build_dir}/${stub}.ino.hex"
 }
 
 function upload() {
     echo "UPLOADING"
     echo
 
-    echo "jk, Ardens only"
-    # TODO: upload to digispark instead
+    echo "If already plugged in, unplug/reset/de-breadboard digispark..."
+    echo
+
+    arduino-cli upload \
+        --fqbn "digistump:avr:digispark-tiny" \
+        --input-dir "${digispark_build_dir}"
 
     echo
 }

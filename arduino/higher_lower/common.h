@@ -3,13 +3,13 @@
 #define LED_PIN 1
 #define UP_BUTTON 2
 #define DOWN_BUTTON 3
-#define RESET_BUTTON 5
+#define SKIP_BUTTON 4
 #else
 #define SPKR_PIN 5
 #define LED_PIN 9
 #define UP_BUTTON A0
 #define DOWN_BUTTON A3
-#define RESET_BUTTON 8
+#define SKIP_BUTTON 8
 #endif
 
 #define THEME_NOTE_LENGTH 180
