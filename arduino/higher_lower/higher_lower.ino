@@ -30,7 +30,13 @@ int16_t getNextTone(int16_t fromTone, uint8_t nextIndex) {
 }
 
 void randomize() {
-  tones[0] = random(MIN_TONE, MAX_TONE + 1);
+  if (currentRound == 0) {
+    tones[0] = NOTE_C5;
+  } else {
+    tones[0] = tones[TONES_COUNT - 1];
+  }
+
+  // TODO: try diatonic scale for intro round
 
   Serial.println();
   for (uint8_t i = 1; i < TONES_COUNT; i++) {
@@ -73,7 +79,7 @@ void setup() {
 
   Serial.begin(9600);
 
-  playSuccessSound(currentRound);
+  playIntro();
   delay(RESET_PAUSE);
   setRound(0);
 }

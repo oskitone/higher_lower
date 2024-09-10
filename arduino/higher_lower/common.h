@@ -12,6 +12,8 @@
 #define RESET_BUTTON 8
 #endif
 
+#define THEME_NOTE_LENGTH 214
+
 // NOTES: max human-audible frequency is ~20k and max for int16_t is ~32k,
 // but this max is the max that doesn't hurt my ears.
 #define MIN_TONE 60
@@ -30,7 +32,7 @@
 // Ya can't diff off nuthin, charlie!
 #define STARTING_INDEX 1
 
-#define LAST_TONE_DURATION 400
+#define LAST_TONE_DURATION THEME_NOTE_LENGTH * 2
 #define CURRENT_TONE_DURATION (LAST_TONE_DURATION / 2)
 
 #define INTERVAL_CHUNK ((MAX_TONE - MIN_TONE) / TONES_COUNT)

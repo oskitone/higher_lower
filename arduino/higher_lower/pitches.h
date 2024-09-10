@@ -1,3 +1,8 @@
+// Copied from ArduboyTonesPitches
+// https://github.com/MLXXXp/ArduboyTones
+// MIT license
+
+#define NOTE_REST 0
 #define NOTE_C0 16
 #define NOTE_CS0 17
 #define NOTE_D0 18
