@@ -31,12 +31,12 @@ int16_t getNextTone(int16_t fromTone, uint8_t nextIndex) {
 }
 
 void randomize() {
-  // TODO: fix tones[TONES_COUNT - 1] == 0 after failure
   tones[0] = currentRound == 0 ? NOTE_C5 : tones[TONES_COUNT - 1];
 
   for (uint8_t i = 1; i < TONES_COUNT; i++) {
-    tones[i] = currentRound == 0 ? scale[random(0, 8 + 1)]
-                                 : getNextTone(tones[i - 1], i - 1);
+    // TODO: prevent stagnant scale tones
+    tones[i] = currentRound == 0 ? scale[random(0, SCALE_TONES_COUNT)]
+                                 : getNextTone(tones[i - 1], i);
     printIntervalToSerial(i);
   }
 
