@@ -56,8 +56,8 @@ void playIntro() {
   _tone(NOTE_C4);
 }
 
-void playSuccessSound(int8_t currentRound) {
-  for (uint8_t i = 0; i <= currentRound; i++) {
+void playSuccessSound(int8_t count) {
+  for (uint8_t i = 0; i < count; i++) {
     _tone(NOTE_G3, 17);
     _tone(NOTE_C4, 34);
     _tone(NOTE_E4, 34);
@@ -69,12 +69,18 @@ void playSuccessSound(int8_t currentRound) {
   }
 }
 
-void playGameOverSound() {
-  // play score
-  for (uint8_t i = 0; i < 4; i++) {
-    _tone(NOTE_G2, 136);
-    _tone(NOTE_E2, 136);
-    _tone(NOTE_B2, 136);
-    _tone(NOTE_C2, 136);
+void playGameOverSound(int8_t count) {
+  _tone(NOTE_G2, RESET_PAUSE);
+  delay(RESET_PAUSE);
+
+  for (uint8_t i = 0; i < count; i++) {
+    _tone(NOTE_C4, 17);
+    _tone(NOTE_E3, 34);
+    _tone(NOTE_C3, 34);
+    _tone(NOTE_G2, 68);
+
+    if ((i + 1) % SUCCESS_TONES_BUNCH == 0) {
+      delay(SUCCESS_TONES_BREAK);
+    }
   }
 }

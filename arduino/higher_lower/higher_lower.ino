@@ -76,7 +76,7 @@ void setup() {
   setupSerial();
 
   playIntro();
-  delay(RESET_PAUSE);
+  delay(NEW_ROUND_PAUSE);
   setRound(0);
 }
 
@@ -85,8 +85,8 @@ void increment() { index = constrain(index + 1, 0, TONES_COUNT - 1); }
 void handleGuess(bool success) {
   if (success) {
     if (index == TONES_COUNT - 1) {
-      playSuccessSound(currentRound);
-      delay(RESET_PAUSE);
+      playSuccessSound(currentRound + 1);
+      delay(NEW_ROUND_PAUSE);
       printBlankLineToSerial();
       setRound(currentRound + 1);
 
@@ -101,8 +101,11 @@ void handleGuess(bool success) {
     return;
   }
 
-  playGameOverSound();
+  playGameOverSound(currentRound);
   delay(RESET_PAUSE);
+  playIntro();
+  delay(NEW_ROUND_PAUSE);
+
   printBlankLineToSerial();
   setRound(0);
 }
