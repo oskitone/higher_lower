@@ -11,6 +11,16 @@ int8_t currentRound = 0;
 
 inline int8_t getDirection() { return random(0, 2) ? -1 : 1; }
 
+int16_t getNextToneInScale(uint8_t previousIndex) {
+  int16_t nextTone = scale[random(0, SCALE_TONES_COUNT)];
+
+  if (nextTone == tones[previousIndex]) {
+    return getNextToneInScale(previousIndex);
+  }
+
+  return nextTone;
+}
+
 int16_t getNextTone(uint8_t previousIndex) {
   int8_t direction = getDirection();
   int16_t nextTone = tones[previousIndex];
@@ -36,9 +46,8 @@ void randomize() {
   tones[0] = currentRound == 0 ? NOTE_C5 : tones[TONES_COUNT - 1];
 
   for (uint8_t i = 1; i < TONES_COUNT; i++) {
-    // TODO: prevent stagnant scale tones
-    tones[i] = currentRound == 0 ? scale[random(0, SCALE_TONES_COUNT)]
-                                 : getNextTone(i - 1);
+    tones[i] =
+        currentRound == 0 ? getNextToneInScale(i - 1) : getNextTone(i - 1);
     printIntervalToSerial(i);
   }
 
