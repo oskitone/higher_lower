@@ -25,8 +25,6 @@
 #define SUCCESS_TONES_BUNCH 5
 #define SUCCESS_TONES_BREAK 125
 
-#define RESET_PAUSE 500
-
 // NOTE: Yes, we start at 1 instead of 0,
 // because we want an interval between tones.
 // Ya can't diff off nuthin, charlie!
@@ -34,6 +32,10 @@
 
 #define LAST_TONE_DURATION THEME_NOTE_LENGTH * 4
 #define CURRENT_TONE_DURATION (LAST_TONE_DURATION / 2)
+
+#define RESET_PAUSE 500
+#define PRE_INTERVAL_PAUSE THEME_NOTE_LENGTH / 2
+#define MID_INTERVAL_PAUSE PRE_INTERVAL_PAUSE / 2
 
 #define INTERVAL_CHUNK ((MAX_TONE - MIN_TONE) / TONES_COUNT)
 #define MIN_INTERVAL 5
