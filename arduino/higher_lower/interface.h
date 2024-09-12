@@ -6,9 +6,6 @@ void setupInterface() {
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, LOW);
 
-  // ATtiny85 says it has pullups but in practice may not?
-  // Seems like it might be a digispark/breadboard issue.
-  // TODO: Try different breadboard. Try bare ATtiny85.
   pinMode(UP_BUTTON, INPUT_PULLUP);
   pinMode(DOWN_BUTTON, INPUT_PULLUP);
   pinMode(SKIP_BUTTON, INPUT_PULLUP);

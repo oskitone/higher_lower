@@ -84,7 +84,6 @@ void increment() { index = constrain(index + 1, 0, TONES_COUNT - 1); }
 
 void handleGuess(bool success) {
   if (success) {
-    // TODO: round ending prematurely (hardware only?)
     if (index == TONES_COUNT - 1) {
       playSuccessSound(currentRound + 1);
       delay(NEW_ROUND_PAUSE);

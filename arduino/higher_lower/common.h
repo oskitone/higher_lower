@@ -1,9 +1,9 @@
 #ifdef __AVR_ATtiny85__
-#define SPKR_PIN 0
+#define SPKR_PIN 4
 #define LED_PIN 1
 #define UP_BUTTON 2
 #define DOWN_BUTTON 3
-#define SKIP_BUTTON 4
+#define SKIP_BUTTON 0
 #else
 #define SPKR_PIN 5
 #define LED_PIN 9

@@ -2,4 +2,6 @@ build/
 local/
 imgui.ini
 .vscode/
+
 kicad/*-backups/
+kicad/#auto_saved_files#

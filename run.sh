@@ -6,6 +6,10 @@
 set -o errexit
 set -o errtrace
 
+_packages="$HOME/Library/Arduino15/packages"
+avrdude="${_packages}/arduino/tools/avrdude/6.3.0-arduino17/bin/avrdude"
+avrdude_config="${_packages}/ATTinyCore/hardware/avr/1.5.2/avrdude.conf"
+
 ardens="/Applications/Ardens/Ardens.app/Contents/MacOS/Ardens"
 
 port="/dev/cu.usbmodem143101"
@@ -14,7 +18,7 @@ stub=$(ls arduino | xargs)
 input_path="$PWD/arduino/${stub}"
 
 arduboy_build_dir="$PWD/build/arduboy"
-digispark_build_dir="$PWD/build/digispark"
+attiny85_build_dir="$PWD/build/attiny85"
 
 function help() {
     echo "\
@@ -54,15 +58,14 @@ function compile_for_arduboy() {
     echo
 }
 
-function compile_for_digispark() {
-    echo "COMPILING FOR DIGISPARK"
+function compile_for_attiny85() {
+    echo "COMPILING FOR ATTINY85"
     echo
 
-    mkdir -pv "${digispark_build_dir}" >/dev/null
+    mkdir -pv "${attiny85_build_dir}" >/dev/null
     arduino-cli compile \
-        --fqbn "digistump:avr:digispark-tiny" \
-        --build-path="$digispark_build_dir" \
-        --build-property "compiler.cpp.extra_flags=-w" \
+        --fqbn "ATTinyCore:avr:attinyx5:clock=4internal" \
+        --build-path="$attiny85_build_dir" \
         "${input_path}"
 
     echo
@@ -72,16 +75,17 @@ function emulate() {
     $ardens file="${arduboy_build_dir}/${stub}.ino.hex"
 }
 
-function upload_to_digispark() {
+function upload_with_programmer() {
     echo "UPLOADING"
     echo
 
-    echo "If already plugged in, unplug/reset/de-breadboard digispark..."
-    echo
-
-    arduino-cli upload \
-        --fqbn "digistump:avr:digispark-tiny" \
-        --input-dir "${digispark_build_dir}"
+    $avrdude \
+        -C"$avrdude_config" \
+        -v \
+        -pattiny85 \
+        -cusbtiny \
+        -B8 \
+        -U"flash:w:$attiny85_build_dir/higher_lower.ino.hex:i"
 
     echo
 }
@@ -93,7 +97,7 @@ fi
 
 if [ "$1" == 'compile' ]; then
     compile_for_arduboy
-    compile_for_digispark
+    compile_for_attiny85
     exit
 fi
 
@@ -107,8 +111,8 @@ if [ "$1" == 'deploy' ]; then
         port="$3"
     fi
 
-    compile_for_digispark
-    upload_to_digispark
+    compile_for_attiny85
+    upload_with_programmer
 
     exit
 fi
