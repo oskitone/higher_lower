@@ -4,7 +4,7 @@
 
 int16_t tones[TONES_COUNT];
 uint8_t index = STARTING_INDEX;
-int8_t currentRound = 0;
+int8_t currentRound = 0; // TODO: rename to level? score?
 // TODO: guess countdown timer
 
 #include "interface.h"
@@ -84,6 +84,7 @@ void increment() { index = constrain(index + 1, 0, TONES_COUNT - 1); }
 
 void handleGuess(bool success) {
   if (success) {
+    // TODO: round ending prematurely (hardware only?)
     if (index == TONES_COUNT - 1) {
       playSuccessSound(currentRound + 1);
       delay(NEW_ROUND_PAUSE);

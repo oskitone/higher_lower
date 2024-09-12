@@ -40,7 +40,7 @@ if [ "$1" == '-h' ]; then
     exit
 fi
 
-function compile() {
+function compile_for_arduboy() {
     echo "COMPILING FOR ARDUBOY"
     echo
 
@@ -51,6 +51,10 @@ function compile() {
         --verbose \
         "${input_path}"
 
+    echo
+}
+
+function compile_for_digispark() {
     echo "COMPILING FOR DIGISPARK"
     echo
 
@@ -68,7 +72,7 @@ function emulate() {
     $ardens file="${arduboy_build_dir}/${stub}.ino.hex"
 }
 
-function upload() {
+function upload_to_digispark() {
     echo "UPLOADING"
     echo
 
@@ -88,7 +92,8 @@ if [ "$1" == '-h' ]; then
 fi
 
 if [ "$1" == 'compile' ]; then
-    compile
+    compile_for_arduboy
+    compile_for_digispark
     exit
 fi
 
@@ -102,14 +107,14 @@ if [ "$1" == 'deploy' ]; then
         port="$3"
     fi
 
-    compile
-    upload
+    compile_for_digispark
+    upload_to_digispark
 
     exit
 fi
 
 while true; do
-    compile
+    compile_for_arduboy
     emulate
 
     echo
