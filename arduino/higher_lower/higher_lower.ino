@@ -83,6 +83,8 @@ void setup() {
 void increment() { index = constrain(index + 1, 0, TONES_COUNT - 1); }
 
 void handleGuess(bool success) {
+  delay(POST_BUTTON_PRESS_PAUSE);
+
   if (success) {
     if (index == TONES_COUNT - 1) {
       playSuccessSound(currentRound + 1);
