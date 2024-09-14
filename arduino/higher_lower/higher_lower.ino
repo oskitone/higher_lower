@@ -63,6 +63,9 @@ void randomize() {
 void setRound(int8_t r) {
   currentRound = r;
 
+  printRoundToSerial(r);
+  printBlankLineToSerial();
+
   // NOTE: Yeah, we're seeding at the start of the second round.
   // Otherwise we'd need to delay the first til user input.
   if (currentRound == 1) {

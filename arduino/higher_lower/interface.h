@@ -30,6 +30,14 @@ void printBlankLineToSerial() {
 #endif
 }
 
+uint8_t printRoundToSerial(int8_t currentRound) {
+#ifndef __AVR_ATtiny85__
+  Serial.print(F("ROUND "));
+  Serial.print(currentRound);
+  Serial.println();
+#endif
+}
+
 uint8_t printIntervalToSerial(uint8_t i) {
 #ifndef __AVR_ATtiny85__
   Serial.print(i);
