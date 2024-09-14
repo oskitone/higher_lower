@@ -21,6 +21,10 @@ int16_t getNextToneInScale(uint8_t previousIndex) {
   return nextTone;
 }
 
+inline bool isBeyondMinMax(int16_t nextTone) {
+  return nextTone < MIN_TONE || nextTone > MAX_TONE;
+}
+
 int16_t getNextTone(uint8_t previousIndex) {
   int8_t direction = getDirection();
   int16_t nextTone = tones[previousIndex];
@@ -35,7 +39,7 @@ int16_t getNextTone(uint8_t previousIndex) {
     return getNextTone(previousIndex);
   }
 
-  if (nextTone < MIN_TONE || nextTone > MAX_TONE) {
+  if (isBeyondMinMax(nextTone)) {
     return getNextTone(previousIndex);
   }
 
@@ -43,7 +47,9 @@ int16_t getNextTone(uint8_t previousIndex) {
 }
 
 void randomize() {
-  tones[0] = currentRound == 0 ? NOTE_C5 : tones[TONES_COUNT - 1];
+  tones[0] = currentRound == 0 || isBeyondMinMax(tones[TONES_COUNT - 1])
+                 ? NOTE_C5
+                 : tones[TONES_COUNT - 1];
 
   for (uint8_t i = 1; i < TONES_COUNT; i++) {
     tones[i] =
