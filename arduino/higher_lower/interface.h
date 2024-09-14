@@ -55,3 +55,13 @@ uint8_t printIntervalToSerial(uint8_t i) {
   // when targeting ATtiny85
   return i;
 }
+
+void printAllTones() {
+#ifndef __AVR_ATtiny85__
+  for (uint8_t i = 0; i < TONES_COUNT; i++) {
+    Serial.print(i);
+    Serial.print(": ");
+    Serial.println(tones[i]);
+  }
+#endif
+}

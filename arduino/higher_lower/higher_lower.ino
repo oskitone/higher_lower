@@ -54,17 +54,11 @@ void randomize() {
   for (uint8_t i = 1; i < TONES_COUNT; i++) {
     tones[i] =
         currentRound == 0 ? getNextToneInScale(i - 1) : getNextTone(i - 1);
-    printIntervalToSerial(i);
   }
-
-  printBlankLineToSerial();
 }
 
 void setRound(uint8_t r) {
   currentRound = r;
-
-  printRoundToSerial(r);
-  printBlankLineToSerial();
 
   // NOTE: Yeah, we're seeding at the start of the second round.
   // Otherwise we'd need to delay the first til user input.
@@ -74,6 +68,11 @@ void setRound(uint8_t r) {
 
   randomize();
   index = STARTING_INDEX;
+
+  printRoundToSerial(r);
+  printBlankLineToSerial();
+  printAllTones();
+  printBlankLineToSerial();
 
   printIntervalToSerial(index);
   playInterval(tones[index - 1], tones[index], currentRound);
