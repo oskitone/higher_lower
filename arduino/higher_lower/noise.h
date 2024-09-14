@@ -17,12 +17,12 @@ void _tone(int16_t t, int16_t duration) {
   digitalWrite(LED_PIN, LOW);
 }
 
-inline int16_t getDuration(int16_t duration, int8_t currentRound) {
+inline int16_t getDuration(int16_t duration, uint8_t currentRound) {
   return max(MIN_TONE_OR_INTERVAL_PAUSE_DURATION,
              duration * pow(DURATION_DIMINISH, currentRound));
 }
 
-void playInterval(int16_t tone1, int16_t tone2, int8_t currentRound) {
+void playInterval(int16_t tone1, int16_t tone2, uint8_t currentRound) {
   delay(PRE_INTERVAL_PAUSE);
 
   _tone(tone1, getDuration(LAST_TONE_DURATION, currentRound));
@@ -61,7 +61,7 @@ void playIntro() {
   _theme_tone(NOTE_C4);
 }
 
-void playSuccessSound(int8_t count) {
+void playSuccessSound(uint8_t count) {
   for (uint8_t i = 0; i < count; i++) {
     _tone(NOTE_G3, 17);
     _tone(NOTE_C4, 34);
@@ -74,7 +74,7 @@ void playSuccessSound(int8_t count) {
   }
 }
 
-void playGameOverSound(int8_t count) {
+void playGameOverSound(uint8_t count) {
   _tone(NOTE_G2, RESET_PAUSE);
   delay(RESET_PAUSE);
 

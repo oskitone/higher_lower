@@ -4,7 +4,7 @@
 
 int16_t tones[TONES_COUNT];
 uint8_t index = STARTING_INDEX;
-int8_t currentRound = 0; // TODO: rename to level? score?
+uint8_t currentRound; // TODO: rename to level? score?
 // TODO: guess countdown timer
 
 #include "interface.h"
@@ -60,7 +60,7 @@ void randomize() {
   printBlankLineToSerial();
 }
 
-void setRound(int8_t r) {
+void setRound(uint8_t r) {
   currentRound = r;
 
   printRoundToSerial(r);
