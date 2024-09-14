@@ -17,43 +17,48 @@ void _tone(int16_t t, int16_t duration) {
   digitalWrite(LED_PIN, LOW);
 }
 
-void _tone(int16_t t) { _tone(t, THEME_NOTE_LENGTH); }
+inline int16_t getDuration(int16_t duration, int8_t currentRound) {
+  return max(MIN_TONE_OR_INTERVAL_PAUSE_DURATION,
+             duration * pow(DIMINISH, currentRound));
+}
 
 void playInterval(int16_t tone1, int16_t tone2, int8_t currentRound) {
   delay(PRE_INTERVAL_PAUSE);
 
-  _tone(tone1, LAST_TONE_DURATION * pow(DIMINISH, currentRound));
-  delay(MID_INTERVAL_PAUSE * pow(DIMINISH, currentRound));
-  _tone(tone1, CURRENT_TONE_DURATION * pow(DIMINISH, currentRound));
-  delay(MID_INTERVAL_PAUSE * pow(DIMINISH, currentRound));
-  _tone(tone2, CURRENT_TONE_DURATION * pow(DIMINISH, currentRound));
+  _tone(tone1, getDuration(LAST_TONE_DURATION, currentRound));
+  delay(getDuration(MID_INTERVAL_PAUSE, currentRound));
+  _tone(tone1, getDuration(CURRENT_TONE_DURATION, currentRound));
+  delay(getDuration(MID_INTERVAL_PAUSE, currentRound));
+  _tone(tone2, getDuration(CURRENT_TONE_DURATION, currentRound));
 }
 
+void _theme_tone(int16_t t) { _tone(t, THEME_NOTE_LENGTH); }
+
 void playIntro() {
-  _tone(NOTE_C5);
-  _tone(NOTE_REST);
-  _tone(NOTE_E5);
-  _tone(NOTE_D5);
-  _tone(NOTE_REST);
-  _tone(NOTE_F5);
-  _tone(NOTE_REST);
-  _tone(NOTE_E5);
-  _tone(NOTE_REST);
-  _tone(NOTE_G5);
-  _tone(NOTE_REST);
-  _tone(NOTE_F5);
-  _tone(NOTE_A5);
-  _tone(NOTE_REST);
-  _tone(NOTE_G5);
-  _tone(NOTE_REST);
-  _tone(NOTE_C5);
-  _tone(NOTE_REST);
-  _tone(NOTE_C6);
-  _tone(NOTE_C5);
-  _tone(NOTE_REST);
-  _tone(NOTE_C6);
-  _tone(NOTE_REST);
-  _tone(NOTE_C4);
+  _theme_tone(NOTE_C5);
+  _theme_tone(NOTE_REST);
+  _theme_tone(NOTE_E5);
+  _theme_tone(NOTE_D5);
+  _theme_tone(NOTE_REST);
+  _theme_tone(NOTE_F5);
+  _theme_tone(NOTE_REST);
+  _theme_tone(NOTE_E5);
+  _theme_tone(NOTE_REST);
+  _theme_tone(NOTE_G5);
+  _theme_tone(NOTE_REST);
+  _theme_tone(NOTE_F5);
+  _theme_tone(NOTE_A5);
+  _theme_tone(NOTE_REST);
+  _theme_tone(NOTE_G5);
+  _theme_tone(NOTE_REST);
+  _theme_tone(NOTE_C5);
+  _theme_tone(NOTE_REST);
+  _theme_tone(NOTE_C6);
+  _theme_tone(NOTE_C5);
+  _theme_tone(NOTE_REST);
+  _theme_tone(NOTE_C6);
+  _theme_tone(NOTE_REST);
+  _theme_tone(NOTE_C4);
 }
 
 void playSuccessSound(int8_t count) {
