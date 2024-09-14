@@ -19,7 +19,7 @@ void _tone(int16_t t, int16_t duration) {
 
 inline int16_t getDuration(int16_t duration, int8_t currentRound) {
   return max(MIN_TONE_OR_INTERVAL_PAUSE_DURATION,
-             duration * pow(DIMINISH, currentRound));
+             duration * pow(DURATION_DIMINISH, currentRound));
 }
 
 void playInterval(int16_t tone1, int16_t tone2, int8_t currentRound) {

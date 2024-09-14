@@ -30,9 +30,9 @@ int16_t getNextTone(uint8_t previousIndex) {
   int16_t nextTone = tones[previousIndex];
 
   for (uint8_t i = 0; i < (GUESSES_PER_ROUND - previousIndex); i++) {
-    nextTone +=
-        direction *
-        random(MIN_INTERVAL, INTERVAL_CHUNK * pow(DIMINISH, currentRound));
+    nextTone += direction *
+                random(MIN_INTERVAL,
+                       INTERVAL_CHUNK * pow(INTERVAL_DIMINISH, currentRound));
   }
 
   if (nextTone == tones[previousIndex]) {
