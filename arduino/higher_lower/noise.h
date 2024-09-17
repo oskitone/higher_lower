@@ -17,19 +17,19 @@ void _tone(int16_t t, int16_t duration) {
   digitalWrite(LED_PIN, LOW);
 }
 
-inline int16_t getDuration(int16_t duration, uint8_t currentRound) {
+inline int16_t getDuration(int16_t duration, uint8_t roundsWon) {
   return max(MIN_TONE_OR_INTERVAL_PAUSE_DURATION,
-             duration * pow(DURATION_DIMINISH, currentRound));
+             duration * pow(DURATION_DIMINISH, roundsWon));
 }
 
-void playInterval(int16_t tone1, int16_t tone2, uint8_t currentRound) {
+void playInterval(int16_t tone1, int16_t tone2, uint8_t roundsWon) {
   delay(PRE_INTERVAL_PAUSE);
 
-  _tone(tone1, getDuration(LAST_TONE_DURATION, currentRound));
-  delay(getDuration(MID_INTERVAL_PAUSE, currentRound));
-  _tone(tone1, getDuration(CURRENT_TONE_DURATION, currentRound));
-  delay(getDuration(MID_INTERVAL_PAUSE, currentRound));
-  _tone(tone2, getDuration(CURRENT_TONE_DURATION, currentRound));
+  _tone(tone1, getDuration(LAST_TONE_DURATION, roundsWon));
+  delay(getDuration(MID_INTERVAL_PAUSE, roundsWon));
+  _tone(tone1, getDuration(CURRENT_TONE_DURATION, roundsWon));
+  delay(getDuration(MID_INTERVAL_PAUSE, roundsWon));
+  _tone(tone2, getDuration(CURRENT_TONE_DURATION, roundsWon));
 }
 
 void _theme_tone(int16_t t) { _tone(t, THEME_NOTE_LENGTH); }
@@ -68,7 +68,7 @@ void playSuccessSound(uint8_t count) {
     _tone(NOTE_E4, 34);
     _tone(NOTE_C5, 68);
 
-    if ((i + 1) % SUCCESS_TONES_BUNCH == 0) {
+    if ((i + 1) % ROUNDS_PER_LEVEL == 0) {
       delay(SUCCESS_TONES_BREAK);
     }
   }
@@ -84,7 +84,7 @@ void playGameOverSound(uint8_t count) {
     _tone(NOTE_C3, 34);
     _tone(NOTE_G2, 68);
 
-    if ((i + 1) % SUCCESS_TONES_BUNCH == 0) {
+    if ((i + 1) % ROUNDS_PER_LEVEL == 0) {
       delay(SUCCESS_TONES_BREAK);
     }
   }

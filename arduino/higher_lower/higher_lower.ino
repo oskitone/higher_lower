@@ -2,12 +2,16 @@
 
 #include "noise.h"
 
-int16_t tones[TONES_COUNT];
+int16_t tones[TONES_PER_ROUND];
 uint8_t index = STARTING_INDEX;
-uint8_t currentRound; // TODO: rename to level? score?
+
+uint8_t roundsWon = 0;
+
 // TODO: guess countdown timer
 
 #include "interface.h"
+
+inline uint8_t getLevelsWon() { return roundsWon / ROUNDS_PER_LEVEL; }
 
 inline int8_t getDirection() { return random(0, 2) ? -1 : 1; }
 
@@ -30,9 +34,9 @@ int16_t getNextTone(uint8_t previousIndex) {
   int16_t nextTone = tones[previousIndex];
 
   for (uint8_t i = 0; i < (GUESSES_PER_ROUND - previousIndex); i++) {
-    nextTone += direction *
-                random(MIN_INTERVAL,
-                       INTERVAL_CHUNK * pow(INTERVAL_DIMINISH, currentRound));
+    nextTone +=
+        direction * random(MIN_INTERVAL,
+                           INTERVAL_CHUNK * pow(INTERVAL_DIMINISH, roundsWon));
   }
 
   if (nextTone == tones[previousIndex]) {
@@ -47,58 +51,66 @@ int16_t getNextTone(uint8_t previousIndex) {
 }
 
 void randomize() {
-  tones[0] = currentRound == 0 || isBeyondMinMax(tones[TONES_COUNT - 1])
+  tones[0] = roundsWon == 0 || isBeyondMinMax(tones[TONES_PER_ROUND - 1])
                  ? NOTE_C5
-                 : tones[TONES_COUNT - 1];
+                 : tones[TONES_PER_ROUND - 1];
 
-  for (uint8_t i = 1; i < TONES_COUNT; i++) {
-    tones[i] =
-        currentRound == 0 ? getNextToneInScale(i - 1) : getNextTone(i - 1);
+  for (uint8_t i = 1; i < TONES_PER_ROUND; i++) {
+    tones[i] = roundsWon == 0 ? getNextToneInScale(i - 1) : getNextTone(i - 1);
   }
 }
 
-void setRound(uint8_t r) {
-  currentRound = r;
+void setRoundsWon(uint8_t r) {
+  roundsWon = r;
 
-  // NOTE: Yeah, we're seeding at the start of the second round.
-  // Otherwise we'd need to delay the first til user input.
-  if (currentRound == 1) {
+  if (getLevelsWon() == LEVELS_PER_GAME) {
+    // TODO: something special!
+    reset();
+    return;
+  }
+
+  // TODO: rethink when to do this
+  if (roundsWon == 1) {
     initRandomSeed();
   }
 
   randomize();
   index = STARTING_INDEX;
 
-  printRoundToSerial(r);
+  printLevelAndRoundToSerial(getLevelsWon(), r);
   printBlankLineToSerial();
   printAllTones();
   printBlankLineToSerial();
 
   printIntervalToSerial(index);
-  playInterval(tones[index - 1], tones[index], currentRound);
+  playInterval(tones[index - 1], tones[index], roundsWon);
+}
+
+void reset() {
+  playIntro();
+  delay(NEW_ROUND_PAUSE);
+
+  printBlankLineToSerial();
+  setRoundsWon(0);
 }
 
 void setup() {
   setupInterface();
-
   setupSerial();
-
-  playIntro();
-  delay(NEW_ROUND_PAUSE);
-  setRound(0);
+  reset();
 }
 
-void increment() { index = constrain(index + 1, 0, TONES_COUNT - 1); }
+void increment() { index = constrain(index + 1, 0, TONES_PER_ROUND - 1); }
 
 void handleGuess(bool success) {
   delay(POST_BUTTON_PRESS_PAUSE);
 
   if (success) {
-    if (index == TONES_COUNT - 1) {
-      playSuccessSound(currentRound + 1);
+    if (index == TONES_PER_ROUND - 1) {
+      playSuccessSound(roundsWon + 1);
       delay(NEW_ROUND_PAUSE);
       printBlankLineToSerial();
-      setRound(currentRound + 1);
+      setRoundsWon(roundsWon + 1);
 
       return;
     }
@@ -106,23 +118,20 @@ void handleGuess(bool success) {
     increment();
 
     printIntervalToSerial(index);
-    playInterval(tones[index - 1], tones[index], currentRound);
+    playInterval(tones[index - 1], tones[index], roundsWon);
 
     return;
   }
 
-  playGameOverSound(currentRound);
+  playGameOverSound(roundsWon);
   delay(RESET_PAUSE);
-  playIntro();
-  delay(NEW_ROUND_PAUSE);
 
-  printBlankLineToSerial();
-  setRound(0);
+  reset();
 }
 
 void loop() {
   if (justPressed(SKIP_BUTTON)) {
-    index = TONES_COUNT - 1;
+    index = TONES_PER_ROUND - 1;
     handleGuess(true);
   }
 

@@ -30,10 +30,13 @@ void printBlankLineToSerial() {
 #endif
 }
 
-uint8_t printRoundToSerial(uint8_t currentRound) {
+void printLevelAndRoundToSerial(uint8_t level, uint8_t roundsWon) {
 #ifndef __AVR_ATtiny85__
-  Serial.print(F("ROUND "));
-  Serial.print(currentRound);
+  Serial.print(F("LEVEL "));
+  Serial.print(level + 1);
+  Serial.print(F("  ROUND "));
+  Serial.print((roundsWon % ROUNDS_PER_LEVEL) + 1);
+
   Serial.println();
 #endif
 }
@@ -58,7 +61,7 @@ uint8_t printIntervalToSerial(uint8_t i) {
 
 void printAllTones() {
 #ifndef __AVR_ATtiny85__
-  for (uint8_t i = 0; i < TONES_COUNT; i++) {
+  for (uint8_t i = 0; i < GUESSES_PER_ROUND; i++) {
     Serial.print(i);
     Serial.print(": ");
     Serial.println(tones[i]);
