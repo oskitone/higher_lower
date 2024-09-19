@@ -6,6 +6,7 @@ WiP electronic game about guessing musical interval directions
 
 - Better description ^
 - Reduce power usage
+- Difficulty settings
 - Minimum viable Arduboy setup
 
 ## License
