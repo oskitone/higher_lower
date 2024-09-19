@@ -25,8 +25,6 @@
 
 #define TONES_PER_ROUND (GUESSES_PER_ROUND + 1)
 
-#define SUCCESS_TONES_BREAK 125
-
 // NOTE: Yes, we start at 1 instead of 0,
 // because we want an interval between tones.
 // Ya can't diff off nuthin, charlie!

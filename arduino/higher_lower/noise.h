@@ -69,7 +69,7 @@ void playSuccessSound(uint8_t count) {
     _tone(NOTE_C5, 68);
 
     if ((i + 1) % ROUNDS_PER_LEVEL == 0) {
-      delay(SUCCESS_TONES_BREAK);
+      delay(68 * 2);
     }
   }
 }
@@ -85,7 +85,7 @@ void playGameOverSound(uint8_t count) {
     _tone(NOTE_G2, 68);
 
     if ((i + 1) % ROUNDS_PER_LEVEL == 0) {
-      delay(SUCCESS_TONES_BREAK);
+      delay(68 * 2);
     }
   }
 }
