@@ -2,6 +2,7 @@ include <../../parts_cafe/openscad/nuts_and_bolts.scad>;
 include <../../parts_cafe/openscad/switch.scad>;
 include <../../parts_cafe/openscad/speaker-AZ40R.scad>;
 
+include <button_rocker.scad>;
 include <enclosure.scad>;
 include <pcb.scad>;
 
@@ -12,12 +13,15 @@ module higher_lower(
     show_battery = true,
     show_pcb = true,
     show_accoutrements = true,
+    show_buttons = true,
     show_enclosure_top = true,
 
+    button_exposure = 2,
+
     default_gutter = SCOUT_DEFAULT_GUTTER,
+    button_gutter = SCOUT_DEFAULT_GUTTER / -2,
     label_gutter = 1,
 
-    // TODO: what'd these do?
     accessory_fillet = 1,
     control_exposure = .6,
 
@@ -54,7 +58,7 @@ module higher_lower(
     e = .00319;
 
     speaker_grill_size = get_speaker_fixture_diameter(tolerance);
-    button_size = speaker_grill_size / 2;
+    button_size = (speaker_grill_size - button_gutter) / 2;
 
     available_width = speaker_grill_size + button_size + default_gutter;
 
@@ -96,6 +100,12 @@ module higher_lower(
         height - ENCLOSURE_FLOOR_CEILING - SPEAKER_HEIGHT
     ];
 
+    button_rocker_position = [
+        speaker_grill_position.x + speaker_grill_dimensions.x + default_gutter,
+        speaker_grill_position.y,
+        height - ENCLOSURE_FLOOR_CEILING - ROCKER_BRIM_HEIGHT - e
+    ];
+
     enclosure_bottom_height = pcb_position.z + ENCLOSURE_LIP_HEIGHT / 2;
     enclosure_top_height = height - enclosure_bottom_height;
 
@@ -114,6 +124,19 @@ module higher_lower(
         }
     }
 
+    if (show_buttons) {
+        _height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
+
+        translate(button_rocker_position) {
+            button_rocker(
+                button_size, button_size, _height,
+                gutter = button_gutter,
+                brim_height = ROCKER_BRIM_HEIGHT,
+                fillet = accessory_fillet
+            );
+        }
+    }
+
     if (show_enclosure_bottom || show_enclosure_top) {
         enclosure(
             show_top = show_enclosure_top,
@@ -123,12 +146,17 @@ module higher_lower(
             bottom_height = enclosure_bottom_height,
             top_height = enclosure_top_height,
 
+            control_exposure = control_exposure,
+
             pcb_position = pcb_position,
 
             speaker_position = speaker_position,
-
             speaker_grill_dimensions = speaker_grill_dimensions,
             speaker_grill_position = speaker_grill_position,
+
+            button_size = button_size,
+            button_rocker_position = button_rocker_position,
+            button_gutter = button_gutter,
 
             label_gutter = label_gutter,
 
@@ -196,6 +224,7 @@ SHOW_ENCLOSURE_BOTTOM = true;
 SHOW_BATTERY = true;
 SHOW_PCB = true;
 SHOW_ACCOUTREMENTS = true;
+SHOW_BUTTONS = true;
 SHOW_ENCLOSURE_TOP = true;
 
 DEFAULT_TOLERANCE = .1;
@@ -206,11 +235,12 @@ higher_lower(
     show_battery = SHOW_BATTERY,
     show_pcb = SHOW_PCB,
     show_accoutrements = SHOW_ACCOUTREMENTS,
+    show_buttons = SHOW_BUTTONS,
     show_enclosure_top = SHOW_ENCLOSURE_TOP,
 
     tolerance = DEFAULT_TOLERANCE,
 
     quick_preview = $preview
 );
-// translate([25, -1, -1]) cube([100, 100, 100]);
+// translate([60, -1, -1]) cube([100, 100, 100]);
 }

@@ -26,12 +26,17 @@ module enclosure(
     bottom_height = 0,
     top_height = 0,
 
+    control_exposure = 0,
+
     pcb_position = [0,0,0],
 
     speaker_position = [0,0,0],
-
     speaker_grill_dimensions = [0,0,0],
     speaker_grill_position = [0,0,0],
+
+    button_size = 0,
+    button_rocker_position = [0,0,0],
+    button_gutter = 0,
 
     label_gutter = 0,
 
@@ -249,6 +254,20 @@ module enclosure(
         );
     }
 
+    module _button_rocker_cavity() {
+        translate([
+            button_rocker_position.x - control_exposure,
+            button_rocker_position.y - control_exposure,
+            dimensions.z - ENCLOSURE_FLOOR_CEILING - e
+        ]) {
+            cube([
+                button_size + control_exposure * 2,
+                button_size * 2 + button_gutter + control_exposure * 2,
+                ENCLOSURE_FLOOR_CEILING + e * 2
+            ]);
+        }
+    }
+
     module _disassembly_cavities(
         bottom,
 
@@ -335,6 +354,7 @@ module enclosure(
             color(cavity_color) {
                 _speaker_cavity();
                 _speaker_grill();
+                _button_rocker_cavity();
                 _top_engraving();
                 _disassembly_cavities(bottom = false);
             }
