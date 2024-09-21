@@ -5,7 +5,7 @@ include <../../parts_cafe/openscad/speaker-AZ40R.scad>;
 include <enclosure.scad>;
 include <pcb.scad>;
 
-SCOUT_KNOB_RADIUS = 10;
+SCOUT_DEFAULT_GUTTER = 3.4; // default_gutter = keys_x = ENCLOSURE_WALL + key_gutter
 
 module higher_lower(
     show_enclosure_bottom = true,
@@ -14,7 +14,7 @@ module higher_lower(
     show_accoutrements = true,
     show_enclosure_top = true,
 
-    default_gutter = 5,
+    default_gutter = SCOUT_DEFAULT_GUTTER,
     label_gutter = 1,
 
     // TODO: what'd these do?
