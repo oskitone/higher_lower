@@ -56,29 +56,25 @@ module higher_lower(
 ) {
     e = .00319;
 
-    pcb_clearance = [1, 1, 2];
-
-    speaker_fixture_diameter = get_speaker_fixture_diameter(tolerance);
-    speaker_grill_size = speaker_fixture_diameter;
-
+    speaker_grill_size = get_speaker_fixture_diameter(tolerance);
     button_size = speaker_grill_size / 2;
 
-    width = speaker_grill_size + button_size + default_gutter * 3;
+    available_width = speaker_grill_size + button_size + default_gutter;
 
     top_engraving_model_length = ENCLOSURE_ENGRAVING_GUTTER * 2
         + top_engraving_model_text_size;
-    // TODO: pull out just top_engraving_dimensions_length, then reorg dimension math
-    top_engraving_dimensions = [
-        (width - default_gutter * 2),
-        (width - default_gutter * 2) * OSKITONE_LENGTH_WIDTH_RATIO
-            + label_gutter + top_engraving_model_length
-    ];
+    top_engraving_length =
+        available_width * OSKITONE_LENGTH_WIDTH_RATIO
+        + label_gutter + top_engraving_model_length;
     top_engraving_position = [default_gutter, default_gutter];
 
-    length = top_engraving_dimensions.y + default_gutter * 3 + speaker_grill_size;
-    height = ENCLOSURE_FLOOR_CEILING * 2 + BATTERY_HOLDER_DIMENSIONS.z
+    // TODO: make it a square?!
+    width = available_width + default_gutter * 2;
+    length = top_engraving_length + default_gutter * 3 + speaker_grill_size;
+    height = ENCLOSURE_FLOOR_CEILING * 2 + battery_holder_dimensions.z
         + SPEAKER_HEIGHT + speaker_bottom_clearance;
 
+    pcb_clearance = [1, 1, 2];
     pcb_position = [
         (width - pcb_width) / 2,
         length - ENCLOSURE_WALL - pcb_length - pcb_clearance.y,
@@ -91,7 +87,7 @@ module higher_lower(
     ];
     speaker_grill_position = [
         default_gutter,
-        top_engraving_position.y + top_engraving_dimensions.y + default_gutter
+        top_engraving_position.y + top_engraving_length + default_gutter
     ];
     speaker_position = [
         speaker_grill_position.x + speaker_grill_dimensions.x / 2,
@@ -135,7 +131,10 @@ module higher_lower(
 
             label_gutter = label_gutter,
 
-            top_engraving_dimensions = top_engraving_dimensions,
+            top_engraving_dimensions = [
+                available_width,
+                top_engraving_length
+            ],
             top_engraving_position = top_engraving_position,
             top_engraving_model_text_size = top_engraving_model_text_size,
             top_engraving_model_length = top_engraving_model_length,
