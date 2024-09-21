@@ -33,8 +33,6 @@ module enclosure(
     speaker_grill_dimensions = [0,0,0],
     speaker_grill_position = [0,0,0],
 
-    battery_position = [0,0,0],
-
     label_gutter = 0,
 
     top_engraving_dimensions = [0,0],

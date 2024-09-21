@@ -21,6 +21,8 @@ module higher_lower(
     accessory_fillet = 1,
     control_exposure = .6,
 
+    speaker_bottom_clearance = 1,
+
     pcb_width = PCB_WIDTH,
     pcb_length = PCB_LENGTH,
     pcb_height = PCB_HEIGHT,
@@ -40,6 +42,8 @@ module higher_lower(
     screw_clearance_usage = .5,
     screw_length = 3/4 * 25.4,
 
+    battery_holder_dimensions = [60, 35, 12],
+
     tolerance = 0,
 
     enclosure_outer_color = "#FF69B4",
@@ -52,9 +56,6 @@ module higher_lower(
 ) {
     e = .00319;
 
-    // TODO: measure
-    BATTERY_HOLDER_DIMENSIONS = [40, 30, 20];
-
     pcb_clearance = [1, 1, 2];
 
     speaker_fixture_diameter = get_speaker_fixture_diameter(tolerance);
@@ -63,14 +64,20 @@ module higher_lower(
     button_size = speaker_grill_size / 2;
 
     width = speaker_grill_size + button_size + default_gutter * 3;
-    length = 75;
-    height = 20;
 
-    battery_position = [
-        (width - BATTERY_HOLDER_DIMENSIONS.x) / 2,
-        ENCLOSURE_WALL + tolerance * 2,
-        ENCLOSURE_FLOOR_CEILING
+    top_engraving_model_length = ENCLOSURE_ENGRAVING_GUTTER * 2
+        + top_engraving_model_text_size;
+    // TODO: pull out just top_engraving_dimensions_length, then reorg dimension math
+    top_engraving_dimensions = [
+        (width - default_gutter * 2),
+        (width - default_gutter * 2) * OSKITONE_LENGTH_WIDTH_RATIO
+            + label_gutter + top_engraving_model_length
     ];
+    top_engraving_position = [default_gutter, default_gutter];
+
+    length = top_engraving_dimensions.y + default_gutter * 3 + speaker_grill_size;
+    height = ENCLOSURE_FLOOR_CEILING * 2 + BATTERY_HOLDER_DIMENSIONS.z
+        + SPEAKER_HEIGHT + speaker_bottom_clearance;
 
     pcb_position = [
         (width - pcb_width) / 2,
@@ -101,9 +108,12 @@ module higher_lower(
         + screw_clearance * screw_clearance_usage;
 
     if (show_battery) {
-        position = battery_position;
-        translate([position.x + e, position.y + e, position.z + e]) {
-            % cube(BATTERY_HOLDER_DIMENSIONS);
+        translate([
+            (width - battery_holder_dimensions.x) / 2,
+            ENCLOSURE_WALL + tolerance * 2,
+            ENCLOSURE_FLOOR_CEILING + e
+        ]) {
+            % cube(battery_holder_dimensions);
         }
     }
 
@@ -122,8 +132,6 @@ module higher_lower(
 
             speaker_grill_dimensions = speaker_grill_dimensions,
             speaker_grill_position = speaker_grill_position,
-
-            battery_position = battery_position,
 
             label_gutter = label_gutter,
 
@@ -191,6 +199,7 @@ SHOW_ENCLOSURE_TOP = true;
 
 DEFAULT_TOLERANCE = .1;
 
+difference() {
 higher_lower(
     show_enclosure_bottom = SHOW_ENCLOSURE_BOTTOM,
     show_battery = SHOW_BATTERY,
@@ -202,3 +211,5 @@ higher_lower(
 
     quick_preview = $preview
 );
+// translate([25, -1, -1]) cube([100, 100, 100]);
+}
