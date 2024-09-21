@@ -1,5 +1,6 @@
 include <../../parts_cafe/openscad/nuts_and_bolts.scad>;
 include <../../parts_cafe/openscad/switch.scad>;
+include <../../parts_cafe/openscad/speaker-AZ40R.scad>;
 
 include <enclosure.scad>;
 include <pcb.scad>;
@@ -13,14 +14,11 @@ module higher_lower(
     show_accoutrements = true,
     show_enclosure_top = true,
 
-    // TODO: why differentiate these?
-    enclosure_gutter = [5, 5],
     default_gutter = 5,
     label_gutter = 1,
 
-    // TODO: what'd this do?
+    // TODO: what'd these do?
     accessory_fillet = 1,
-
     control_exposure = .6,
 
     pcb_width = PCB_WIDTH,
@@ -59,8 +57,13 @@ module higher_lower(
 
     pcb_clearance = [1, 1, 2];
 
-    width = 80;
-    length = 80;
+    speaker_fixture_diameter = get_speaker_fixture_diameter(tolerance);
+    speaker_grill_size = speaker_fixture_diameter;
+
+    button_size = speaker_grill_size / 2;
+
+    width = speaker_grill_size + button_size + default_gutter * 3;
+    length = 75;
     height = 20;
 
     battery_position = [
@@ -75,27 +78,18 @@ module higher_lower(
         ENCLOSURE_FLOOR_CEILING + pcb_clearance.z
     ];
 
-    top_engraving_model_length = ENCLOSURE_ENGRAVING_GUTTER * 2
-        + top_engraving_model_text_size;
-    top_engraving_dimensions = [
-        (width - enclosure_gutter.x * 2),
-        (width - enclosure_gutter.x * 2) * OSKITONE_LENGTH_WIDTH_RATIO
-            + label_gutter + top_engraving_model_length
-    ];
-    top_engraving_position = enclosure_gutter;
-
     speaker_grill_dimensions = [
-        SPEAKER_DIAMETER,
-        SPEAKER_DIAMETER
+        speaker_grill_size,
+        speaker_grill_size
     ];
     speaker_grill_position = [
-        enclosure_gutter.x,
+        default_gutter,
         top_engraving_position.y + top_engraving_dimensions.y + default_gutter
     ];
     speaker_position = [
         speaker_grill_position.x + speaker_grill_dimensions.x / 2,
         speaker_grill_position.y + speaker_grill_dimensions.y / 2,
-        pcb_position.z + pcb_height
+        height - ENCLOSURE_FLOOR_CEILING - SPEAKER_HEIGHT
     ];
 
     enclosure_bottom_height = pcb_position.z + ENCLOSURE_LIP_HEIGHT / 2;
@@ -172,6 +166,8 @@ module higher_lower(
     }
 
     if (show_accoutrements) {
+        % translate(speaker_position) speaker();
+
         % screws(
             positions = pcb_screw_hole_positions,
             pcb_position = pcb_position,

@@ -96,55 +96,34 @@ module enclosure(
     }
 
     module _speaker_grill(
-        z = pcb_position.z + pcb_height + SPEAKER_HEIGHT +
-            (ENCLOSURE_FLOOR_CEILING - ENCLOSURE_ENGRAVING_DEPTH)
+        depth = ENCLOSURE_ENGRAVING_DEPTH
     ) {
-        height = dimensions.z - z + e;
-
-        translate([speaker_grill_position.x, speaker_grill_position.y, z]) {
+        translate([
+            speaker_grill_position.x,
+            speaker_grill_position.y,
+            dimensions.z - depth
+        ]) {
             render() diagonal_grill(
                 speaker_grill_dimensions.x,
                 speaker_grill_dimensions.y,
-                height
+                depth + e
             );
         }
     }
 
-    module _speaker_plate(coverage = ENCLOSURE_INNER_WALL) {
-        z = pcb_position.z + pcb_height + SPEAKER_HEIGHT;
-        height = dimensions.z - ENCLOSURE_FLOOR_CEILING - z;
-
-        translate([
-            speaker_grill_position.x - coverage,
-            speaker_grill_position.y - coverage,
-            z
-        ]) {
-            cube([
-                speaker_grill_dimensions.x + coverage * 2,
-                speaker_grill_dimensions.y + coverage * 2,
-                height + e
-            ]);
-        }
-
-        translate([speaker_position.x, speaker_position.y, z]) {
-            _c(speaker_cavity_diameter, height + e, chamfer = 0);
-        }
-    }
-
-    module _speaker_cavity() {
-        z = pcb_position.z + pcb_height + SPEAKER_HEIGHT - e;
-        height = dimensions.z - z + e;
+    module _speaker_cavity(rim = 2) {
+        z = dimensions.z - ENCLOSURE_FLOOR_CEILING;
 
         render() intersection() {
-            translate([speaker_position.x, speaker_position.y, z]) {
+            translate([speaker_position.x, speaker_position.y, z - e]) {
                 _c(
-                    speaker_cavity_diameter - SPEAKER_RIM * 2,
-                    height,
+                    speaker_cavity_diameter - rim * 2,
+                    ENCLOSURE_FLOOR_CEILING + e * 2,
                     chamfer = 0
                 );
             }
 
-            _speaker_grill(z - e);
+            _speaker_grill(ENCLOSURE_FLOOR_CEILING + e * 2);
         }
     }
 
@@ -222,6 +201,18 @@ module enclosure(
                     );
                 }
             }
+        }
+    }
+
+    module _speaker_fixture() {
+        translate(speaker_position) {
+            speaker_fixture(
+                height = SPEAKER_HEIGHT + e,
+                wall = ENCLOSURE_INNER_WALL,
+                tab_cavity_rotation = 180,
+                tolerance = tolerance,
+                quick_preview = quick_preview
+            );
         }
     }
 
@@ -339,6 +330,7 @@ module enclosure(
 
                 color(outer_color) {
                     _top_pcb_fixtures();
+                    _speaker_fixture();
                 }
             }
 
