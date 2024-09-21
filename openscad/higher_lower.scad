@@ -22,10 +22,7 @@ module higher_lower(
     control_exposure = .6,
 
     speaker_bottom_clearance = 1,
-
-    pcb_width = PCB_WIDTH,
-    pcb_length = PCB_LENGTH,
-    pcb_height = PCB_HEIGHT,
+    pcb_clearance = [1, 1, 5],
 
     pcb_screw_hole_positions = [
     ],
@@ -74,10 +71,14 @@ module higher_lower(
     height = ENCLOSURE_FLOOR_CEILING * 2 + battery_holder_dimensions.z
         + SPEAKER_HEIGHT + speaker_bottom_clearance;
 
-    pcb_clearance = [1, 1, 2];
+    pcb_width = available_width;
+    pcb_length = length - battery_holder_dimensions.y - pcb_clearance.y * 2
+        - ENCLOSURE_WALL * 2;
+    pcb_height = PCB_HEIGHT;
+
     pcb_position = [
         (width - pcb_width) / 2,
-        length - ENCLOSURE_WALL - pcb_length - pcb_clearance.y,
+        ENCLOSURE_WALL + battery_holder_dimensions.y + pcb_clearance.y,
         ENCLOSURE_FLOOR_CEILING + pcb_clearance.z
     ];
 
@@ -167,7 +168,8 @@ module higher_lower(
                 show_board = show_pcb,
                 show_silkscreen = false,
 
-                dimensions = [pcb_width, pcb_length, pcb_height]
+                width = pcb_width,
+                length = pcb_length
             );
         }
     }
@@ -190,10 +192,10 @@ module higher_lower(
     }
 }
 
-SHOW_ENCLOSURE_BOTTOM = false;
-SHOW_BATTERY = false;
-SHOW_PCB = false;
-SHOW_ACCOUTREMENTS = false;
+SHOW_ENCLOSURE_BOTTOM = true;
+SHOW_BATTERY = true;
+SHOW_PCB = true;
+SHOW_ACCOUTREMENTS = true;
 SHOW_ENCLOSURE_TOP = true;
 
 DEFAULT_TOLERANCE = .1;

@@ -1,6 +1,3 @@
-// TODO: derive from enclosure
-PCB_WIDTH = 70;
-PCB_LENGTH = 40;
 PCB_HEIGHT = 1.6;
 
 PCB_HOLE_POSITIONS = [
@@ -11,7 +8,9 @@ module pcb(
     show_board = true,
     show_silkscreen = true,
 
-    dimensions = [PCB_WIDTH, PCB_LENGTH, PCB_HEIGHT],
+    width = 0,
+    length = 0,
+    height = PCB_HEIGHT,
 
     hole_positions = PCB_HOLE_POSITIONS,
     hole_diameter = PCB_HOLE_DIAMETER,
@@ -31,13 +30,13 @@ module pcb(
         difference() {
             union() {
                 color(pcb_color) {
-                    cube(dimensions);
+                    cube([width, length, height]);
                 }
 
                 if (show_silkscreen) {
                     intersection() {
                         // NOTE: eyeballed
-                        // translate([-3.44, -2.54 * 3, dimensions.z - e]) {
+                        // translate([-3.44, -2.54 * 3, height - e]) {
                         //     linear_extrude(silkscreen_height + e) {
                         //         import("../kicad/wub-brd.svg");
                         //     }
@@ -45,9 +44,9 @@ module pcb(
 
                         translate([e, e, e]) {
                             cube([
-                                dimensions.x - e * 2,
-                                dimensions.y - e * 2,
-                                dimensions.z + silkscreen_height + e,
+                                width - e * 2,
+                                length - e * 2,
+                                height + silkscreen_height + e,
                             ]);
                         }
                     }
@@ -59,7 +58,7 @@ module pcb(
                     translate([xy.x, xy.y, -e]) {
                         cylinder(
                             d = hole_diameter,
-                            h = dimensions.z + silkscreen_height + e * 2,
+                            h = height + silkscreen_height + e * 2,
                             $fn = 12
                         );
                     }

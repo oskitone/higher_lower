@@ -44,8 +44,8 @@ module enclosure(
 
     fillet = ENCLOSURE_FILLET,
 
-    pcb_width = PCB_WIDTH,
-    pcb_length = PCB_LENGTH,
+    pcb_width = 0,
+    pcb_length = 0,
     pcb_height = PCB_HEIGHT,
 
     pcb_screw_hole_positions = [],
