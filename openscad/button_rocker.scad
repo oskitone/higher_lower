@@ -16,10 +16,10 @@ module button_rocker(
     for (y = [0, length + gutter]) {
         translate([0, y, 0]) {
             cap_blank(
-                dimensions = [width, width, height],
+                dimensions = [width, length, height],
                 contact_dimensions = [
                     width - SCOUT_DEFAULT_GUTTER,
-                    width - SCOUT_DEFAULT_GUTTER,
+                    length - SCOUT_DEFAULT_GUTTER,
                     2
                 ],
 
@@ -27,7 +27,7 @@ module button_rocker(
 
                 brim_dimensions = [
                     width + ROCKER_BRIM_SIZE * 2,
-                    width + ROCKER_BRIM_SIZE * 2,
+                    length + ROCKER_BRIM_SIZE * 2,
                     brim_height
                 ]
             );
