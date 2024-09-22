@@ -22,7 +22,7 @@ module higher_lower(
     show_batteries = true,
     show_pcb = true,
     show_accoutrements = true,
-    show_buttons = true,
+    show_rocker = true,
     show_enclosure_top = true,
 
     button_exposure = 2,
@@ -192,7 +192,7 @@ module higher_lower(
         }
     }
 
-    if (show_buttons) {
+    if (show_rocker) {
         _height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
 
         translate(button_rocker_position) {
@@ -260,6 +260,11 @@ module higher_lower(
             pcb(
                 show_board = show_pcb,
                 show_silkscreen = false,
+                show_switches = show_accoutrements,
+
+                rocker_center_x = button_rocker_position.x - pcb_position.x
+                    + button_size / 2,
+                button_size = button_size,
 
                 width = pcb_width,
                 length = pcb_length
@@ -296,7 +301,7 @@ SHOW_BATTERY_HOLDER = true;
 SHOW_BATTERIES = true;
 SHOW_PCB = true;
 SHOW_ACCOUTREMENTS = true;
-SHOW_BUTTONS = true;
+SHOW_ROCKER = true;
 SHOW_ENCLOSURE_TOP = true;
 
 DEFAULT_TOLERANCE = .1;
@@ -309,7 +314,7 @@ higher_lower(
     show_batteries = SHOW_BATTERIES,
     show_pcb = SHOW_PCB,
     show_accoutrements = SHOW_ACCOUTREMENTS,
-    show_buttons = SHOW_BUTTONS,
+    show_rocker = SHOW_ROCKER,
     show_enclosure_top = SHOW_ENCLOSURE_TOP,
 
     tolerance = DEFAULT_TOLERANCE,

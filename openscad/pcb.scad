@@ -6,13 +6,20 @@ PCB_HOLE_POSITIONS = [
 ];
 PCB_HOLE_DIAMETER = 3.2;
 
+BUTTON_DIAMETER = 6;
+BUTTON_HEIGHT = 6;
+
 module pcb(
     show_board = true,
     show_silkscreen = true,
+    show_switches = true,
 
     width = 0,
     length = 0,
     height = PCB_HEIGHT,
+
+    rocker_center_x = 0,
+    button_size = 0,
 
     hole_positions = PCB_HOLE_POSITIONS,
     hole_diameter = PCB_HOLE_DIAMETER,
@@ -25,6 +32,21 @@ module pcb(
     module _translate(position, z = -e) {
         translate([position.x, position.y, z + position.z]) {
             children();
+        }
+    }
+
+    switch_centers = [
+        [rocker_center_x, length / 2 - button_size / 2],
+        [rocker_center_x, length / 2 + button_size / 2],
+    ];
+
+    echo("PCB switch_centers", switch_centers);
+
+    if (show_switches) {
+        for (xy = switch_centers) {
+            translate([xy.x, xy.y, height - e]) {
+                % cylinder(d = BUTTON_DIAMETER, h = BUTTON_HEIGHT + e);
+            }
         }
     }
 
