@@ -1,5 +1,6 @@
 include <../../parts_cafe/openscad/cap_blank.scad>;
 
+// TODO: fix against enclosure
 ROCKER_BRIM_SIZE = 2;
 ROCKER_BRIM_HEIGHT = 1;
 
@@ -17,8 +18,8 @@ module button_rocker(
             cap_blank(
                 dimensions = [width, width, height],
                 contact_dimensions = [
-                    width - fillet * 4,
-                    width - fillet * 4,
+                    width - SCOUT_DEFAULT_GUTTER,
+                    width - SCOUT_DEFAULT_GUTTER,
                     2
                 ],
 

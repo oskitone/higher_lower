@@ -133,7 +133,7 @@ module higher_lower(
                 button_size, button_size, _height,
                 gutter = button_gutter,
                 brim_height = ROCKER_BRIM_HEIGHT,
-                fillet = accessory_fillet
+                fillet = quick_preview ? 0 : accessory_fillet
             );
         }
     }
@@ -190,7 +190,7 @@ module higher_lower(
         );
     }
 
-    if (show_pcb || show_accoutrements) {
+    if (show_pcb) {
         position = pcb_position;
         translate([position.x, position.y, position.z - e * 2]) {
             pcb(
@@ -204,7 +204,13 @@ module higher_lower(
     }
 
     if (show_accoutrements) {
-        % translate(speaker_position) speaker();
+        % translate([
+            speaker_position.x,
+            speaker_position.y,
+            speaker_position.z - e
+        ]) {
+            speaker($fn = 120);
+        }
 
         % screws(
             positions = pcb_screw_hole_positions,
@@ -230,6 +236,7 @@ SHOW_ENCLOSURE_TOP = true;
 
 DEFAULT_TOLERANCE = .1;
 
+// rotate([0,180,0])
 difference() {
 higher_lower(
     show_enclosure_bottom = SHOW_ENCLOSURE_BOTTOM,
