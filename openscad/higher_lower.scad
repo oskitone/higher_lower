@@ -57,21 +57,15 @@ module higher_lower(
 ) {
     e = .00319;
 
-    speaker_grill_size = get_speaker_fixture_diameter(tolerance);
+    speaker_grill_size =
+        get_speaker_fixture_diameter(tolerance, ENCLOSURE_INNER_WALL)
+        - ENCLOSURE_INNER_WALL * 2 - (default_gutter - ENCLOSURE_WALL) * 2;
     button_size = (speaker_grill_size - button_gutter) / 2;
 
     available_width = speaker_grill_size + button_size + default_gutter;
 
-    top_engraving_model_length = ENCLOSURE_ENGRAVING_GUTTER * 2
-        + top_engraving_model_text_size;
-    top_engraving_length =
-        available_width * OSKITONE_LENGTH_WIDTH_RATIO
-        + label_gutter + top_engraving_model_length;
-    top_engraving_position = [default_gutter, default_gutter];
-
-    // TODO: make it a square?!
     width = available_width + default_gutter * 2;
-    length = top_engraving_length + default_gutter * 3 + speaker_grill_size;
+    length = width;
     height = ENCLOSURE_FLOOR_CEILING * 2 + battery_holder_dimensions.z
         + SPEAKER_HEIGHT + speaker_bottom_clearance;
 
@@ -92,7 +86,7 @@ module higher_lower(
     ];
     speaker_grill_position = [
         default_gutter,
-        top_engraving_position.y + top_engraving_length + default_gutter
+        length - speaker_grill_size - default_gutter
     ];
     speaker_position = [
         speaker_grill_position.x + speaker_grill_dimensions.x / 2,
@@ -105,6 +99,13 @@ module higher_lower(
         speaker_grill_position.y,
         height - ENCLOSURE_FLOOR_CEILING - ROCKER_BRIM_HEIGHT - e
     ];
+
+    top_engraving_model_length = ENCLOSURE_ENGRAVING_GUTTER * 2
+        + top_engraving_model_text_size;
+    top_engraving_length =
+        available_width * OSKITONE_LENGTH_WIDTH_RATIO
+        + label_gutter + top_engraving_model_length;
+    top_engraving_position = [default_gutter, default_gutter];
 
     enclosure_bottom_height = pcb_position.z + ENCLOSURE_LIP_HEIGHT / 2;
     enclosure_top_height = height - enclosure_bottom_height;
