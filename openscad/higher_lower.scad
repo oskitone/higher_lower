@@ -35,11 +35,6 @@ module higher_lower(
     pcb_post_hole_positions = [
     ],
 
-    top_engraving_model_text_size = ENCLOSURE_ENGRAVING_TEXT_SIZE,
-
-    label_size = ENCLOSURE_ENGRAVING_TEXT_SIZE,
-    label_length = ENCLOSURE_ENGRAVING_LENGTH,
-
     // Screw can be 3/4" to 1"
     screw_clearance = 1/4 * 25.4 + 2,
     screw_clearance_usage = .5,
@@ -102,13 +97,6 @@ module higher_lower(
         height - ENCLOSURE_FLOOR_CEILING - ROCKER_BRIM_HEIGHT - e
     ];
 
-    top_engraving_model_length = ENCLOSURE_ENGRAVING_GUTTER * 2
-        + top_engraving_model_text_size;
-    top_engraving_length =
-        available_width * OSKITONE_LENGTH_WIDTH_RATIO
-        + label_gutter + top_engraving_model_length;
-    top_engraving_position = [default_gutter, default_gutter];
-
     enclosure_bottom_height = pcb_position.z + ENCLOSURE_LIP_HEIGHT / 2;
     enclosure_top_height = height - enclosure_bottom_height;
 
@@ -165,11 +153,9 @@ module higher_lower(
 
             top_engraving_dimensions = [
                 available_width,
-                top_engraving_length
+                available_width - speaker_grill_dimensions.y - default_gutter
             ],
-            top_engraving_position = top_engraving_position,
-            top_engraving_model_text_size = top_engraving_model_text_size,
-            top_engraving_model_length = top_engraving_model_length,
+            top_engraving_position = [outer_gutter, outer_gutter],
 
             pcb_width = pcb_width,
             pcb_length = pcb_length,

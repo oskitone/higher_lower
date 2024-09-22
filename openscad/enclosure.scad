@@ -42,7 +42,7 @@ module enclosure(
 
     top_engraving_dimensions = [0,0],
     top_engraving_position = [0,0],
-    top_engraving_model_text_size = ENCLOSURE_ENGRAVING_TEXT_SIZE,
+    top_engraving_model_text_size = 4.25,
     top_engraving_model_length = ENCLOSURE_ENGRAVING_LENGTH,
 
     lip_height = ENCLOSURE_LIP_HEIGHT,
@@ -219,16 +219,18 @@ module enclosure(
         }
     }
 
-    // TODO: redesign
     module _top_engraving() {
+        brand_length = top_engraving_dimensions.x * OSKITONE_LENGTH_WIDTH_RATIO;
+        placard_length = top_engraving_dimensions.y
+            - brand_length - label_gutter;
+
         render() enclosure_engraving(
-            size = top_engraving_dimensions.x
-                * OSKITONE_LENGTH_WIDTH_RATIO,
+            size = brand_length,
             position = [
                 top_engraving_position.x,
                 top_engraving_position.y
                     + label_gutter
-                    + top_engraving_model_length
+                    + placard_length
             ],
             bottom = false,
             center = false,
@@ -241,11 +243,11 @@ module enclosure(
             size = top_engraving_model_text_size,
             position = [
                 top_engraving_position.x + top_engraving_dimensions.x / 2,
-                top_engraving_position.y + top_engraving_model_length / 2
+                top_engraving_position.y + placard_length / 2
             ],
             placard = [
                 top_engraving_dimensions.x,
-                top_engraving_model_length
+                placard_length
             ],
             bottom = false,
             center = true,
