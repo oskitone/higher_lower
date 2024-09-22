@@ -18,6 +18,8 @@ ENCLOSURE_FILLET = 2;
 DEFAULT_ROUNDING = 24;
 HIDEF_ROUNDING = 120;
 
+ENCLOSURE_TOP_ENGRAVING_MINIMUM_LENGTH = 25.4; // NOTE: arbitrary but reasonable!
+
 module enclosure(
     show_top = true,
     show_bottom = true,

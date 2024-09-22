@@ -11,6 +11,10 @@ SCOUT_DEFAULT_GUTTER = 3.4; // default_gutter = keys_x = ENCLOSURE_WALL + key_gu
 OUTER_GUTTER = 5;
 
 module higher_lower(
+    width = 25.4 * 3,
+    length = 25.4 * 3,
+    height = 25.4 * 1,
+
     show_enclosure_bottom = true,
     show_battery = true,
     show_pcb = true,
@@ -55,17 +59,18 @@ module higher_lower(
 ) {
     e = .00319;
 
-    speaker_grill_size =
-        get_speaker_fixture_diameter(tolerance, ENCLOSURE_INNER_WALL)
-        - ENCLOSURE_INNER_WALL * 2 - (outer_gutter - ENCLOSURE_WALL) * 2;
-    button_size = (speaker_grill_size - button_gutter) / 2;
+    // NOTE: 2:1 ratio here assumes portrait/square enclosure dimensions.
+    // It will look odd if enclosure width > length.
+    speaker_grill_width = (width - outer_gutter * 2 - default_gutter) / 3 * 2;
+    speaker_grill_length = min(
+        speaker_grill_width,
+        length - outer_gutter * 2 - default_gutter
+            - ENCLOSURE_TOP_ENGRAVING_MINIMUM_LENGTH
+    );
+    button_size = (speaker_grill_length - button_gutter) / 2;
 
-    available_width = speaker_grill_size + button_size + default_gutter;
-
-    width = available_width + outer_gutter * 2;
-    length = width;
-    height = ENCLOSURE_FLOOR_CEILING * 2 + battery_holder_dimensions.z
-        + SPEAKER_HEIGHT + speaker_bottom_clearance;
+    available_width = speaker_grill_width + button_size + default_gutter;
+    available_length = length - outer_gutter * 2;
 
     module _assert_minimimum_dimensions() {
         min_speaker_grill_width =
@@ -79,8 +84,8 @@ module higher_lower(
         min_height = ENCLOSURE_FLOOR_CEILING * 2 + battery_holder_dimensions.z
             + SPEAKER_HEIGHT + speaker_bottom_clearance;
 
-        warn_if(speaker_grill_size < min_speaker_grill_width, str(
-            "speaker_grill_size of ", speaker_grill_size,
+        warn_if(speaker_grill_width < min_speaker_grill_width, str(
+            "speaker_grill_width of ", speaker_grill_width,
             " < min_speaker_grill_width of ", min_speaker_grill_width
         ));
 
@@ -111,12 +116,12 @@ module higher_lower(
     ];
 
     speaker_grill_dimensions = [
-        speaker_grill_size,
-        speaker_grill_size
+        speaker_grill_width,
+        speaker_grill_length
     ];
     speaker_grill_position = [
         outer_gutter,
-        length - speaker_grill_size - outer_gutter
+        length - speaker_grill_length - outer_gutter
     ];
     speaker_position = [
         speaker_grill_position.x + speaker_grill_dimensions.x / 2,
@@ -190,7 +195,7 @@ module higher_lower(
 
             top_engraving_dimensions = [
                 available_width,
-                available_width - speaker_grill_dimensions.y - default_gutter
+                available_length - speaker_grill_dimensions.y - default_gutter
             ],
             top_engraving_position = [outer_gutter, outer_gutter],
 
@@ -216,8 +221,7 @@ module higher_lower(
     }
 
     if (show_pcb) {
-        position = pcb_position;
-        translate([position.x, position.y, position.z - e * 2]) {
+        translate([pcb_position.x, pcb_position.y, pcb_position.z - e * 2]) {
             pcb(
                 show_board = show_pcb,
                 show_silkscreen = false,
