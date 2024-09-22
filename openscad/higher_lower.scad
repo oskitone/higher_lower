@@ -7,6 +7,7 @@ include <enclosure.scad>;
 include <pcb.scad>;
 
 SCOUT_DEFAULT_GUTTER = 3.4; // default_gutter = keys_x = ENCLOSURE_WALL + key_gutter
+OUTER_GUTTER = 5;
 
 module higher_lower(
     show_enclosure_bottom = true,
@@ -18,6 +19,7 @@ module higher_lower(
 
     button_exposure = 2,
 
+    outer_gutter = OUTER_GUTTER,
     default_gutter = SCOUT_DEFAULT_GUTTER,
     button_gutter = SCOUT_DEFAULT_GUTTER / -2,
     label_gutter = 1,
@@ -59,12 +61,12 @@ module higher_lower(
 
     speaker_grill_size =
         get_speaker_fixture_diameter(tolerance, ENCLOSURE_INNER_WALL)
-        - ENCLOSURE_INNER_WALL * 2 - (default_gutter - ENCLOSURE_WALL) * 2;
+        - ENCLOSURE_INNER_WALL * 2 - (outer_gutter - ENCLOSURE_WALL) * 2;
     button_size = (speaker_grill_size - button_gutter) / 2;
 
     available_width = speaker_grill_size + button_size + default_gutter;
 
-    width = available_width + default_gutter * 2;
+    width = available_width + outer_gutter * 2;
     length = width;
     height = ENCLOSURE_FLOOR_CEILING * 2 + battery_holder_dimensions.z
         + SPEAKER_HEIGHT + speaker_bottom_clearance;
@@ -85,8 +87,8 @@ module higher_lower(
         speaker_grill_size
     ];
     speaker_grill_position = [
-        default_gutter,
-        length - speaker_grill_size - default_gutter
+        outer_gutter,
+        length - speaker_grill_size - outer_gutter
     ];
     speaker_position = [
         speaker_grill_position.x + speaker_grill_dimensions.x / 2,

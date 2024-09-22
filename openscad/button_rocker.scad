@@ -1,6 +1,6 @@
 include <../../parts_cafe/openscad/cap_blank.scad>;
 
-// TODO: fix against enclosure
+// NOTE: must be well less than SCOUT_DEFAULT_GUTTER
 ROCKER_BRIM_SIZE = 2;
 ROCKER_BRIM_HEIGHT = 1;
 
