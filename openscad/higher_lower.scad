@@ -139,7 +139,10 @@ module higher_lower(
     ];
 
     pcb_width = width - (ENCLOSURE_WALL + pcb_clearance.x) * 2;
-    pcb_length = (speaker_position.y - pcb_position.y) * 2;
+    pcb_length = min(
+        (speaker_position.y - pcb_position.y) * 2,
+        length - ENCLOSURE_WALL - pcb_clearance.y - pcb_position.y
+    );
     pcb_height = PCB_HEIGHT;
 
     button_rocker_position = [
