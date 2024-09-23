@@ -1,3 +1,4 @@
+include <../../parts_cafe/openscad/console.scad>;
 include <../../parts_cafe/openscad/nuts_and_bolts.scad>;
 include <../../parts_cafe/openscad/switch.scad>;
 include <../../parts_cafe/openscad/speaker-AZ40R.scad>;
@@ -66,6 +67,38 @@ module higher_lower(
     height = ENCLOSURE_FLOOR_CEILING * 2 + battery_holder_dimensions.z
         + SPEAKER_HEIGHT + speaker_bottom_clearance;
 
+    module _assert_minimimum_dimensions() {
+        min_speaker_grill_width =
+            get_speaker_fixture_diameter(tolerance, ENCLOSURE_INNER_WALL)
+            - ENCLOSURE_INNER_WALL * 2 - (outer_gutter - ENCLOSURE_WALL) * 2;
+
+        min_width = min_speaker_grill_width + button_size + default_gutter
+            + outer_gutter * 2;
+        min_length = ENCLOSURE_WALL * 2 + battery_holder_dimensions.y
+            + PCB_MINIMUM_LENGTH + pcb_clearance.y * 2;
+        min_height = ENCLOSURE_FLOOR_CEILING * 2 + battery_holder_dimensions.z
+            + SPEAKER_HEIGHT + speaker_bottom_clearance;
+
+        warn_if(speaker_grill_size < min_speaker_grill_width, str(
+            "speaker_grill_size of ", speaker_grill_size,
+            " < min_speaker_grill_width of ", min_speaker_grill_width
+        ));
+
+        warn_if(width < min_width, str(
+            "width of ", width,
+            " < min_width of ", min_width
+        ));
+        warn_if(length < min_length, str(
+            "length of ", length,
+            " < min_length of ", min_length
+        ));
+        warn_if(height < min_height, str(
+            "height of ", height,
+            " < min_height of ", min_height
+        ));
+    }
+    _assert_minimimum_dimensions();
+
     pcb_width = available_width;
     pcb_length = length - battery_holder_dimensions.y - pcb_clearance.y * 2
         - ENCLOSURE_WALL * 2;
@@ -104,6 +137,10 @@ module higher_lower(
     screw_head_clearance = nut_z - screw_length
         + NUT_HEIGHT - SCREW_HEAD_HEIGHT
         + screw_clearance * screw_clearance_usage;
+
+    echo("Enclosure", width / 25.4, length / 25.4, height / 25.4);
+    echo("PCB", pcb_width / 25.4, pcb_length / 25.4);
+    echo("Button", button_size / 25.4, button_size / 25.4);
 
     if (show_battery) {
         translate([

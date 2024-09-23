@@ -1,5 +1,7 @@
 PCB_HEIGHT = 1.6;
 
+PCB_MINIMUM_LENGTH = 25.4; // NOTE: arbitrary but reasonable!
+
 PCB_HOLE_POSITIONS = [
 ];
 PCB_HOLE_DIAMETER = 3.2;
