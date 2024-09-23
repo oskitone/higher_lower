@@ -139,8 +139,6 @@ module higher_lower(
     ];
 
     pcb_width = width - (ENCLOSURE_WALL + pcb_clearance.x) * 2;
-    pcb_length_old = length - battery_holder_dimensions.y - pcb_clearance.y * 2
-        - ENCLOSURE_WALL * 2;
     pcb_length = (speaker_position.y - pcb_position.y) * 2;
     pcb_height = PCB_HEIGHT;
 
