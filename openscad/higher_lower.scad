@@ -150,6 +150,7 @@ module higher_lower(
         speaker_grill_position.y,
         height - ENCLOSURE_FLOOR_CEILING - ROCKER_BRIM_HEIGHT - e
     ];
+    button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
 
     enclosure_bottom_height = pcb_position.z + ENCLOSURE_LIP_HEIGHT / 2;
     enclosure_top_height = height - enclosure_bottom_height;
@@ -194,11 +195,9 @@ module higher_lower(
     }
 
     if (show_rocker) {
-        _height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
-
         translate(button_rocker_position) {
             button_rocker(
-                button_size, button_size, _height,
+                button_size, button_size, button_height,
                 gutter = button_gutter,
                 brim_height = ROCKER_BRIM_HEIGHT,
                 fillet = quick_preview ? 0 : accessory_fillet
@@ -265,6 +264,8 @@ module higher_lower(
 
                 rocker_center_x = button_rocker_position.x - pcb_position.x
                     + button_size / 2,
+                rocker_center_y = button_rocker_position.y - pcb_position.y
+                    + button_size + button_gutter / 2,
                 button_size = button_size,
 
                 width = pcb_width,

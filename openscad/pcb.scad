@@ -19,6 +19,7 @@ module pcb(
     height = PCB_HEIGHT,
 
     rocker_center_x = 0,
+    rocker_center_y = 0,
     button_size = 0,
 
     hole_positions = PCB_HOLE_POSITIONS,
@@ -36,8 +37,8 @@ module pcb(
     }
 
     switch_centers = [
-        [rocker_center_x, length / 2 - button_size / 2],
-        [rocker_center_x, length / 2 + button_size / 2],
+        [rocker_center_x, rocker_center_y - button_size / 2],
+        [rocker_center_x, rocker_center_y + button_size / 2],
     ];
 
     echo("PCB switch_centers", switch_centers);
