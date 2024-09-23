@@ -15,8 +15,6 @@ module higher_lower(
     length = 25.4 * 3,
     height = 25.4 * 1,
 
-    button_to_speaker_grill_ratio = .5,
-
     show_enclosure_bottom = true,
     show_battery = true,
     show_pcb = true,
@@ -61,36 +59,34 @@ module higher_lower(
 ) {
     e = .00319;
 
-    speaker_grill_width = (width - outer_gutter * 2 - default_gutter)
-        / (1 + button_to_speaker_grill_ratio);
+    // NOTE: 2:1 ratio here assumes portrait/square enclosure dimensions.
+    // It will look odd if enclosure width > length.
+    speaker_grill_width = (width - outer_gutter * 2 - default_gutter) / 3 * 2;
     speaker_grill_length = min(
         speaker_grill_width,
         length - outer_gutter * 2 - default_gutter
             - ENCLOSURE_TOP_ENGRAVING_MINIMUM_LENGTH
     );
+    button_size = (speaker_grill_length - button_gutter) / 2;
 
-    // TODO: enforce square buttons
-    button_length = (speaker_grill_length - button_gutter) / 2;
-    button_width = speaker_grill_width * button_to_speaker_grill_ratio;
-
-    available_width = speaker_grill_width + button_width + default_gutter;
+    available_width = speaker_grill_width + button_size + default_gutter;
     available_length = length - outer_gutter * 2;
 
     module _assert_minimimum_dimensions() {
-        min_speaker_grill_size =
+        min_speaker_grill_width =
             get_speaker_fixture_diameter(tolerance, ENCLOSURE_INNER_WALL)
             - ENCLOSURE_INNER_WALL * 2 - (outer_gutter - ENCLOSURE_WALL) * 2;
 
-        min_width = min_speaker_grill_size + button_width + default_gutter
+        min_width = min_speaker_grill_width + button_size + default_gutter
             + outer_gutter * 2;
         min_length = ENCLOSURE_WALL * 2 + battery_holder_dimensions.y
             + PCB_MINIMUM_LENGTH + pcb_clearance.y * 2;
         min_height = ENCLOSURE_FLOOR_CEILING * 2 + battery_holder_dimensions.z
             + SPEAKER_HEIGHT + speaker_bottom_clearance;
 
-        warn_if(speaker_grill_width < min_speaker_grill_size, str(
+        warn_if(speaker_grill_width < min_speaker_grill_width, str(
             "speaker_grill_width of ", speaker_grill_width,
-            " < min_speaker_grill_size of ", min_speaker_grill_size
+            " < min_speaker_grill_width of ", min_speaker_grill_width
         ));
 
         warn_if(width < min_width, str(
@@ -149,7 +145,7 @@ module higher_lower(
 
     echo("Enclosure", width / 25.4, length / 25.4, height / 25.4);
     echo("PCB", pcb_width / 25.4, pcb_length / 25.4);
-    echo("Button", button_width / 25.4, button_length / 25.4);
+    echo("Button", button_size / 25.4, button_size / 25.4);
 
     if (show_battery) {
         translate([
@@ -166,7 +162,7 @@ module higher_lower(
 
         translate(button_rocker_position) {
             button_rocker(
-                button_width, button_length, _height,
+                button_size, button_size, _height,
                 gutter = button_gutter,
                 brim_height = ROCKER_BRIM_HEIGHT,
                 fillet = quick_preview ? 0 : accessory_fillet
@@ -191,8 +187,7 @@ module higher_lower(
             speaker_grill_dimensions = speaker_grill_dimensions,
             speaker_grill_position = speaker_grill_position,
 
-            button_width = button_width,
-            button_length = button_length,
+            button_size = button_size,
             button_rocker_position = button_rocker_position,
             button_gutter = button_gutter,
 

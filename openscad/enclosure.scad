@@ -36,8 +36,7 @@ module enclosure(
     speaker_grill_dimensions = [0,0,0],
     speaker_grill_position = [0,0,0],
 
-    button_width = 0,
-    button_length = 0,
+    button_size = 0,
     button_rocker_position = [0,0,0],
     button_gutter = 0,
 
@@ -266,8 +265,8 @@ module enclosure(
             dimensions.z - ENCLOSURE_FLOOR_CEILING - e
         ]) {
             cube([
-                button_width + control_exposure * 2,
-                button_length * 2 + button_gutter + control_exposure * 2,
+                button_size + control_exposure * 2,
+                button_size * 2 + button_gutter + control_exposure * 2,
                 ENCLOSURE_FLOOR_CEILING + e * 2
             ]);
         }
