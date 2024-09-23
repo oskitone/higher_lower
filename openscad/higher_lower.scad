@@ -1,3 +1,5 @@
+include <../../parts_cafe/openscad/batteries-aaa.scad>;
+include <../../parts_cafe/openscad/battery_holder.scad>;
 include <../../parts_cafe/openscad/console.scad>;
 include <../../parts_cafe/openscad/nuts_and_bolts.scad>;
 include <../../parts_cafe/openscad/switch.scad>;
@@ -16,7 +18,8 @@ module higher_lower(
     height = 25.4 * 1,
 
     show_enclosure_bottom = true,
-    show_battery = true,
+    show_battery_holder = true,
+    show_batteries = true,
     show_pcb = true,
     show_accoutrements = true,
     show_buttons = true,
@@ -33,7 +36,7 @@ module higher_lower(
     control_exposure = .6,
 
     speaker_bottom_clearance = 1,
-    pcb_clearance = [5, 1, 5],
+    pcb_clearance = [5, 1, 5], // NOTE: should include/obviate tolerance
 
     pcb_screw_hole_positions = [
     ],
@@ -45,7 +48,7 @@ module higher_lower(
     screw_clearance_usage = .5,
     screw_length = 3/4 * 25.4,
 
-    battery_holder_dimensions = [60, 35, 12],
+    battery_count = 3,
 
     tolerance = 0,
 
@@ -71,6 +74,17 @@ module higher_lower(
 
     available_width = speaker_grill_width + button_size + default_gutter;
     available_length = length - outer_gutter * 2;
+
+    battery_holder_dimensions = get_battery_holder_dimensions(
+        battery_count,
+        tolerance
+    );
+    battery_holder_position = [
+        (width - battery_holder_dimensions.x) / 2,
+        ENCLOSURE_WALL + tolerance * 2,
+        ENCLOSURE_FLOOR_CEILING
+    ];
+
 
     module _assert_minimimum_dimensions() {
         min_speaker_grill_width =
@@ -120,7 +134,7 @@ module higher_lower(
 
     pcb_position = [
         ENCLOSURE_WALL + pcb_clearance.x,
-        ENCLOSURE_WALL + battery_holder_dimensions.y + pcb_clearance.y,
+        battery_holder_position.y + battery_holder_dimensions.y + pcb_clearance.y,
         ENCLOSURE_FLOOR_CEILING + pcb_clearance.z
     ];
 
@@ -148,13 +162,33 @@ module higher_lower(
     echo("PCB", pcb_width / 25.4, pcb_length / 25.4);
     echo("Button", button_size / 25.4, button_size / 25.4);
 
-    if (show_battery) {
+    if (show_batteries || show_battery_holder) {
         translate([
-            (width - battery_holder_dimensions.x) / 2,
-            ENCLOSURE_WALL + tolerance * 2,
-            ENCLOSURE_FLOOR_CEILING + e
+            BATTERY_HOLDER_DEFAULT_WALL + tolerance + battery_holder_position.x,
+            battery_holder_position.y + BATTERY_HOLDER_DEFAULT_WALL + tolerance,
+            battery_holder_position.z + BATTERY_HOLDER_DEFAULT_FLOOR + e
         ]) {
-            % cube(battery_holder_dimensions);
+            if (show_batteries) {
+                % battery_array(
+                    count = battery_count
+                );
+            }
+
+            if (show_battery_holder) {
+                battery_holder(
+                    wall = BATTERY_HOLDER_DEFAULT_WALL,
+                    floor = BATTERY_HOLDER_DEFAULT_FLOOR,
+                    tolerance = tolerance,
+                    count = battery_count,
+
+                    fillet = quick_preview ? 0 : BATTERY_HOLDER_FILLET,
+
+                    outer_color = enclosure_outer_color,
+                    cavity_color = enclosure_cavity_color,
+
+                    quick_preview = false
+                );
+            }
         }
     }
 
@@ -258,7 +292,8 @@ module higher_lower(
 }
 
 SHOW_ENCLOSURE_BOTTOM = true;
-SHOW_BATTERY = true;
+SHOW_BATTERY_HOLDER = true;
+SHOW_BATTERIES = true;
 SHOW_PCB = true;
 SHOW_ACCOUTREMENTS = true;
 SHOW_BUTTONS = true;
@@ -270,7 +305,8 @@ DEFAULT_TOLERANCE = .1;
 difference() {
 higher_lower(
     show_enclosure_bottom = SHOW_ENCLOSURE_BOTTOM,
-    show_battery = SHOW_BATTERY,
+    show_battery_holder = SHOW_BATTERY_HOLDER,
+    show_batteries = SHOW_BATTERIES,
     show_pcb = SHOW_PCB,
     show_accoutrements = SHOW_ACCOUTREMENTS,
     show_buttons = SHOW_BUTTONS,
