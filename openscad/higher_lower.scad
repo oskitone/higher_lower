@@ -151,10 +151,7 @@ module higher_lower(
     ];
 
     pcb_width = width - (ENCLOSURE_WALL + pcb_x_clearance) * 2;
-    pcb_length = min(
-        (speaker_position.y - pcb_position.y) * 2,
-        length - ENCLOSURE_WALL - pcb_y_clearance - pcb_position.y
-    );
+    pcb_length = length - ENCLOSURE_WALL - pcb_y_clearance - pcb_position.y;
 
     button_rocker_position = [
         speaker_grill_position.x + speaker_grill_dimensions.x + default_gutter,
@@ -206,6 +203,7 @@ module higher_lower(
     }
 
     if (show_rocker) {
+        // TODO: account for distance to buttons
         translate(button_rocker_position) {
             button_rocker(
                 button_size, button_size, button_height,
