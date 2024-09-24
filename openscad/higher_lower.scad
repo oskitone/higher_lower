@@ -206,7 +206,9 @@ module higher_lower(
                 button_size, button_size, button_height,
                 gutter = button_gutter,
                 brim_height = ROCKER_BRIM_HEIGHT,
-                fillet = quick_preview ? 0 : accessory_fillet
+                fillet = quick_preview ? 0 : accessory_fillet,
+                outer_color = control_outer_color,
+                cavity_color = control_cavity_color
             );
         }
     }
