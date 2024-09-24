@@ -8,6 +8,9 @@ include <../../parts_cafe/openscad/pcb_mounting_columns.scad>;
 
 include <pcb.scad>;
 
+SWITCH_CLUTCH_GRIP_LENGTH = 10;
+SWITCH_CLUTCH_GRIP_HEIGHT = 7;
+
 ENCLOSURE_WALL = 2.4;
 ENCLOSURE_FLOOR_CEILING = 1.8;
 ENCLOSURE_INNER_WALL = 1.2;
@@ -28,7 +31,7 @@ module enclosure(
     bottom_height = 0,
     top_height = 0,
 
-    control_exposure = 0,
+    control_clearance = 0,
 
     pcb_position = [0,0,0],
 
@@ -61,6 +64,8 @@ module enclosure(
     screw_clearance = 0,
     screw_head_clearance = 0,
 
+    switch_clutch_web_length_extension = 0,
+
     tolerance = 0,
 
     outer_color = undef,
@@ -77,6 +82,13 @@ module enclosure(
     cavity_height = ENCLOSURE_FLOOR_CEILING + e * 2;
 
     speaker_cavity_diameter = SPEAKER_DIAMETER + tolerance * 2;
+
+    switch_clutch_aligner_length =
+        SWITCH_CLUTCH_GRIP_LENGTH + SWITCH_ACTUATOR_TRAVEL
+        + switch_clutch_web_length_extension * 2;
+    switch_clutch_aligner_y = pcb_position.y + PCB_SWITCH_Y
+            + SWITCH_BASE_LENGTH / 2
+            - switch_clutch_aligner_length / 2;
 
     module _c(
         diameter,
@@ -210,14 +222,30 @@ module enclosure(
     }
 
     module _speaker_fixture() {
-        translate(speaker_position) {
-            speaker_fixture(
-                height = SPEAKER_HEIGHT + e,
-                wall = ENCLOSURE_INNER_WALL,
-                tab_cavity_rotation = 180,
-                tolerance = tolerance,
-                quick_preview = quick_preview
-            );
+        switch_clutch_deobstruction_width = 3; // NOTE: arbitrary
+
+        difference() {
+            translate(speaker_position) {
+                speaker_fixture(
+                    height = SPEAKER_HEIGHT + e,
+                    wall = ENCLOSURE_INNER_WALL,
+                    tab_cavity_rotation = 180,
+                    tolerance = tolerance,
+                    quick_preview = quick_preview
+                );
+            }
+
+            translate([
+                pcb_position.x - switch_clutch_deobstruction_width,
+                switch_clutch_aligner_y - e,
+                speaker_position.z - e
+            ]) {
+                cube([
+                    switch_clutch_deobstruction_width,
+                    switch_clutch_aligner_length + e * 2,
+                    SPEAKER_HEIGHT + e * 3
+                ]);
+            }
         }
     }
 
@@ -259,15 +287,56 @@ module enclosure(
     }
 
     module _button_rocker_cavity() {
+        // TODO: tolerance?
         translate([
-            button_rocker_position.x - control_exposure,
-            button_rocker_position.y - control_exposure,
+            button_rocker_position.x - control_clearance,
+            button_rocker_position.y - control_clearance,
             dimensions.z - ENCLOSURE_FLOOR_CEILING - e
         ]) {
             cube([
-                button_size + control_exposure * 2,
-                button_size * 2 + button_gutter + control_exposure * 2,
+                button_size + control_clearance * 2,
+                button_size * 2 + button_gutter + control_clearance * 2,
                 ENCLOSURE_FLOOR_CEILING + e * 2
+            ]);
+        }
+    }
+
+    module _switch_clutch_aligner(
+        width = 10, // NOTE: eyeballed to fill towards speaker fixture
+        height = SPEAKER_HEIGHT
+    ) {
+        x = pcb_position.x;
+        z = dimensions.z - ENCLOSURE_FLOOR_CEILING - height;
+
+        difference() {
+            translate([x, switch_clutch_aligner_y, z]) {
+                cube([width, switch_clutch_aligner_length, height + e]);
+            }
+
+            translate([speaker_position.x, speaker_position.y, z - e]) {
+                _c(
+                    speaker_cavity_diameter + ENCLOSURE_INNER_WALL,
+                    height + e * 3,
+                    chamfer = 0
+                );
+            }
+        }
+    }
+
+    module _switch_clutch_exposure(
+        length_clearance = .2
+    ) {
+        length = SWITCH_CLUTCH_GRIP_LENGTH + SWITCH_ACTUATOR_TRAVEL
+            + tolerance * 4 + length_clearance * 2;
+        height = SWITCH_CLUTCH_GRIP_HEIGHT + tolerance * 4;
+
+        translate([
+            -e,
+            pcb_position.y + PCB_SWITCH_Y + SWITCH_BASE_LENGTH / 2 - length / 2,
+            (dimensions.z - height) / 2
+        ]) {
+            cube([
+                ENCLOSURE_WALL + e * 2, length, height
             ]);
         }
     }
@@ -326,7 +395,6 @@ module enclosure(
             color(cavity_color) {
                 _bottom_engraving();
                 _disassembly_cavities(bottom = true);
-
                 enclosure_screw_cavities(
                     screw_head_clearance = screw_head_clearance,
                     pcb_position = pcb_position,
@@ -336,6 +404,7 @@ module enclosure(
                     show_dfm = show_dfm,
                     quick_preview = quick_preview
                 );
+                _switch_clutch_exposure();
             }
         }
     }
@@ -352,6 +421,7 @@ module enclosure(
                 color(outer_color) {
                     _top_pcb_fixtures();
                     _speaker_fixture();
+                    _switch_clutch_aligner();
                 }
             }
 
@@ -361,6 +431,7 @@ module enclosure(
                 _button_rocker_cavity();
                 _top_engraving();
                 _disassembly_cavities(bottom = false);
+                _switch_clutch_exposure();
             }
         }
     }

@@ -2,8 +2,9 @@ include <../../parts_cafe/openscad/batteries-aaa.scad>;
 include <../../parts_cafe/openscad/battery_holder.scad>;
 include <../../parts_cafe/openscad/console.scad>;
 include <../../parts_cafe/openscad/nuts_and_bolts.scad>;
-include <../../parts_cafe/openscad/switch.scad>;
 include <../../parts_cafe/openscad/speaker-AZ40R.scad>;
+
+use <../../scout/openscad/switch_clutch.scad>;
 
 include <button_rocker.scad>;
 include <enclosure.scad>;
@@ -21,11 +22,13 @@ module higher_lower(
     show_battery_holder = true,
     show_batteries = true,
     show_pcb = true,
+    show_switch_clutch = true,
     show_accoutrements = true,
     show_rocker = true,
     show_enclosure_top = true,
 
-    button_exposure = 2,
+    control_exposure = 2,
+    control_clearance = .6,
 
     outer_gutter = OUTER_GUTTER,
     default_gutter = SCOUT_DEFAULT_GUTTER,
@@ -33,12 +36,11 @@ module higher_lower(
     label_gutter = 1,
 
     accessory_fillet = 1,
-    control_exposure = .6,
 
     // NOTE: clearances supercede tolerance
     pcb_top_clearance = PCB_TOP_CLEARANCE,
     pcb_bottom_clearance = PCB_BOTTOM_CLEARANCE,
-    pcb_x_clearance = 5,
+    pcb_x_clearance = 3,
     pcb_y_clearance = 1,
 
     pcb_screw_hole_positions = [
@@ -60,6 +62,9 @@ module higher_lower(
 
     control_outer_color = "#FFFFFF",
     control_cavity_color = "#EEEEEE",
+
+    side_switch_position = round($t),
+    switch_clutch_web_length_extension = 4, // NOTE: eyeballed!
 
     quick_preview = true
 ) {
@@ -156,9 +161,9 @@ module higher_lower(
         speaker_grill_position.y,
         height - ENCLOSURE_FLOOR_CEILING - ROCKER_BRIM_HEIGHT - e
     ];
-    button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
+    button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + control_exposure;
 
-    enclosure_bottom_height = pcb_position.z + ENCLOSURE_LIP_HEIGHT / 2;
+    enclosure_bottom_height = height / 2 - ENCLOSURE_LIP_HEIGHT / 2;
     enclosure_top_height = height - enclosure_bottom_height;
 
     nut_z = height - ENCLOSURE_FLOOR_CEILING - NUT_HEIGHT - screw_clearance;
@@ -222,7 +227,7 @@ module higher_lower(
             bottom_height = enclosure_bottom_height,
             top_height = enclosure_top_height,
 
-            control_exposure = control_exposure,
+            control_clearance = control_clearance,
 
             pcb_position = pcb_position,
 
@@ -251,6 +256,8 @@ module higher_lower(
             screw_clearance = screw_clearance,
             screw_head_clearance = screw_head_clearance,
 
+            switch_clutch_web_length_extension = switch_clutch_web_length_extension,
+
             tolerance = tolerance,
 
             outer_color = enclosure_outer_color,
@@ -275,8 +282,39 @@ module higher_lower(
                     + button_size + button_gutter / 2,
                 button_size = button_size,
 
+                side_switch_position = side_switch_position,
+
                 width = pcb_width,
                 length = pcb_length
+            );
+        }
+    }
+
+    if (show_switch_clutch) {
+        // HACK: lots of arbitrary values here to make Scout's clutch work. eh
+        translate([
+            pcb_position.x + SWITCH_ORIGIN.x,
+            pcb_position.y + PCB_SWITCH_Y + SWITCH_ORIGIN.y,
+            0
+        ]) {
+            switch_clutch(
+                position = side_switch_position,
+
+                web_available_width = pcb_position.x - ENCLOSURE_WALL,
+                web_length_extension = switch_clutch_web_length_extension,
+
+                enclosure_height = height,
+
+                x_clearance = .2,
+
+                fillet = accessory_fillet,
+                side_overexposure = control_exposure,
+                tolerance = tolerance,
+
+                outer_color = control_outer_color,
+                cavity_color = control_cavity_color,
+
+                quick_preview = quick_preview
             );
         }
     }
@@ -309,6 +347,7 @@ SHOW_ENCLOSURE_BOTTOM = true;
 SHOW_BATTERY_HOLDER = true;
 SHOW_BATTERIES = true;
 SHOW_PCB = true;
+SHOW_SWITCH_CLUTCH = true;
 SHOW_ACCOUTREMENTS = true;
 SHOW_ROCKER = true;
 SHOW_ENCLOSURE_TOP = true;
@@ -322,6 +361,7 @@ higher_lower(
     show_battery_holder = SHOW_BATTERY_HOLDER,
     show_batteries = SHOW_BATTERIES,
     show_pcb = SHOW_PCB,
+    show_switch_clutch = SHOW_SWITCH_CLUTCH,
     show_accoutrements = SHOW_ACCOUTREMENTS,
     show_rocker = SHOW_ROCKER,
     show_enclosure_top = SHOW_ENCLOSURE_TOP,

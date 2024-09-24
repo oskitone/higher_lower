@@ -1,3 +1,7 @@
+include <../../parts_cafe/openscad/switch-OS102011MA1QN1.scad>;
+
+use <../../scout/openscad/switch_clutch.scad>;
+
 PCB_HEIGHT = 1.6;
 
 PCB_MINIMUM_LENGTH = 25.4; // NOTE: arbitrary but reasonable!
@@ -13,6 +17,8 @@ BUTTON_HEIGHT = 6;
 PCB_TOP_CLEARANCE = 10;
 PCB_BOTTOM_CLEARANCE = 2;
 
+PCB_SWITCH_Y = 15; // made up. TODO: replace
+
 module pcb(
     show_board = true,
     show_silkscreen = true,
@@ -26,6 +32,8 @@ module pcb(
     rocker_center_x = 0,
     rocker_center_y = 0,
     button_size = 0,
+
+    side_switch_position = 0,
 
     top_clearance = PCB_TOP_CLEARANCE,
     bottom_clearance = PCB_BOTTOM_CLEARANCE,
@@ -56,6 +64,10 @@ module pcb(
             translate([xy.x, xy.y, height - e]) {
                 % cylinder(d = BUTTON_DIAMETER, h = BUTTON_HEIGHT + e);
             }
+        }
+
+        translate([SWITCH_ORIGIN.x, PCB_SWITCH_Y + SWITCH_ORIGIN.y, height - e]) {
+            switch(position = side_switch_position);
         }
     }
 
