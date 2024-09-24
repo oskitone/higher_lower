@@ -15,7 +15,7 @@ OUTER_GUTTER = 5;
 module higher_lower(
     width = 25.4 * 3,
     length = 25.4 * 3,
-    height = 25.4 * 1,
+    height = 25.4 * 1, // TODO: reduce
 
     show_enclosure_bottom = true,
     show_battery_holder = true,
@@ -35,8 +35,11 @@ module higher_lower(
     accessory_fillet = 1,
     control_exposure = .6,
 
-    speaker_bottom_clearance = 1,
-    pcb_clearance = [5, 1, 5], // NOTE: should include/obviate tolerance
+    // NOTE: clearances supercede tolerance
+    pcb_top_clearance = PCB_TOP_CLEARANCE,
+    pcb_bottom_clearance = PCB_BOTTOM_CLEARANCE,
+    pcb_x_clearance = 5,
+    pcb_y_clearance = 1,
 
     pcb_screw_hole_positions = [
     ],
@@ -85,7 +88,6 @@ module higher_lower(
         ENCLOSURE_FLOOR_CEILING
     ];
 
-
     module _assert_minimimum_dimensions() {
         min_speaker_grill_width =
             get_speaker_fixture_diameter(tolerance, ENCLOSURE_INNER_WALL)
@@ -94,9 +96,14 @@ module higher_lower(
         min_width = min_speaker_grill_width + button_size + default_gutter
             + outer_gutter * 2;
         min_length = ENCLOSURE_WALL * 2 + battery_holder_dimensions.y
-            + PCB_MINIMUM_LENGTH + pcb_clearance.y * 2;
-        min_height = ENCLOSURE_FLOOR_CEILING * 2 + battery_holder_dimensions.z
-            + SPEAKER_HEIGHT + speaker_bottom_clearance;
+            + PCB_MINIMUM_LENGTH + pcb_y_clearance * 2;
+        min_height =
+            max(
+                battery_holder_position.z + battery_holder_dimensions.z,
+                pcb_position.z + PCB_HEIGHT + pcb_top_clearance,
+                0
+            )
+            + SPEAKER_HEIGHT + ENCLOSURE_FLOOR_CEILING;
 
         warn_if(speaker_grill_width < min_speaker_grill_width, str(
             "speaker_grill_width of ", speaker_grill_width,
@@ -133,17 +140,16 @@ module higher_lower(
     ];
 
     pcb_position = [
-        ENCLOSURE_WALL + pcb_clearance.x,
-        battery_holder_position.y + battery_holder_dimensions.y + pcb_clearance.y,
-        ENCLOSURE_FLOOR_CEILING + pcb_clearance.z
+        ENCLOSURE_WALL + pcb_x_clearance,
+        battery_holder_position.y + battery_holder_dimensions.y + pcb_y_clearance,
+        speaker_position.z - PCB_HEIGHT - pcb_top_clearance
     ];
 
-    pcb_width = width - (ENCLOSURE_WALL + pcb_clearance.x) * 2;
+    pcb_width = width - (ENCLOSURE_WALL + pcb_x_clearance) * 2;
     pcb_length = min(
         (speaker_position.y - pcb_position.y) * 2,
-        length - ENCLOSURE_WALL - pcb_clearance.y - pcb_position.y
+        length - ENCLOSURE_WALL - pcb_y_clearance - pcb_position.y
     );
-    pcb_height = PCB_HEIGHT;
 
     button_rocker_position = [
         speaker_grill_position.x + speaker_grill_dimensions.x + default_gutter,
@@ -236,7 +242,6 @@ module higher_lower(
 
             pcb_width = pcb_width,
             pcb_length = pcb_length,
-            pcb_height = pcb_height,
 
             pcb_screw_hole_positions = pcb_screw_hole_positions,
             pcb_post_hole_positions = pcb_post_hole_positions,

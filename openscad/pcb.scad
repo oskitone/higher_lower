@@ -9,10 +9,15 @@ PCB_HOLE_DIAMETER = 3.2;
 BUTTON_DIAMETER = 6;
 BUTTON_HEIGHT = 6;
 
+// NOTE: caps lie flat, leads must be trimmed
+PCB_TOP_CLEARANCE = 10;
+PCB_BOTTOM_CLEARANCE = 2;
+
 module pcb(
     show_board = true,
     show_silkscreen = true,
     show_switches = true,
+    show_clearance = false,
 
     width = 0,
     length = 0,
@@ -21,6 +26,9 @@ module pcb(
     rocker_center_x = 0,
     rocker_center_y = 0,
     button_size = 0,
+
+    top_clearance = PCB_TOP_CLEARANCE,
+    bottom_clearance = PCB_BOTTOM_CLEARANCE,
 
     hole_positions = PCB_HOLE_POSITIONS,
     hole_diameter = PCB_HOLE_DIAMETER,
@@ -89,6 +97,16 @@ module pcb(
                     }
                 }
             }
+        }
+    }
+
+    if (show_clearance) {
+        translate([e, e, height - e]) {
+            % cube([width - e * 2, length - e * 2, top_clearance + e]);
+        }
+
+        translate([e, e, -bottom_clearance]) {
+            % cube([width - e * 2, length - e * 2, bottom_clearance + e]);
         }
     }
 }
