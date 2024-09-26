@@ -67,7 +67,7 @@ module pcb(
         }
 
         translate([SWITCH_ORIGIN.x, PCB_SWITCH_Y + SWITCH_ORIGIN.y, height - e]) {
-            switch(position = side_switch_position);
+            % switch(position = side_switch_position);
         }
     }
 
