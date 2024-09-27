@@ -16,26 +16,32 @@ module button_rocker(
     outer_color = undef,
     cavity_color = undef
 ) {
+    e = .0481;
+
+    brim_dimensions = [
+        width + ROCKER_BRIM_SIZE * 2,
+        length * 2 + gutter + ROCKER_BRIM_SIZE * 2,
+        brim_height
+    ];
+
     color(outer_color) {
-        for (y = [0, length + gutter]) {
-            translate([0, y, 0]) {
+        render() for (y = [0, width + gutter]) {
+            translate([0, y, -e]) {
                 cap_blank(
-                    dimensions = [width, width, height],
+                    dimensions = [width, width, height + e],
                     contact_dimensions = [
                         width - SCOUT_DEFAULT_GUTTER,
                         width - SCOUT_DEFAULT_GUTTER,
                         2
                     ],
 
-                    fillet = fillet,
-
-                    brim_dimensions = [
-                        width + ROCKER_BRIM_SIZE * 2,
-                        width + ROCKER_BRIM_SIZE * 2,
-                        brim_height
-                    ]
+                    fillet = fillet
                 );
             }
+        }
+
+        translate([-ROCKER_BRIM_SIZE, -ROCKER_BRIM_SIZE, 0]) {
+            cube(brim_dimensions);
         }
     }
 }

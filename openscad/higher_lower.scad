@@ -206,7 +206,7 @@ module higher_lower(
         // TODO: account for distance to buttons
         translate(button_rocker_position) {
             button_rocker(
-                button_size, button_size, button_height,
+                button_size, button_size * 2 + button_gutter, button_height,
                 gutter = button_gutter,
                 brim_height = ROCKER_BRIM_HEIGHT,
                 fillet = quick_preview ? 0 : accessory_fillet,
