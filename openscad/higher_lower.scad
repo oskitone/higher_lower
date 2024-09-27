@@ -279,6 +279,7 @@ module higher_lower(
                 rocker_center_y = button_rocker_position.y - pcb_position.y
                     + button_size + button_gutter / 2,
                 button_size = button_size,
+                button_gutter = button_gutter,
 
                 side_switch_position = side_switch_position,
 

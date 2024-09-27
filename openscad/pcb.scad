@@ -32,6 +32,7 @@ module pcb(
     rocker_center_x = 0,
     rocker_center_y = 0,
     button_size = 0,
+    button_gutter = 0,
 
     side_switch_position = 0,
 
@@ -53,8 +54,8 @@ module pcb(
     }
 
     switch_centers = [
-        [rocker_center_x, rocker_center_y - button_size / 2],
-        [rocker_center_x, rocker_center_y + button_size / 2],
+        [rocker_center_x, rocker_center_y - (button_size + button_gutter) / 2 ],
+        [rocker_center_x, rocker_center_y + (button_size + button_gutter) / 2 ],
     ];
 
     echo("PCB switch_centers", switch_centers);
