@@ -21,8 +21,6 @@ ENCLOSURE_FILLET = 2;
 DEFAULT_ROUNDING = 24;
 HIDEF_ROUNDING = 120;
 
-ENCLOSURE_TOP_ENGRAVING_MINIMUM_LENGTH = 25.4; // NOTE: arbitrary but reasonable!
-
 module enclosure(
     show_top = true,
     show_bottom = true,
@@ -39,7 +37,7 @@ module enclosure(
     speaker_grill_dimensions = [0,0,0],
     speaker_grill_position = [0,0,0],
 
-    button_size = 0,
+    button_dimensions = [0,0],
     button_rocker_position = [0,0,0],
     button_gutter = 0,
 
@@ -294,8 +292,8 @@ module enclosure(
             dimensions.z - ENCLOSURE_FLOOR_CEILING - e
         ]) {
             cube([
-                button_size + control_clearance * 2,
-                button_size * 2 + button_gutter + control_clearance * 2,
+                button_dimensions.x + control_clearance * 2,
+                button_dimensions.y * 2 + button_gutter + control_clearance * 2,
                 ENCLOSURE_FLOOR_CEILING + e * 2
             ]);
         }

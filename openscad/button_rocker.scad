@@ -25,13 +25,13 @@ module button_rocker(
     ];
 
     color(outer_color) {
-        render() for (y = [0, width + gutter]) {
+        render() for (y = [0, length + gutter]) {
             translate([0, y, -e]) {
                 cap_blank(
-                    dimensions = [width, width, height + e],
+                    dimensions = [width, length, height + e],
                     contact_dimensions = [
                         width - SCOUT_DEFAULT_GUTTER,
-                        width - SCOUT_DEFAULT_GUTTER,
+                        length - SCOUT_DEFAULT_GUTTER,
                         2
                     ],
 
