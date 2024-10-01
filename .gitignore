@@ -5,3 +5,4 @@ imgui.ini
 
 kicad/*-backups/
 kicad/#auto_saved_files#
+kicad/fp-info-cache
