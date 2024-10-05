@@ -58,7 +58,10 @@ module pcb(
         [rocker_center_x, rocker_center_y + (button_dimensions.y + button_gutter) / 2 ],
     ];
 
-    echo("PCB switch_centers", switch_centers);
+    echo("PCB switch_centers", [
+        [4 + switch_centers[0].x / 25.4, 4.5 - switch_centers[0].y / 25.4,],
+        [4 + switch_centers[1].x / 25.4, 4.5 - switch_centers[1].y / 25.4,]
+    ]);
 
     if (show_switches) {
         for (xy = switch_centers) {

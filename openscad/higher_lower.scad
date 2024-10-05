@@ -19,7 +19,7 @@ module higher_lower(
     height = 25.4 * 1, // TODO: reduce
 
     pcb_width = 2.5 * 25.4,
-    pcb_length = 1.25 * 25.4,
+    pcb_length = 1.5 * 25.4,
 
     show_enclosure_bottom = true,
     show_battery_holder = true,
@@ -126,6 +126,10 @@ module higher_lower(
     echo("Enclosure", width / 25.4, length / 25.4, height / 25.4);
     echo("PCB", pcb_width / 25.4, pcb_length / 25.4);
     echo("Button", button_width / 25.4, button_length / 25.4);
+    echo("Speaker center on PCB", [
+        (speaker_position.x - pcb_position.x) / 25.4,
+        (speaker_position.y - pcb_position.y) / 25.4,
+    ]);
 
     if (show_batteries || show_battery_holder) {
         translate([
