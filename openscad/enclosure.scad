@@ -180,6 +180,7 @@ module enclosure(
     }
 
     module _bottom_pcb_fixtures() {
+        // TODO: button supports
         pcb_mounting_columns(
             pcb_position = pcb_position,
             screw_head_clearance = screw_head_clearance,
@@ -206,11 +207,11 @@ module enclosure(
                     position.y + pcb_position.y,
                     z
                 ]) {
+                    // TODO: avoid speaker+rocker
                     pcb_mount_post(
                         width = NUT_DIAMETER + 4,
                         height = height,
                         ceiling = screw_clearance - tolerance,
-                        stalactite = true,
                         tolerance = tolerance,
                         quick_preview = quick_preview
                     );

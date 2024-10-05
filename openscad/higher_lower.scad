@@ -26,6 +26,8 @@ module higher_lower(
     show_batteries = true,
     show_pcb = true,
     show_switch_clutch = true,
+    show_speaker = true,
+    show_fasteners = true,
     show_accoutrements = true,
     show_rocker = true,
     show_enclosure_top = true,
@@ -47,12 +49,13 @@ module higher_lower(
     pcb_y_clearance = 1,
 
     pcb_screw_hole_positions = [
+        PCB_HOLE_POSITIONS[0]
     ],
     pcb_post_hole_positions = [
+        PCB_HOLE_POSITIONS[3]
     ],
 
-    // Screw can be 3/4" to 1"
-    screw_clearance = 1/4 * 25.4 + 2,
+    screw_clearance = 1/8 * 25.4,
     screw_clearance_usage = .5,
     screw_length = 3/4 * 25.4,
 
@@ -276,7 +279,7 @@ module higher_lower(
         }
     }
 
-    if (show_accoutrements) {
+    if (show_speaker) {
         % translate([
             speaker_position.x,
             speaker_position.y,
@@ -284,18 +287,20 @@ module higher_lower(
         ]) {
             speaker($fn = 120);
         }
+    }
 
+    if (show_fasteners) {
         % screws(
             positions = pcb_screw_hole_positions,
             pcb_position = pcb_position,
             length = screw_length,
-            z = screw_head_clearance
+            z = screw_head_clearance - e
         );
 
         % nuts(
             pcb_position = pcb_position,
             positions = pcb_screw_hole_positions,
-            z = nut_z
+            z = nut_z - e
         );
     }
 }
@@ -305,6 +310,8 @@ SHOW_BATTERY_HOLDER = true;
 SHOW_BATTERIES = true;
 SHOW_PCB = true;
 SHOW_SWITCH_CLUTCH = true;
+SHOW_SPEAKER = true;
+SHOW_FASTENERS = true;
 SHOW_ACCOUTREMENTS = true;
 SHOW_ROCKER = true;
 SHOW_ENCLOSURE_TOP = true;
@@ -319,6 +326,8 @@ higher_lower(
     show_batteries = SHOW_BATTERIES,
     show_pcb = SHOW_PCB,
     show_switch_clutch = SHOW_SWITCH_CLUTCH,
+    show_speaker = SHOW_SPEAKER,
+    show_fasteners = SHOW_FASTENERS,
     show_accoutrements = SHOW_ACCOUTREMENTS,
     show_rocker = SHOW_ROCKER,
     show_enclosure_top = SHOW_ENCLOSURE_TOP,
@@ -327,5 +336,10 @@ higher_lower(
 
     quick_preview = $preview
 );
+
+// rocker buttons
 // translate([60, -1, -1]) cube([100, 100, 100]);
+
+// fastener
+// translate([45.5, -1, -1]) cube([100, 100, 100]);
 }
