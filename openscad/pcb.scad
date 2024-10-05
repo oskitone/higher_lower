@@ -6,7 +6,16 @@ PCB_HEIGHT = 1.6;
 
 PCB_MINIMUM_LENGTH = 25.4; // NOTE: arbitrary but reasonable!
 
+function get_translated_xy(xy) = (
+    [xy.x - 4 * 25.4, 4.5 * 25.4 - xy.y]
+);
+
+// Copied from higher_lower.kicad_pcb
 PCB_HOLE_POSITIONS = [
+  get_translated_xy([140.97, 110.49]),
+  get_translated_xy([114.935, 110.49]),
+  get_translated_xy([107.315, 110.49]),
+  get_translated_xy([105.41, 80.01]),
 ];
 PCB_HOLE_DIAMETER = 3.2;
 
@@ -17,7 +26,9 @@ BUTTON_HEIGHT = 6;
 PCB_TOP_CLEARANCE = 10;
 PCB_BOTTOM_CLEARANCE = 2;
 
-PCB_SWITCH_Y = 15; // made up. TODO: replace
+PCB_SWITCH_Y = 16.54;
+
+// TODO: LED
 
 module pcb(
     show_board = true,
@@ -42,7 +53,8 @@ module pcb(
     hole_positions = PCB_HOLE_POSITIONS,
     hole_diameter = PCB_HOLE_DIAMETER,
 
-    pcb_color = "purple"
+    pcb_color = "purple",
+    silkscreen_color = [1,1,1,.25]
 ) {
     e = .0143;
     silkscreen_height = e;
@@ -83,13 +95,13 @@ module pcb(
                 }
 
                 if (show_silkscreen) {
-                    intersection() {
+                    color(silkscreen_color) intersection() {
                         // NOTE: eyeballed
-                        // translate([-3.44, -2.54 * 3, height - e]) {
-                        //     linear_extrude(silkscreen_height + e) {
-                        //         import("../kicad/wub-brd.svg");
-                        //     }
-                        // }
+                        translate([-9.08, -20.7, height - e]) {
+                            linear_extrude(silkscreen_height + e) {
+                                import("../kicad/higher_lower-brd.svg");
+                            }
+                        }
 
                         translate([e, e, e]) {
                             cube([

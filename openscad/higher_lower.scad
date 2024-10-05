@@ -230,7 +230,6 @@ module higher_lower(
         translate([pcb_position.x, pcb_position.y, pcb_position.z - e * 2]) {
             pcb(
                 show_board = show_pcb,
-                show_silkscreen = false,
                 show_switches = show_accoutrements,
 
                 rocker_center_x = button_rocker_position.x - pcb_position.x
