@@ -18,8 +18,8 @@ module higher_lower(
     length = 25.4 * 3,
     height = 25.4 * 1, // TODO: reduce
 
-    pcb_width = 2.5 * 25.4,
-    pcb_length = 1.5 * 25.4,
+    pcb_width = PCB_WIDTH,
+    pcb_length = PCB_LENGTH,
 
     show_enclosure_bottom = true,
     show_battery_holder = true,
@@ -45,19 +45,18 @@ module higher_lower(
     // NOTE: clearances supercede tolerance
     pcb_top_clearance = PCB_TOP_CLEARANCE,
     pcb_bottom_clearance = PCB_BOTTOM_CLEARANCE,
-    pcb_x_clearance = 3,
-    pcb_y_clearance = 1,
 
     pcb_screw_hole_positions = [
-        PCB_HOLE_POSITIONS[0]
+        [PCB_WIDTH / 2, 0]
     ],
     pcb_post_hole_positions = [
+        PCB_HOLE_POSITIONS[0],
         PCB_HOLE_POSITIONS[3]
     ],
 
-    screw_clearance = 1/8 * 25.4,
-    screw_clearance_usage = .5,
-    screw_length = 3/4 * 25.4,
+    screw_length = 1/2 * 25.4,
+    screw_head_clearance = 1,
+    screw_beyond_nut = 1,
 
     battery_count = 2,
 
@@ -121,10 +120,9 @@ module higher_lower(
     enclosure_bottom_height = height / 2 - ENCLOSURE_LIP_HEIGHT / 2;
     enclosure_top_height = height - enclosure_bottom_height;
 
-    nut_z = height - ENCLOSURE_FLOOR_CEILING - NUT_HEIGHT - screw_clearance;
-    screw_head_clearance = nut_z - screw_length
-        + NUT_HEIGHT - SCREW_HEAD_HEIGHT
-        + screw_clearance * screw_clearance_usage;
+    nut_z = screw_head_clearance + SCREW_HEAD_HEIGHT + screw_length
+        - screw_beyond_nut - NUT_HEIGHT;
+    screw_clearance = height - nut_z - ENCLOSURE_FLOOR_CEILING - NUT_HEIGHT;
 
     echo("Enclosure", width / 25.4, length / 25.4, height / 25.4);
     echo("PCB", pcb_width / 25.4, pcb_length / 25.4);
@@ -341,5 +339,5 @@ higher_lower(
 // translate([60, -1, -1]) cube([100, 100, 100]);
 
 // fastener
-// translate([45.5, -1, -1]) cube([100, 100, 100]);
+// translate([38, -1, -1]) cube([100, 100, 100]);
 }

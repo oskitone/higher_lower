@@ -2,6 +2,8 @@ include <../../parts_cafe/openscad/switch-OS102011MA1QN1.scad>;
 
 use <../../scout/openscad/switch_clutch.scad>;
 
+PCB_WIDTH = 2.5 * 25.4;
+PCB_LENGTH = 1.5 * 25.4;
 PCB_HEIGHT = 1.6;
 
 PCB_MINIMUM_LENGTH = 25.4; // NOTE: arbitrary but reasonable!

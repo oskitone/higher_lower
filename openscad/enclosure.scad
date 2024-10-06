@@ -207,15 +207,26 @@ module enclosure(
                     position.y + pcb_position.y,
                     z
                 ]) {
-                    // TODO: avoid speaker+rocker
                     pcb_mount_post(
                         width = NUT_DIAMETER + 4,
                         height = height,
                         ceiling = screw_clearance - tolerance,
                         tolerance = tolerance,
+                        include_sacrificial_bridge = show_dfm,
                         quick_preview = quick_preview
                     );
                 }
+            }
+
+            translate([
+                speaker_position.x,
+                speaker_position.y,
+                z - e
+            ]) {
+                cylinder(
+                    d = speaker_cavity_diameter,
+                    h = dimensions.z - z
+                );
             }
         }
     }
