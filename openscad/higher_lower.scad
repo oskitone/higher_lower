@@ -232,6 +232,7 @@ module higher_lower(
             pcb(
                 show_board = show_pcb,
                 show_switches = show_accoutrements,
+                show_led = show_accoutrements,
 
                 rocker_center_x = button_rocker_position.x - pcb_position.x
                     + button_width / 2,

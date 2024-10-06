@@ -1,3 +1,4 @@
+include <../../parts_cafe/openscad/led.scad>;
 include <../../parts_cafe/openscad/switch-OS102011MA1QN1.scad>;
 
 use <../../scout/openscad/switch_clutch.scad>;
@@ -30,12 +31,13 @@ PCB_BOTTOM_CLEARANCE = 2;
 
 PCB_SWITCH_Y = 16.54;
 
-// TODO: LED
+PCB_LED_POSITION = get_translated_xy([120.145 + 2.5, 80.52 + .6]);
 
 module pcb(
     show_board = true,
     show_silkscreen = true,
     show_switches = true,
+    show_led = true,
     show_clearance = false,
 
     width = 0,
@@ -61,8 +63,8 @@ module pcb(
     e = .0143;
     silkscreen_height = e;
 
-    module _translate(position, z = -e) {
-        translate([position.x, position.y, z + position.z]) {
+    module _translate(position) {
+        translate([position.x, position.y, PCB_HEIGHT - e]) {
             children();
         }
     }
@@ -76,6 +78,12 @@ module pcb(
         [4 + switch_centers[0].x / 25.4, 4.5 - switch_centers[0].y / 25.4,],
         [4 + switch_centers[1].x / 25.4, 4.5 - switch_centers[1].y / 25.4,]
     ]);
+
+    if (show_led) {
+        _translate(PCB_LED_POSITION) {
+            % led();
+        }
+    }
 
     if (show_switches) {
         for (xy = switch_centers) {
