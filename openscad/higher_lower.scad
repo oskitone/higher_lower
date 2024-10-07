@@ -153,10 +153,14 @@ module higher_lower(
 
                     fillet = quick_preview ? 0 : BATTERY_HOLDER_FILLET,
 
+                    include_wire_relief_hitches = false,
+                    include_nub_fixture_cavities = false,
+                    include_wire_channel = false,
+
                     outer_color = enclosure_outer_color,
                     cavity_color = enclosure_cavity_color,
 
-                    quick_preview = false
+                    quick_preview = quick_preview
                 );
             }
         }
