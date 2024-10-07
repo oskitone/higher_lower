@@ -2,6 +2,7 @@ include <../../parts_cafe/openscad/batteries-aaa.scad>;
 include <../../parts_cafe/openscad/battery_holder.scad>;
 include <../../parts_cafe/openscad/console.scad>;
 include <../../parts_cafe/openscad/nuts_and_bolts.scad>;
+include <../../parts_cafe/openscad/socket-35PM2A.scad>;
 include <../../parts_cafe/openscad/speaker-AZ40R.scad>;
 
 use <../../scout/openscad/switch_clutch.scad>;
@@ -31,6 +32,7 @@ module higher_lower(
     show_accoutrements = true,
     show_rocker = true,
     show_enclosure_top = true,
+    show_clearance = false,
 
     control_exposure = 2,
     control_clearance = .6,
@@ -237,6 +239,7 @@ module higher_lower(
                 show_board = show_pcb,
                 show_switches = show_accoutrements,
                 show_led = show_accoutrements,
+                show_clearance = show_clearance,
 
                 rocker_center_x = button_rocker_position.x - pcb_position.x
                     + button_width / 2,
@@ -306,6 +309,16 @@ module higher_lower(
             z = nut_z - e
         );
     }
+
+    if (show_clearance) {
+        translate([
+            ENCLOSURE_WALL + SOCKET_INNER_HEIGHT + e,
+            10,
+            (ENCLOSURE_FLOOR_CEILING + enclosure_bottom_height + ENCLOSURE_LIP_HEIGHT) / 2
+        ]) rotate([0, -90, 0]) {
+            % socket();
+        }
+    }
 }
 
 SHOW_ENCLOSURE_BOTTOM = true;
@@ -318,6 +331,8 @@ SHOW_FASTENERS = true;
 SHOW_ACCOUTREMENTS = true;
 SHOW_ROCKER = true;
 SHOW_ENCLOSURE_TOP = true;
+
+SHOW_CLEARANCE = false;
 
 DEFAULT_TOLERANCE = .1;
 
@@ -334,6 +349,7 @@ higher_lower(
     show_accoutrements = SHOW_ACCOUTREMENTS,
     show_rocker = SHOW_ROCKER,
     show_enclosure_top = SHOW_ENCLOSURE_TOP,
+    show_clearance = SHOW_CLEARANCE,
 
     tolerance = DEFAULT_TOLERANCE,
 
