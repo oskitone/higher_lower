@@ -2,7 +2,6 @@ include <../../parts_cafe/openscad/diagonal_grill.scad>;
 include <../../parts_cafe/openscad/enclosure_engraving.scad>;
 include <../../parts_cafe/openscad/enclosure_screw_cavities.scad>;
 include <../../parts_cafe/openscad/enclosure.scad>;
-include <../../parts_cafe/openscad/nuts_and_bolts.scad>;
 include <../../parts_cafe/openscad/pcb_mount_post.scad>;
 include <../../parts_cafe/openscad/pcb_mounting_columns.scad>;
 
@@ -10,13 +9,6 @@ include <pcb.scad>;
 
 SWITCH_CLUTCH_GRIP_LENGTH = 10;
 SWITCH_CLUTCH_GRIP_HEIGHT = 7;
-
-ENCLOSURE_WALL = 2.4;
-ENCLOSURE_FLOOR_CEILING = 1.8;
-ENCLOSURE_INNER_WALL = 1.2;
-ENCLOSURE_LIP_HEIGHT = 3;
-ENCLOSURE_ENGRAVING_DEPTH = 1.2;
-ENCLOSURE_FILLET = 2;
 
 DEFAULT_ROUNDING = 24;
 HIDEF_ROUNDING = 120;
@@ -158,26 +150,21 @@ module enclosure(
     }
 
     module _half(height, lip) {
-        color(outer_color) {
-            enclosure_half(
-                width = dimensions.x,
-                length = dimensions.y,
-                height = height,
-                wall = ENCLOSURE_WALL,
-                floor_ceiling = ENCLOSURE_FLOOR_CEILING,
-                add_lip = lip,
-                remove_lip = !lip,
-                lip_height = lip_height,
-                fillet = quick_preview ? 0 : fillet,
-                include_tongue_and_groove = true,
-                tongue_and_groove_snap = [0, .8, .5, .8],
-                tongue_and_groove_pull = tolerance,
-                tolerance = tolerance * 1.5, // intentionally kinda loose
-                outer_color = outer_color,
-                cavity_color = cavity_color,
-                $fn = quick_preview ? undef : DEFAULT_ROUNDING
-            );
-        }
+        enclosure_half(
+            width = dimensions.x,
+            length = dimensions.y,
+            height = height,
+            add_lip = lip,
+            remove_lip = !lip,
+            lip_height = lip_height,
+            fillet = quick_preview ? 0 : fillet,
+            tolerance = tolerance * 1.5, // intentionally kinda loose
+            include_tongue_and_groove = true,
+            include_disassembly_cavities = true,
+            outer_color = outer_color,
+            cavity_color = cavity_color,
+            $fn = quick_preview ? undef : DEFAULT_ROUNDING
+        );
     }
 
     module _bottom_pcb_fixtures() {
@@ -352,51 +339,6 @@ module enclosure(
         }
     }
 
-    // TODO: extract
-    module _disassembly_cavities(
-        bottom,
-
-        wedge_width = 10,
-        wedge_height = FLATHEAD_SCREWDRIVER_POINT,
-
-        dimple_diameter = 10,
-        dimple_depth = ENCLOSURE_ENGRAVING_DEPTH
-    ) {
-        if (bottom) {
-            difference() {
-                for (x = [-e, dimensions.x - dimple_depth]) {
-                    translate([x, dimensions.y / 2, bottom_height]) {
-                        rotate([0, 90, 0]) {
-                            cylinder(
-                                d = dimple_diameter,
-                                h = dimple_depth + e,
-                                $fn = quick_preview ? undef : DEFAULT_ROUNDING
-                            );
-                        }
-                    }
-                }
-
-                translate([
-                    -e,
-                    (dimensions.y - dimple_diameter) / 2,
-                    bottom_height + e
-                ]) {
-                    cube([
-                        dimensions.x,
-                        dimple_diameter + e * 2,
-                        lip_height + e
-                    ]);
-                }
-            }
-        } else {
-            x = (dimensions.x - wedge_width) / 2;
-
-            translate([x, -e, bottom_height - e]) {
-                cube([wedge_width, ENCLOSURE_WALL + e * 2, wedge_height + e]);
-            }
-        }
-    }
-
     module _lightpipe_exposure(
         diameter = 1/4 * 25.4 + tolerance * 2,
         fixture = false,
@@ -454,15 +396,17 @@ module enclosure(
 
     if (show_bottom) {
         difference() {
-            color(outer_color) {
+            union() {
                 _half(bottom_height, lip = true);
-                _bottom_pcb_fixtures();
-                _lightpipe_exposure(fixture = true);
+
+                color(outer_color) {
+                    _bottom_pcb_fixtures();
+                    _lightpipe_exposure(fixture = true);
+                }
             }
 
             color(cavity_color) {
                 _bottom_engraving();
-                _disassembly_cavities(bottom = true);
                 enclosure_screw_cavities(
                     screw_head_clearance = screw_head_clearance,
                     pcb_position = pcb_position,
@@ -499,7 +443,6 @@ module enclosure(
                 _speaker_grill();
                 _button_rocker_cavity();
                 _top_engraving();
-                _disassembly_cavities(bottom = false);
                 _switch_clutch_exposure();
                 _lightpipe_exposure();
             }
