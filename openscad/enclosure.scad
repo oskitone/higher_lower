@@ -32,6 +32,7 @@ module enclosure(
     control_clearance = 0,
 
     pcb_position = [0,0,0],
+    led_position_on_pcb = PCB_LED_POSITION,
 
     speaker_position = [0,0,0],
     speaker_grill_dimensions = [0,0,0],
@@ -351,6 +352,7 @@ module enclosure(
         }
     }
 
+    // TODO: extract
     module _disassembly_cavities(
         bottom,
 
@@ -395,11 +397,67 @@ module enclosure(
         }
     }
 
+    module _lightpipe_exposure(
+        diameter = 1/4 * 25.4 + tolerance * 2,
+        fixture = false,
+        $fn = 24
+    ) {
+        fixture_y = pcb_position.y + pcb_length + tolerance;
+
+        x = pcb_position.x + led_position_on_pcb.x;
+        y = fixture
+                ? fixture_y
+                : dimensions.y - ENCLOSURE_WALL - e;
+        z = pcb_position.z + pcb_height + diameter / 2;
+
+        if (fixture) {
+            length = dimensions.y - ENCLOSURE_WALL - fixture_y + e;
+
+            difference() {
+                hull() {
+                    translate([
+                        x - diameter / 2 - ENCLOSURE_INNER_WALL,
+                        y,
+                        ENCLOSURE_FLOOR_CEILING - e
+                    ]) {
+                        cube([
+                            diameter + ENCLOSURE_INNER_WALL * 2,
+                            length,
+                            e
+                        ]);
+                    }
+
+                    translate([x, y, z]) {
+                        rotate([-90, 0, 0]) cylinder(
+                            d = diameter + ENCLOSURE_INNER_WALL * 2,
+                            h = length
+                        );
+                    }
+                }
+
+                translate([x, y - e, z]) {
+                    rotate([-90, 0, 0]) cylinder(
+                        d = diameter,
+                        h = length + e * 2
+                    );
+                }
+            }
+        } else {
+            translate([x, y, z]) {
+                rotate([-90, 0, 0]) cylinder(
+                    d = diameter,
+                    h = ENCLOSURE_WALL + e * 2
+                );
+            }
+        }
+    }
+
     if (show_bottom) {
         difference() {
             color(outer_color) {
                 _half(bottom_height, lip = true);
                 _bottom_pcb_fixtures();
+                _lightpipe_exposure(fixture = true);
             }
 
             color(cavity_color) {
@@ -415,6 +473,7 @@ module enclosure(
                     quick_preview = quick_preview
                 );
                 _switch_clutch_exposure();
+                _lightpipe_exposure();
             }
         }
     }
@@ -442,6 +501,7 @@ module enclosure(
                 _top_engraving();
                 _disassembly_cavities(bottom = false);
                 _switch_clutch_exposure();
+                _lightpipe_exposure();
             }
         }
     }

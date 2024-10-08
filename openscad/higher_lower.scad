@@ -119,6 +119,7 @@ module higher_lower(
     ];
     button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + control_exposure;
 
+    // TODO: reconsider against LED lightpipe
     enclosure_bottom_height = height / 2 - ENCLOSURE_LIP_HEIGHT / 2;
     enclosure_top_height = height - enclosure_bottom_height;
 
