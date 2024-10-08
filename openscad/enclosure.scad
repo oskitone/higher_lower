@@ -197,8 +197,8 @@ module enclosure(
                 ]) {
                     pcb_mount_post(
                         width = NUT_DIAMETER + 4,
-                        height = height,
-                        ceiling = screw_clearance - tolerance,
+                        height = height + e,
+                        ceiling = screw_clearance - tolerance + e,
                         tolerance = tolerance,
                         include_sacrificial_bridge = show_dfm,
                         quick_preview = quick_preview
