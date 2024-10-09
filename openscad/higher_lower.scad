@@ -179,7 +179,8 @@ module higher_lower(
                 brim_height = ROCKER_BRIM_HEIGHT,
                 fillet = quick_preview ? 0 : accessory_fillet,
                 outer_color = control_outer_color,
-                cavity_color = control_cavity_color
+                cavity_color = control_cavity_color,
+                quick_preview = quick_preview
             );
         }
     }
