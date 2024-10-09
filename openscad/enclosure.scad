@@ -2,6 +2,7 @@ include <../../parts_cafe/openscad/diagonal_grill.scad>;
 include <../../parts_cafe/openscad/enclosure_engraving.scad>;
 include <../../parts_cafe/openscad/enclosure_screw_cavities.scad>;
 include <../../parts_cafe/openscad/enclosure.scad>;
+include <../../parts_cafe/openscad/flat_top_rectangular_pyramid.scad>;
 include <../../parts_cafe/openscad/pcb_mount_post.scad>;
 include <../../parts_cafe/openscad/pcb_mounting_columns.scad>;
 
@@ -33,6 +34,9 @@ module enclosure(
     button_dimensions = [0,0],
     button_rocker_position = [0,0,0],
     button_gutter = 0,
+
+    battery_holder_dimensions = [0,0,0],
+    battery_holder_position = [0,0,0],
 
     label_gutter = 0,
 
@@ -394,6 +398,43 @@ module enclosure(
         }
     }
 
+    module _battery_holder_fixture(
+        depth = ENCLOSURE_INNER_WALL,
+        coverage = 5,
+        height = 2
+    ) {
+        translate([
+            battery_holder_position.x
+                + (battery_holder_dimensions.x - coverage) / 2,
+            battery_holder_position.y + battery_holder_dimensions.y
+                + tolerance * 2,
+            ENCLOSURE_FLOOR_CEILING - e
+        ]) {
+            cube([
+                coverage,
+                depth,
+                height + e
+            ]);
+        }
+
+        for (x = [
+            battery_holder_position.x - (depth + tolerance * 2),
+            battery_holder_position.x
+                + battery_holder_dimensions.x + tolerance * 2
+        ]) {
+            translate([x, ENCLOSURE_WALL - e, ENCLOSURE_FLOOR_CEILING - e]) {
+                flat_top_rectangular_pyramid(
+                    top_width = depth,
+                    top_length = 0,
+                    bottom_width = depth,
+                    bottom_length = coverage + e,
+                    height = height + e,
+                    top_weight_y = 0
+                );
+            }
+        }
+    }
+
     if (show_bottom) {
         difference() {
             union() {
@@ -402,6 +443,7 @@ module enclosure(
                 color(outer_color) {
                     _bottom_pcb_fixtures();
                     _lightpipe_exposure(fixture = true);
+                    _battery_holder_fixture();
                 }
             }
 

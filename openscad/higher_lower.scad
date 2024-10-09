@@ -204,6 +204,9 @@ module higher_lower(
             button_rocker_position = button_rocker_position,
             button_gutter = button_gutter,
 
+            battery_holder_dimensions = battery_holder_dimensions,
+            battery_holder_position = battery_holder_position,
+
             label_gutter = label_gutter,
 
             top_engraving_dimensions = [
