@@ -170,10 +170,11 @@ module higher_lower(
     }
 
     if (show_rocker) {
-        // TODO: account for distance to buttons
         translate(button_rocker_position) {
             button_rocker(
                 button_width, button_length, button_height,
+                plunge = button_rocker_position.z
+                    - (pcb_position.z + PCB_HEIGHT + BUTTON_HEIGHT),
                 gutter = button_gutter,
                 brim_height = ROCKER_BRIM_HEIGHT,
                 fillet = quick_preview ? 0 : accessory_fillet,
