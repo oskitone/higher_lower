@@ -85,6 +85,9 @@ module enclosure(
             + SWITCH_BASE_LENGTH / 2
             - switch_clutch_aligner_length / 2;
 
+    button_rocker_length = button_dimensions.y * 2
+        + button_gutter + control_clearance * 2;
+
     module _c(
         diameter,
         height,
@@ -171,8 +174,9 @@ module enclosure(
         );
     }
 
-    module _bottom_pcb_fixtures() {
-        // TODO: button supports
+    module _bottom_pcb_fixtures(
+        button_support_length = 26
+    ) {
         pcb_mounting_columns(
             pcb_position = pcb_position,
             screw_head_clearance = screw_head_clearance,
@@ -186,6 +190,21 @@ module enclosure(
             support_web_length = (pcb_position.z - ENCLOSURE_FLOOR_CEILING) / 2,
             quick_preview = quick_preview
         );
+
+        translate([
+            button_rocker_position.x
+                + (button_dimensions.x - ENCLOSURE_INNER_WALL) / 2,
+            button_rocker_position.y
+                + button_dimensions.y + button_gutter / 2
+                - button_support_length / 2,
+            ENCLOSURE_FLOOR_CEILING - e
+        ]) {
+            cube([
+                ENCLOSURE_INNER_WALL,
+                button_support_length,
+                pcb_position.z - ENCLOSURE_FLOOR_CEILING + e
+            ]);
+        }
     }
 
     module _top_pcb_fixtures() {
@@ -297,7 +316,7 @@ module enclosure(
         ]) {
             cube([
                 button_dimensions.x + control_clearance * 2,
-                button_dimensions.y * 2 + button_gutter + control_clearance * 2,
+                button_rocker_length,
                 ENCLOSURE_FLOOR_CEILING + e * 2
             ]);
         }
