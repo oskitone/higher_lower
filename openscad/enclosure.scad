@@ -85,9 +85,6 @@ module enclosure(
             + SWITCH_BASE_LENGTH / 2
             - switch_clutch_aligner_length / 2;
 
-    button_rocker_length = button_dimensions.y * 2
-        + button_gutter + control_clearance * 2;
-
     module _c(
         diameter,
         height,
@@ -308,15 +305,17 @@ module enclosure(
     }
 
     module _button_rocker_cavity() {
-        // TODO: tolerance?
+        gutter = control_clearance + tolerance;
+
         translate([
-            button_rocker_position.x - control_clearance,
-            button_rocker_position.y - control_clearance,
+            button_rocker_position.x - gutter,
+            button_rocker_position.y - gutter,
             dimensions.z - ENCLOSURE_FLOOR_CEILING - e
         ]) {
             cube([
-                button_dimensions.x + control_clearance * 2,
-                button_rocker_length,
+                button_dimensions.x + gutter * 2,
+                button_dimensions.y * 2
+                    + button_gutter + gutter * 2,
                 ENCLOSURE_FLOOR_CEILING + e * 2
             ]);
         }
