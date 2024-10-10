@@ -17,7 +17,9 @@ OUTER_GUTTER = 5;
 module higher_lower(
     width = 25.4 * 3,
     length = 25.4 * 3,
-    height = 25.4 * 1, // TODO: reduce
+    height = 25.4 * 1,
+
+    reduce_height = true,
 
     pcb_width = PCB_WIDTH,
     pcb_length = PCB_LENGTH,
@@ -96,6 +98,8 @@ module higher_lower(
         ENCLOSURE_FLOOR_CEILING
     ];
 
+    pcb_z_min = ENCLOSURE_FLOOR_CEILING + pcb_bottom_clearance;
+
     speaker_grill_position = [
         outer_gutter,
         length - speaker_grill_size - outer_gutter
@@ -103,14 +107,22 @@ module higher_lower(
     speaker_position = [
         speaker_grill_position.x + speaker_grill_size / 2,
         speaker_grill_position.y + speaker_grill_size / 2,
-        height - ENCLOSURE_FLOOR_CEILING - SPEAKER_HEIGHT
+        reduce_height
+            ? pcb_z_min + PCB_HEIGHT + pcb_top_clearance
+            : height - ENCLOSURE_FLOOR_CEILING - SPEAKER_HEIGHT
     ];
+
+    pcb_z_max = speaker_position.z - PCB_HEIGHT - pcb_top_clearance;
 
     pcb_position = [
         (width - pcb_width) / 2,
         speaker_position.y - pcb_length / 2,
-        speaker_position.z - PCB_HEIGHT - pcb_top_clearance
+        reduce_height ? pcb_z_min : pcb_z_max
     ];
+
+    height = reduce_height
+        ? speaker_position.z + SPEAKER_HEIGHT + ENCLOSURE_FLOOR_CEILING
+        : height;
 
     button_rocker_position = [
         speaker_grill_position.x + speaker_grill_size + default_gutter,
@@ -119,9 +131,10 @@ module higher_lower(
     ];
     button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + control_exposure;
 
-    // TODO: reconsider against LED lightpipe
-    enclosure_bottom_height = height / 2 - ENCLOSURE_LIP_HEIGHT / 2;
-    enclosure_top_height = height - enclosure_bottom_height;
+    // NOTE: fixed top + variable bottom for easier swapping
+    // of prints as I test heights
+    enclosure_top_height = 25.4 / 2 + ENCLOSURE_LIP_HEIGHT / 2;
+    enclosure_bottom_height = height - enclosure_top_height;
 
     nut_z = screw_head_clearance + SCREW_HEAD_HEIGHT + screw_length
         - screw_beyond_nut - NUT_HEIGHT;
@@ -343,6 +356,8 @@ DEFAULT_TOLERANCE = .1;
 // rotate([0,180,0])
 difference() {
 higher_lower(
+    // reduce_height = $t >= .5,
+
     show_enclosure_bottom = SHOW_ENCLOSURE_BOTTOM,
     show_battery_holder = SHOW_BATTERY_HOLDER,
     show_batteries = SHOW_BATTERIES,
