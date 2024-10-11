@@ -1,7 +1,6 @@
 include <../../parts_cafe/openscad/batteries-aaa.scad>;
 include <../../parts_cafe/openscad/battery_holder.scad>;
 include <../../parts_cafe/openscad/console.scad>;
-include <../../parts_cafe/openscad/nuts_and_bolts.scad>;
 include <../../parts_cafe/openscad/socket-35PM2A.scad>;
 include <../../parts_cafe/openscad/speaker-AZ40R.scad>;
 
@@ -30,7 +29,6 @@ module higher_lower(
     show_pcb = true,
     show_switch_clutch = true,
     show_speaker = true,
-    show_fasteners = true,
     show_accoutrements = true,
     show_rocker = true,
     show_enclosure_top = true,
@@ -50,17 +48,10 @@ module higher_lower(
     pcb_top_clearance = PCB_TOP_CLEARANCE,
     pcb_bottom_clearance = PCB_BOTTOM_CLEARANCE,
 
-    pcb_screw_hole_positions = [
-        [PCB_WIDTH / 2, 0]
-    ],
     pcb_post_hole_positions = [
         PCB_HOLE_POSITIONS[0],
         PCB_HOLE_POSITIONS[3]
     ],
-
-    screw_length = 1/2 * 25.4,
-    screw_head_clearance = 1,
-    screw_beyond_nut = 1,
 
     battery_count = 2,
 
@@ -135,10 +126,6 @@ module higher_lower(
     // of prints as I test heights
     enclosure_top_height = 25.4 / 2 + ENCLOSURE_LIP_HEIGHT / 2;
     enclosure_bottom_height = height - enclosure_top_height;
-
-    nut_z = screw_head_clearance + SCREW_HEAD_HEIGHT + screw_length
-        - screw_beyond_nut - NUT_HEIGHT;
-    screw_clearance = height - nut_z - ENCLOSURE_FLOOR_CEILING - NUT_HEIGHT;
 
     echo("Enclosure", width / 25.4, length / 25.4, height / 25.4);
     echo("PCB", pcb_width / 25.4, pcb_length / 25.4);
@@ -233,11 +220,7 @@ module higher_lower(
             pcb_width = pcb_width,
             pcb_length = pcb_length,
 
-            pcb_screw_hole_positions = pcb_screw_hole_positions,
             pcb_post_hole_positions = pcb_post_hole_positions,
-
-            screw_clearance = screw_clearance,
-            screw_head_clearance = screw_head_clearance,
 
             switch_clutch_web_length_extension = switch_clutch_web_length_extension,
 
@@ -312,21 +295,6 @@ module higher_lower(
         }
     }
 
-    if (show_fasteners) {
-        % screws(
-            positions = pcb_screw_hole_positions,
-            pcb_position = pcb_position,
-            length = screw_length,
-            z = screw_head_clearance - e
-        );
-
-        % nuts(
-            pcb_position = pcb_position,
-            positions = pcb_screw_hole_positions,
-            z = nut_z - e
-        );
-    }
-
     if (show_clearance) {
         translate([
             ENCLOSURE_WALL + SOCKET_INNER_HEIGHT + e,
@@ -344,7 +312,6 @@ SHOW_BATTERIES = true;
 SHOW_PCB = true;
 SHOW_SWITCH_CLUTCH = true;
 SHOW_SPEAKER = true;
-SHOW_FASTENERS = true;
 SHOW_ACCOUTREMENTS = true;
 SHOW_ROCKER = true;
 SHOW_ENCLOSURE_TOP = true;
@@ -364,7 +331,6 @@ higher_lower(
     show_pcb = SHOW_PCB,
     show_switch_clutch = SHOW_SWITCH_CLUTCH,
     show_speaker = SHOW_SPEAKER,
-    show_fasteners = SHOW_FASTENERS,
     show_accoutrements = SHOW_ACCOUTREMENTS,
     show_rocker = SHOW_ROCKER,
     show_enclosure_top = SHOW_ENCLOSURE_TOP,
@@ -378,6 +344,6 @@ higher_lower(
 // rocker buttons
 // translate([60, -1, -1]) cube([100, 100, 100]);
 
-// fastener
+// middle
 // translate([38, -1, -1]) cube([100, 100, 100]);
 }

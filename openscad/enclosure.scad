@@ -1,9 +1,7 @@
 include <../../parts_cafe/openscad/diagonal_grill.scad>;
 include <../../parts_cafe/openscad/enclosure_engraving.scad>;
-include <../../parts_cafe/openscad/enclosure_screw_cavities.scad>;
 include <../../parts_cafe/openscad/enclosure.scad>;
 include <../../parts_cafe/openscad/flat_top_rectangular_pyramid.scad>;
-include <../../parts_cafe/openscad/pcb_mount_post.scad>;
 include <../../parts_cafe/openscad/pcb_mounting_columns.scad>;
 
 include <pcb.scad>;
@@ -53,11 +51,7 @@ module enclosure(
     pcb_length = 0,
     pcb_height = PCB_HEIGHT,
 
-    pcb_screw_hole_positions = [],
     pcb_post_hole_positions = [],
-
-    screw_clearance = 0,
-    screw_head_clearance = 0,
 
     switch_clutch_web_length_extension = 0,
 
@@ -176,13 +170,11 @@ module enclosure(
     ) {
         pcb_mounting_columns(
             pcb_position = pcb_position,
-            screw_head_clearance = screw_head_clearance,
             wall = ENCLOSURE_INNER_WALL,
-            pcb_screw_hole_positions = pcb_screw_hole_positions,
+            pcb_screw_hole_positions = [],
             pcb_post_hole_positions = pcb_post_hole_positions,
             tolerance = tolerance,
             enclosure_floor_ceiling = ENCLOSURE_FLOOR_CEILING,
-            screw_head_diameter = SCREW_HEAD_DIAMETER,
             pcb_hole_diameter = PCB_HOLE_DIAMETER,
             support_web_length = (pcb_position.z - ENCLOSURE_FLOOR_CEILING) / 2,
             quick_preview = quick_preview
@@ -201,41 +193,6 @@ module enclosure(
                 button_support_length,
                 pcb_position.z - ENCLOSURE_FLOOR_CEILING + e
             ]);
-        }
-    }
-
-    module _top_pcb_fixtures() {
-        z = pcb_position.z + pcb_height;
-        height = dimensions.z - z - ENCLOSURE_FLOOR_CEILING;
-
-        difference() {
-            for (position = pcb_screw_hole_positions) {
-                translate([
-                    position.x + pcb_position.x,
-                    position.y + pcb_position.y,
-                    z
-                ]) {
-                    pcb_mount_post(
-                        width = NUT_DIAMETER + 4,
-                        height = height + e,
-                        ceiling = screw_clearance - tolerance + e,
-                        tolerance = tolerance,
-                        include_sacrificial_bridge = show_dfm,
-                        quick_preview = quick_preview
-                    );
-                }
-            }
-
-            translate([
-                speaker_position.x,
-                speaker_position.y,
-                z - e
-            ]) {
-                cylinder(
-                    d = speaker_cavity_diameter,
-                    h = dimensions.z - z
-                );
-            }
         }
     }
 
@@ -467,15 +424,6 @@ module enclosure(
 
             color(cavity_color) {
                 _bottom_engraving();
-                enclosure_screw_cavities(
-                    screw_head_clearance = screw_head_clearance,
-                    pcb_position = pcb_position,
-                    pcb_screw_hole_positions = pcb_screw_hole_positions,
-                    tolerance = tolerance,
-                    pcb_hole_diameter = PCB_HOLE_DIAMETER,
-                    show_dfm = show_dfm,
-                    quick_preview = quick_preview
-                );
                 _switch_clutch_exposure();
                 _lightpipe_exposure();
             }
@@ -492,7 +440,6 @@ module enclosure(
                 }
 
                 color(outer_color) {
-                    _top_pcb_fixtures();
                     _speaker_fixture();
                     _switch_clutch_aligner();
                 }

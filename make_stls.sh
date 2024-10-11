@@ -69,7 +69,6 @@ function export_stl() {
             -D 'SHOW_PCB=false ' \
             -D 'SHOW_SWITCH_CLUTCH=false ' \
             -D 'SHOW_SPEAKER=false ' \
-            -D 'SHOW_FASTENERS=false ' \
             -D 'SHOW_ACCOUTREMENTS=false ' \
             -D 'SHOW_ROCKER=false ' \
             -D 'SHOW_ENCLOSURE_TOP=false ' \
