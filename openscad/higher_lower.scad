@@ -122,10 +122,8 @@ module higher_lower(
     ];
     button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + control_exposure;
 
-    // NOTE: fixed top + variable bottom for easier swapping
-    // of prints as I test heights
-    enclosure_top_height = 25.4 / 2 + ENCLOSURE_LIP_HEIGHT / 2;
-    enclosure_bottom_height = height - enclosure_top_height;
+    enclosure_bottom_height = pcb_position.z + PCB_HEIGHT + LIGHTPIPE_DIAMETER / 2;
+    enclosure_top_height = height - enclosure_bottom_height;
 
     echo("Enclosure", width / 25.4, length / 25.4, height / 25.4);
     echo("PCB", pcb_width / 25.4, pcb_length / 25.4);

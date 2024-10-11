@@ -12,6 +12,8 @@ SWITCH_CLUTCH_GRIP_HEIGHT = 7;
 DEFAULT_ROUNDING = 24;
 HIDEF_ROUNDING = 120;
 
+LIGHTPIPE_DIAMETER = 1/4 * 25.4;
+
 module enclosure(
     show_top = true,
     show_bottom = true,
@@ -319,56 +321,68 @@ module enclosure(
     }
 
     module _lightpipe_exposure(
-        diameter = 1/4 * 25.4 + tolerance * 2,
+        diameter = LIGHTPIPE_DIAMETER + tolerance * 2,
         fixture = false,
+        bottom = false,
+        top = false,
         $fn = 24
     ) {
-        fixture_y = pcb_position.y + pcb_length + tolerance;
-
         x = pcb_position.x + led_position_on_pcb.x;
-        y = fixture
-                ? fixture_y
-                : dimensions.y - ENCLOSURE_WALL - e;
-        z = pcb_position.z + pcb_height + diameter / 2;
+        y = pcb_position.y + pcb_length + tolerance;
+        led_center_z = pcb_position.z + pcb_height + LIGHTPIPE_DIAMETER / 2;
+
+        fixture_width = diameter + ENCLOSURE_INNER_WALL * 2 + 4;
+        fixture_length = dimensions.y - y - e;
 
         if (fixture) {
-            length = dimensions.y - ENCLOSURE_WALL - fixture_y + e;
+            z = bottom
+                ? ENCLOSURE_FLOOR_CEILING - e
+                : led_center_z + e;
 
             difference() {
-                hull() {
-                    translate([
-                        x - diameter / 2 - ENCLOSURE_INNER_WALL,
-                        y,
-                        ENCLOSURE_FLOOR_CEILING - e
-                    ]) {
-                        cube([
-                            diameter + ENCLOSURE_INNER_WALL * 2,
-                            length,
-                            e
-                        ]);
-                    }
+                translate([x - fixture_width / 2, y, z]) {
+                    cube([
+                        fixture_width,
+                        fixture_length,
+                        bottom
+                            ? led_center_z - z
+                            : dimensions.z - z - ENCLOSURE_FLOOR_CEILING + e
+                    ]);
+                }
 
-                    translate([x, y, z]) {
-                        rotate([-90, 0, 0]) cylinder(
-                            d = diameter + ENCLOSURE_INNER_WALL * 2,
-                            h = length
+                if (top) {
+                    translate([
+                        speaker_position.x,
+                        speaker_position.y,
+                        z - e
+                    ]) {
+                        cylinder(
+                            d = speaker_cavity_diameter + ENCLOSURE_INNER_WALL / 2,
+                            h = dimensions.z - z + e * 2
                         );
                     }
                 }
-
-                translate([x, y - e, z]) {
-                    rotate([-90, 0, 0]) cylinder(
-                        d = diameter,
-                        h = length + e * 2
-                    );
-                }
             }
         } else {
-            translate([x, y, z]) {
+            translate([x, y - e, led_center_z]) {
                 rotate([-90, 0, 0]) cylinder(
                     d = diameter,
-                    h = ENCLOSURE_WALL + e * 2
+                    h = dimensions.y - y + e * 2
                 );
+            }
+
+            if (bottom) {
+                translate([
+                    x - (fixture_width + tolerance * 2) / 2,
+                    y - e,
+                    led_center_z - e
+                ]) {
+                    cube([
+                        (fixture_width + tolerance * 2),
+                        fixture_length + e * 2,
+                        ENCLOSURE_LIP_HEIGHT + e * 2
+                    ]);
+                }
             }
         }
     }
@@ -417,7 +431,7 @@ module enclosure(
 
                 color(outer_color) {
                     _bottom_pcb_fixtures();
-                    _lightpipe_exposure(fixture = true);
+                    _lightpipe_exposure(fixture = true, bottom = true);
                     _battery_holder_fixture();
                 }
             }
@@ -425,7 +439,7 @@ module enclosure(
             color(cavity_color) {
                 _bottom_engraving();
                 _switch_clutch_exposure();
-                _lightpipe_exposure();
+                _lightpipe_exposure(fixture = false, bottom = true);
             }
         }
     }
@@ -442,6 +456,7 @@ module enclosure(
                 color(outer_color) {
                     _speaker_fixture();
                     _switch_clutch_aligner();
+                    _lightpipe_exposure(fixture = true, top = true);
                 }
             }
 
@@ -451,7 +466,7 @@ module enclosure(
                 _button_rocker_cavity();
                 _top_engraving();
                 _switch_clutch_exposure();
-                _lightpipe_exposure();
+                _lightpipe_exposure(fixture = false, top = true);
             }
         }
     }
