@@ -388,38 +388,61 @@ module enclosure(
     }
 
     module _battery_holder_fixture(
+        top = false,
         depth = ENCLOSURE_INNER_WALL,
         coverage = 5,
         height = 2
     ) {
-        translate([
-            battery_holder_position.x
-                + (battery_holder_dimensions.x - coverage) / 2,
-            battery_holder_position.y + battery_holder_dimensions.y
-                + tolerance * 2,
-            ENCLOSURE_FLOOR_CEILING - e
-        ]) {
-            cube([
-                coverage,
-                depth,
-                height + e
-            ]);
-        }
+        function get_x(width, offset = 0) = (
+            battery_holder_position.x + (battery_holder_dimensions.x - width) / 2
+            + offset
+        );
 
-        for (x = [
-            battery_holder_position.x - (depth + tolerance * 2),
-            battery_holder_position.x
-                + battery_holder_dimensions.x + tolerance * 2
-        ]) {
-            translate([x, ENCLOSURE_WALL - e, ENCLOSURE_FLOOR_CEILING - e]) {
-                flat_top_rectangular_pyramid(
-                    top_width = depth,
-                    top_length = 0,
-                    bottom_width = depth,
-                    bottom_length = coverage + e,
-                    height = height + e,
-                    top_weight_y = 0
-                );
+        if (top) {
+            z = battery_holder_position.z + battery_holder_dimensions.z;
+            y = ENCLOSURE_WALL - e;
+
+            for (x = [
+                get_x(ENCLOSURE_INNER_WALL) - dimensions.x / 6,
+                get_x(ENCLOSURE_INNER_WALL) + dimensions.x / 6
+            ]) {
+                translate([x, y, z]) {
+                    cube([
+                        ENCLOSURE_INNER_WALL,
+                        battery_holder_dimensions.y,
+                        dimensions.z - z - e
+                    ]);
+                }
+            }
+        } else {
+            translate([
+                get_x(coverage),
+                battery_holder_position.y + battery_holder_dimensions.y
+                    + tolerance * 2,
+                ENCLOSURE_FLOOR_CEILING - e
+            ]) {
+                cube([
+                    coverage,
+                    depth,
+                    height + e
+                ]);
+            }
+
+            for (x = [
+                battery_holder_position.x - (depth + tolerance * 2),
+                battery_holder_position.x
+                    + battery_holder_dimensions.x + tolerance * 2
+            ]) {
+                translate([x, ENCLOSURE_WALL - e, ENCLOSURE_FLOOR_CEILING - e]) {
+                    flat_top_rectangular_pyramid(
+                        top_width = depth,
+                        top_length = 0,
+                        bottom_width = depth,
+                        bottom_length = coverage + e,
+                        height = height + e,
+                        top_weight_y = 0
+                    );
+                }
             }
         }
     }
@@ -457,6 +480,7 @@ module enclosure(
                     _speaker_fixture();
                     _switch_clutch_aligner();
                     _lightpipe_exposure(fixture = true, top = true);
+                    _battery_holder_fixture(top = true);
                 }
             }
 
