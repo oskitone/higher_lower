@@ -48,6 +48,7 @@ module button_rocker(
     ];
 
     plunge = plunge + actuator_cavity_height;
+    offset = plunge * .75; // TODO: smarter
 
     module _engraving(y, rotation, size = min(width, length) * .5) {
         translate([width / 2, y, height - ENCLOSURE_ENGRAVING_DEPTH]) {
@@ -102,12 +103,12 @@ module button_rocker(
                 cube(brim_dimensions);
             }
 
-            translate([-brim_size + plunge, -brim_size + plunge, -plunge]) {
+            translate([-brim_size + offset, -brim_size + offset, -plunge]) {
                 flat_top_rectangular_pyramid(
                     top_width = brim_dimensions.x,
                     top_length = brim_dimensions.y,
-                    bottom_width = brim_dimensions.x - plunge * 2,
-                    bottom_length = brim_dimensions.y - plunge * 2,
+                    bottom_width = brim_dimensions.x - offset * 2,
+                    bottom_length = brim_dimensions.y - offset * 2,
                     height = plunge + e
                 );
             }
