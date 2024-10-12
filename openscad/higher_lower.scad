@@ -41,7 +41,7 @@ module higher_lower(
     outer_gutter = OUTER_GUTTER,
     default_gutter = SCOUT_DEFAULT_GUTTER,
     button_gutter = SCOUT_DEFAULT_GUTTER / -2,
-    label_gutter = 1,
+    label_gutter = 2,
 
     accessory_fillet = 1,
 
