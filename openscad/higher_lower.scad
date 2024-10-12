@@ -172,7 +172,7 @@ module higher_lower(
             button_rocker(
                 button_width, button_length, button_height,
                 plunge = button_rocker_position.z
-                    - (pcb_position.z + PCB_HEIGHT + BUTTON_HEIGHT),
+                    - (pcb_position.z + PCB_HEIGHT + SPST_ACTUATOR_HEIGHT_OFF_PCB),
                 gutter = button_gutter,
                 brim_height = ROCKER_BRIM_HEIGHT,
                 fillet = quick_preview ? 0 : accessory_fillet,

@@ -1,4 +1,5 @@
 include <../../parts_cafe/openscad/led.scad>;
+include <../../parts_cafe/openscad/spst.scad>;
 include <../../parts_cafe/openscad/switch-OS102011MA1QN1.scad>;
 
 use <../../scout/openscad/switch_clutch.scad>;
@@ -21,9 +22,6 @@ PCB_HOLE_POSITIONS = [
   get_translated_xy([105.41, 80.01]),
 ];
 PCB_HOLE_DIAMETER = 3.2;
-
-BUTTON_DIAMETER = 6;
-BUTTON_HEIGHT = 6;
 
 // NOTE: caps lie flat, leads must be trimmed
 PCB_TOP_CLEARANCE = 10;
@@ -88,7 +86,7 @@ module pcb(
     if (show_switches) {
         for (xy = switch_centers) {
             translate([xy.x, xy.y, height - e]) {
-                % cylinder(d = BUTTON_DIAMETER, h = BUTTON_HEIGHT + e);
+                % spst();
             }
         }
 
