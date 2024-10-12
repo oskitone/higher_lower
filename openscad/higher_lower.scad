@@ -34,7 +34,8 @@ module higher_lower(
     show_enclosure_top = true,
     show_clearance = false,
 
-    control_exposure = 2,
+    button_exposure = 4,
+    switch_exposure = 2,
     control_clearance = .6,
 
     outer_gutter = OUTER_GUTTER,
@@ -120,7 +121,7 @@ module higher_lower(
         speaker_grill_position.y,
         height - ENCLOSURE_FLOOR_CEILING - ROCKER_BRIM_HEIGHT - e
     ];
-    button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + control_exposure;
+    button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
 
     enclosure_bottom_height = pcb_position.z + PCB_HEIGHT + LIGHTPIPE_DIAMETER / 2;
     enclosure_top_height = height - enclosure_bottom_height;
@@ -272,7 +273,7 @@ module higher_lower(
                 x_clearance = .2,
 
                 fillet = accessory_fillet,
-                side_overexposure = control_exposure,
+                side_overexposure = switch_exposure,
                 tolerance = tolerance,
 
                 outer_color = control_outer_color,
