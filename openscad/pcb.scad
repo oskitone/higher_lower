@@ -68,8 +68,14 @@ module pcb(
     }
 
     switch_centers = [
-        [rocker_center_x, rocker_center_y - (button_dimensions.x + button_gutter) / 2 ],
-        [rocker_center_x, rocker_center_y + (button_dimensions.y + button_gutter) / 2 ],
+        [rocker_center_x, rocker_center_y - (button_dimensions.x + button_gutter) / 2],
+        [rocker_center_x, rocker_center_y + (button_dimensions.y + button_gutter) / 2],
+
+        // TODO: de-dupe
+        [rocker_center_x, rocker_center_y - (button_dimensions.x + button_gutter) / 2
+            + 6.3],
+        [rocker_center_x, rocker_center_y + (button_dimensions.y + button_gutter) / 2
+            - 6.3],
     ];
 
     echo("PCB switch_centers", [
