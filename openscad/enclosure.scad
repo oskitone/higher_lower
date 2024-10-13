@@ -14,6 +14,9 @@ HIDEF_ROUNDING = 120;
 
 LIGHTPIPE_DIAMETER = 1/4 * 25.4;
 
+// TODO: prevent PCB obstruction
+FIXTURE_HEIGHT = 2;
+
 module enclosure(
     show_top = true,
     show_bottom = true,
@@ -280,24 +283,31 @@ module enclosure(
         }
     }
 
-    module _switch_clutch_aligner(
-        width = 10, // NOTE: eyeballed to fill towards speaker fixture
-        height = SPEAKER_HEIGHT
+    module _switch_clutch_fixture(
+        top = true,
+        top_width = 10 // NOTE: eyeballed to fill towards speaker fixture
     ) {
+        width = top ? top_width : ENCLOSURE_INNER_WALL;
+        height = top ? SPEAKER_HEIGHT : FIXTURE_HEIGHT;
+
         x = pcb_position.x;
-        z = dimensions.z - ENCLOSURE_FLOOR_CEILING - height;
+        z = top
+            ? dimensions.z - ENCLOSURE_FLOOR_CEILING - height
+            : ENCLOSURE_FLOOR_CEILING - e;
 
         difference() {
             translate([x, switch_clutch_aligner_y, z]) {
                 cube([width, switch_clutch_aligner_length, height + e]);
             }
 
-            translate([speaker_position.x, speaker_position.y, z - e]) {
-                _c(
-                    speaker_cavity_diameter + ENCLOSURE_INNER_WALL,
-                    height + e * 3,
-                    chamfer = 0
-                );
+            if (top) {
+                translate([speaker_position.x, speaker_position.y, z - e]) {
+                    _c(
+                        speaker_cavity_diameter + ENCLOSURE_INNER_WALL,
+                        height + e * 3,
+                        chamfer = 0
+                    );
+                }
             }
         }
     }
@@ -391,7 +401,7 @@ module enclosure(
         top = false,
         depth = ENCLOSURE_INNER_WALL,
         coverage = 5,
-        height = 2
+        height = FIXTURE_HEIGHT
     ) {
         function get_x(width, offset = 0) = (
             battery_holder_position.x + (battery_holder_dimensions.x - width) / 2
@@ -454,6 +464,7 @@ module enclosure(
 
                 color(outer_color) {
                     _bottom_pcb_fixtures();
+                    _switch_clutch_fixture(top = false);
                     _lightpipe_exposure(fixture = true, bottom = true);
                     _battery_holder_fixture();
                 }
@@ -478,7 +489,7 @@ module enclosure(
 
                 color(outer_color) {
                     _speaker_fixture();
-                    _switch_clutch_aligner();
+                    _switch_clutch_fixture(top = true);
                     _lightpipe_exposure(fixture = true, top = true);
                     _battery_holder_fixture(top = true);
                 }
