@@ -14,9 +14,6 @@ HIDEF_ROUNDING = 120;
 
 LIGHTPIPE_DIAMETER = 1/4 * 25.4;
 
-// TODO: prevent PCB obstruction
-FIXTURE_HEIGHT = 2;
-
 module enclosure(
     show_top = true,
     show_bottom = true,
@@ -83,6 +80,8 @@ module enclosure(
     switch_clutch_aligner_y = pcb_position.y + PCB_SWITCH_Y
             + SWITCH_BASE_LENGTH / 2
             - switch_clutch_aligner_length / 2;
+
+    fixture_height = pcb_position.z - ENCLOSURE_FLOOR_CEILING;
 
     module _c(
         diameter,
@@ -288,7 +287,7 @@ module enclosure(
         top_width = 10 // NOTE: eyeballed to fill towards speaker fixture
     ) {
         width = top ? top_width : ENCLOSURE_INNER_WALL;
-        height = top ? SPEAKER_HEIGHT : FIXTURE_HEIGHT;
+        height = top ? SPEAKER_HEIGHT : fixture_height;
 
         x = pcb_position.x;
         z = top
@@ -401,7 +400,7 @@ module enclosure(
         top = false,
         depth = ENCLOSURE_INNER_WALL,
         coverage = 5,
-        height = FIXTURE_HEIGHT
+        height = fixture_height
     ) {
         function get_x(width, offset = 0) = (
             battery_holder_position.x + (battery_holder_dimensions.x - width) / 2
