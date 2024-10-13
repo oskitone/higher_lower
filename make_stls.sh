@@ -54,15 +54,15 @@ function export_stl() {
     override="$2"
 
     function _run() {
-        ascii_filename="$dir/$prefix-$timestamp-$commit_hash-$stub-ascii.stl"
         filename="$dir/$prefix-$timestamp-$commit_hash-$stub.stl"
 
         echo "Exporting $filename..."
 
+        # The "& \" at the end runs everything in parallel!
         $openscad "openscad/higher_lower.scad" \
             --quiet \
-            -o "$ascii_filename" \
-            --export-format "asciistl" \
+            -o "$filename" \
+            --export-format "binstl" \
             -D 'SHOW_ENCLOSURE_BOTTOM=false ' \
             -D 'SHOW_BATTERY_HOLDER=false ' \
             -D 'SHOW_BATTERIES=false ' \
@@ -73,14 +73,7 @@ function export_stl() {
             -D 'SHOW_ROCKER=false ' \
             -D 'SHOW_ENCLOSURE_TOP=false ' \
             -D "$override=true" \
-
-        echo "Compressing $filename..."
-        admesh "$ascii_filename" \
-            --no-check \
-            --write-binary-stl="$filename" \
-            > /dev/null
-
-        rm "$ascii_filename"
+            & \
     }
 
     if [[ -z "$query" ]]; then
@@ -106,18 +99,16 @@ function run() {
 
     start=`date +%s`
 
-    # The "& \" at the end runs everything in parallel!
-    export_stl 'enclosure_bottom' 'SHOW_ENCLOSURE_BOTTOM'& \
-    export_stl 'battery_holder' 'SHOW_BATTERY_HOLDER'& \
-    export_stl 'switch_clutch' 'SHOW_SWITCH_CLUTCH'& \
-    export_stl 'rocker' 'SHOW_ROCKER'& \
-    export_stl 'enclosure_top' 'SHOW_ENCLOSURE_TOP'& \
+    export_stl 'enclosure_bottom' 'SHOW_ENCLOSURE_BOTTOM'
+    export_stl 'battery_holder' 'SHOW_BATTERY_HOLDER'
+    export_stl 'switch_clutch' 'SHOW_SWITCH_CLUTCH'
+    export_stl 'rocker' 'SHOW_ROCKER'
+    export_stl 'enclosure_top' 'SHOW_ENCLOSURE_TOP'
     wait
 
     end=`date +%s`
     runtime=$((end-start))
 
-    # TODO: fix condition
     if [[ "$query" && -z $_found_matches ]]; then
         echo "Found no matches for query '$query'"
     else
