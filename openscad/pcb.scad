@@ -55,14 +55,16 @@ module pcb(
     hole_positions = PCB_HOLE_POSITIONS,
     hole_diameter = PCB_HOLE_DIAMETER,
 
+    bleed = 0,
+
     pcb_color = "purple",
     silkscreen_color = [1,1,1,.25]
 ) {
     e = .0143;
     silkscreen_height = e;
 
-    module _translate(position) {
-        translate([position.x, position.y, PCB_HEIGHT - e]) {
+    module _translate(xy, z = PCB_HEIGHT - e) {
+        translate([xy.x, xy.y, z]) {
             children();
         }
     }
@@ -85,19 +87,19 @@ module pcb(
 
     if (show_led) {
         _translate(PCB_LED_POSITION) {
-            % led();
+            # led();
         }
     }
 
     if (show_switches) {
         for (xy = switch_centers) {
             translate([xy.x, xy.y, height - e]) {
-                % spst();
+                # spst();
             }
         }
 
         translate([SWITCH_ORIGIN.x, PCB_SWITCH_Y + SWITCH_ORIGIN.y, height - e]) {
-            % switch(position = side_switch_position);
+            # switch(position = side_switch_position);
         }
     }
 
@@ -105,7 +107,13 @@ module pcb(
         difference() {
             union() {
                 color(pcb_color) {
-                    cube([width, length, height]);
+                    _translate([-bleed, -bleed], 0) {
+                        cube([
+                            width + bleed * 2,
+                            length + bleed * 2,
+                            height
+                        ]);
+                    }
                 }
 
                 if (show_silkscreen) {
@@ -132,7 +140,7 @@ module pcb(
                 for (xy = hole_positions) {
                     translate([xy.x, xy.y, -e]) {
                         cylinder(
-                            d = hole_diameter,
+                            d = hole_diameter + bleed * 2,
                             h = height + silkscreen_height + e * 2,
                             $fn = 12
                         );

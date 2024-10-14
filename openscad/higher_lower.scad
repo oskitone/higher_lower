@@ -29,7 +29,6 @@ module higher_lower(
     show_pcb = true,
     show_switch_clutch = true,
     show_speaker = true,
-    show_accoutrements = true,
     show_rocker = true,
     show_enclosure_top = true,
     show_clearance = false,
@@ -237,8 +236,8 @@ module higher_lower(
     translate([pcb_position.x, pcb_position.y, pcb_position.z - e * 2]) {
         pcb(
             show_board = show_pcb,
-            show_switches = show_accoutrements,
-            show_led = show_accoutrements,
+            show_switches = show_pcb,
+            show_led = show_pcb,
             show_clearance = show_clearance,
 
             rocker_center_x = button_rocker_position.x - pcb_position.x
@@ -249,6 +248,8 @@ module higher_lower(
             button_gutter = button_gutter,
 
             side_switch_position = side_switch_position,
+
+            bleed = tolerance,
 
             width = pcb_width,
             length = pcb_length
@@ -311,7 +312,6 @@ SHOW_BATTERIES = true;
 SHOW_PCB = true;
 SHOW_SWITCH_CLUTCH = true;
 SHOW_SPEAKER = true;
-SHOW_ACCOUTREMENTS = true;
 SHOW_ROCKER = true;
 SHOW_ENCLOSURE_TOP = true;
 
@@ -330,7 +330,6 @@ higher_lower(
     show_pcb = SHOW_PCB,
     show_switch_clutch = SHOW_SWITCH_CLUTCH,
     show_speaker = SHOW_SPEAKER,
-    show_accoutrements = SHOW_ACCOUTREMENTS,
     show_rocker = SHOW_ROCKER,
     show_enclosure_top = SHOW_ENCLOSURE_TOP,
     show_clearance = SHOW_CLEARANCE,
