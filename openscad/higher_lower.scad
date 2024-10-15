@@ -122,6 +122,21 @@ module higher_lower(
     ];
     button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
 
+    pcb_rocker_center_x = button_rocker_position.x - pcb_position.x
+        + button_width / 2;
+    rocker_center_y = button_rocker_position.y - pcb_position.y
+        + button_length + button_gutter / 2;
+    pcb_switch_centers = [
+        [pcb_rocker_center_x, rocker_center_y - (button_width + button_gutter) / 2],
+        [pcb_rocker_center_x, rocker_center_y + (button_length + button_gutter) / 2],
+
+        // TODO: de-dupe
+        [pcb_rocker_center_x, rocker_center_y - (button_width + button_gutter) / 2
+            + 6.3],
+        [pcb_rocker_center_x, rocker_center_y + (button_length + button_gutter) / 2
+            - 6.3],
+    ];
+
     enclosure_bottom_height = pcb_position.z + PCB_HEIGHT + LIGHTPIPE_DIAMETER / 2;
     enclosure_top_height = height - enclosure_bottom_height;
 
@@ -240,12 +255,7 @@ module higher_lower(
             show_led = show_pcb,
             show_clearance = show_clearance,
 
-            rocker_center_x = button_rocker_position.x - pcb_position.x
-                + button_width / 2,
-            rocker_center_y = button_rocker_position.y - pcb_position.y
-                + button_length + button_gutter / 2,
-            button_dimensions = [button_width, button_length],
-            button_gutter = button_gutter,
+            switch_centers = pcb_switch_centers,
 
             side_switch_position = side_switch_position,
 

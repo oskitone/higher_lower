@@ -42,10 +42,7 @@ module pcb(
     length = 0,
     height = PCB_HEIGHT,
 
-    rocker_center_x = 0,
-    rocker_center_y = 0,
-    button_dimensions = [0,0],
-    button_gutter = 0,
+    switch_centers = [],
 
     side_switch_position = 0,
 
@@ -68,17 +65,6 @@ module pcb(
             children();
         }
     }
-
-    switch_centers = [
-        [rocker_center_x, rocker_center_y - (button_dimensions.x + button_gutter) / 2],
-        [rocker_center_x, rocker_center_y + (button_dimensions.y + button_gutter) / 2],
-
-        // TODO: de-dupe
-        [rocker_center_x, rocker_center_y - (button_dimensions.x + button_gutter) / 2
-            + 6.3],
-        [rocker_center_x, rocker_center_y + (button_dimensions.y + button_gutter) / 2
-            - 6.3],
-    ];
 
     echo("PCB switch_centers", [
         [4 + switch_centers[0].x / 25.4, 4.5 - switch_centers[0].y / 25.4,],
