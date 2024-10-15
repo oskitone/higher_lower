@@ -6,8 +6,21 @@ include <../../parts_cafe/openscad/flat_top_rectangular_pyramid.scad>;
 ROCKER_BRIM_SIZE = 2;
 ROCKER_BRIM_HEIGHT = 1;
 
+function get_rocker_switch_center(
+    xy = [0,0],
+    offset = [0,0]
+) = ([
+    xy.x - offset.x,
+    xy.y - offset.y,
+]);
+
 module button_rocker(
     width, length, height,
+
+    switch_centers = [],
+    actuator_cavity_height =
+        SPST_ACTUATOR_HEIGHT_OFF_PCB - SPST_BASE_DIMENSIONS.z
+        - SPST_CONSERVATIVE_TRAVEL,
 
     plunge = 0,
 
@@ -17,6 +30,9 @@ module button_rocker(
     brim_height = ROCKER_BRIM_HEIGHT,
 
     fillet = 0,
+    chamfer = ENCLOSURE_ENGRAVING_CHAMFER,
+
+    tolerance = 0,
 
     outer_color = undef,
     cavity_color = undef,
@@ -31,6 +47,8 @@ module button_rocker(
         brim_height
     ];
 
+    plunge = plunge + actuator_cavity_height;
+
     module _engraving(y, rotation, size = min(width, length) * .5) {
         translate([width / 2, y, height - ENCLOSURE_ENGRAVING_DEPTH]) {
             rotate([0, 0, rotation]) engraving(
@@ -39,8 +57,27 @@ module button_rocker(
                 bleed = quick_preview ? 0 : ENCLOSURE_ENGRAVING_BLEED,
                 height = ENCLOSURE_ENGRAVING_DEPTH + e,
                 center = true,
-                chamfer =  quick_preview ? 0 : ENCLOSURE_ENGRAVING_CHAMFER
+                chamfer =  quick_preview ? 0 : chamfer
             );
+        }
+    }
+
+    module _actuator_cavities($fn = quick_preview ? 6 : 24) {
+        inner_diameter = SPST_ACTUATOR_DIAMETER + tolerance * 2;
+
+        for (xy = switch_centers) {
+            translate([xy.x, xy.y, -(plunge + e)]) {
+                cylinder(
+                    d = inner_diameter,
+                    h = actuator_cavity_height + e
+                );
+
+                cylinder(
+                    d1 = inner_diameter + chamfer * 2,
+                    d2 = inner_diameter,
+                    h = chamfer + e
+                );
+            }
         }
     }
 
@@ -79,6 +116,7 @@ module button_rocker(
         color(cavity_color) {
             _engraving(length + gutter + length / 2, 0);
             _engraving(length / 2, 180);
+            _actuator_cavities();
         }
     }
 }

@@ -183,14 +183,28 @@ module higher_lower(
     }
 
     if (show_rocker) {
+        offset = [
+            button_rocker_position.x - pcb_position.x,
+            button_rocker_position.y - pcb_position.y
+        ];
+
+        switch_centers = [
+            get_rocker_switch_center(pcb_switch_centers[0], offset),
+            get_rocker_switch_center(pcb_switch_centers[1], offset),
+            get_rocker_switch_center(pcb_switch_centers[2], offset),
+            get_rocker_switch_center(pcb_switch_centers[3], offset),
+        ];
+
         translate(button_rocker_position) {
             button_rocker(
                 button_width, button_length, button_height,
+                switch_centers = switch_centers,
                 plunge = button_rocker_position.z
                     - (pcb_position.z + PCB_HEIGHT + SPST_ACTUATOR_HEIGHT_OFF_PCB),
                 gutter = button_gutter,
                 brim_height = ROCKER_BRIM_HEIGHT,
                 fillet = quick_preview ? 0 : accessory_fillet,
+                tolerance = tolerance * 2, // intentionally loose
                 outer_color = control_outer_color,
                 cavity_color = control_cavity_color,
                 quick_preview = quick_preview
@@ -350,7 +364,7 @@ higher_lower(
 );
 
 // rocker buttons
-// translate([60, -1, -1]) cube([100, 100, 100]);
+// translate([60.7, -1, -1]) cube([100, 100, 100]);
 
 // middle
 // translate([38, -1, -1]) cube([100, 100, 100]);
