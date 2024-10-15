@@ -88,7 +88,9 @@ function export_stl() {
 }
 
 function run() {
-    mkdir -pv $dir
+    mkdir -pv $dir >/dev/null
+    echo "$dir"
+    echo
 
     function finish() {
         # Kill descendent processes
