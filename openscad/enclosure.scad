@@ -12,7 +12,8 @@ SWITCH_CLUTCH_GRIP_HEIGHT = 7;
 DEFAULT_ROUNDING = 24;
 HIDEF_ROUNDING = 120;
 
-LIGHTPIPE_DIAMETER = 1/4 * 25.4;
+// "1/4" glue stick
+LIGHTPIPE_DIAMETER = 7;
 
 module enclosure(
     show_top = true,
@@ -334,6 +335,8 @@ module enclosure(
         fixture = false,
         bottom = false,
         top = false,
+        gasket_depth = ENCLOSURE_INNER_WALL,
+        gasket_brim = ENCLOSURE_INNER_WALL,
         $fn = 24
     ) {
         x = pcb_position.x + led_position_on_pcb.x;
@@ -376,7 +379,14 @@ module enclosure(
             translate([x, y - e, led_center_z]) {
                 rotate([-90, 0, 0]) cylinder(
                     d = diameter,
-                    h = dimensions.y - y + e * 2
+                    h = dimensions.y - y - gasket_depth + e
+                );
+            }
+
+            translate([x, dimensions.y - gasket_depth - e, led_center_z]) {
+                rotate([-90, 0, 0]) cylinder(
+                    d = diameter - gasket_brim * 2,
+                    h = gasket_depth + e * 2
                 );
             }
 
