@@ -43,7 +43,7 @@ module enclosure(
 
     top_engraving_dimensions = [0,0],
     top_engraving_position = [0,0],
-    top_engraving_model_text_size = 4.25,
+    top_engraving_model_text_size = 3.8,
     top_engraving_model_length = ENCLOSURE_ENGRAVING_LENGTH,
 
     lip_height = ENCLOSURE_LIP_HEIGHT,
@@ -249,7 +249,8 @@ module enclosure(
         );
 
         render() enclosure_engraving(
-            string = "HIGHER LOWER",
+            // HACK: kerning
+            string = "H\u2009I\u2009G\u2009H\u2009E\u2009R\u2009 \u2009L\u2009O\u2009W\u2009E\u2009R",
             size = top_engraving_model_text_size,
             position = [
                 top_engraving_position.x + top_engraving_dimensions.x / 2,
