@@ -82,7 +82,7 @@ module enclosure(
             + SWITCH_BASE_LENGTH / 2
             - switch_clutch_aligner_length / 2;
 
-    fixture_height = pcb_position.z - ENCLOSURE_FLOOR_CEILING;
+    under_pcb_fixture_height = pcb_position.z - ENCLOSURE_FLOOR_CEILING;
 
     module _c(
         diameter,
@@ -288,7 +288,7 @@ module enclosure(
         top_width = 10 // NOTE: eyeballed to fill towards speaker fixture
     ) {
         width = top ? top_width : ENCLOSURE_INNER_WALL;
-        height = top ? SPEAKER_HEIGHT : fixture_height;
+        height = top ? SPEAKER_HEIGHT : under_pcb_fixture_height;
 
         x = pcb_position.x;
         z = top
@@ -409,27 +409,42 @@ module enclosure(
     module _battery_holder_fixture(
         top = false,
         depth = ENCLOSURE_INNER_WALL,
-        coverage = 5,
-        height = fixture_height
+        lip_length = ENCLOSURE_WALL,
+        lip_height = ENCLOSURE_WALL,
+        coverage = 5
     ) {
         function get_x(width, offset = 0) = (
             battery_holder_position.x + (battery_holder_dimensions.x - width) / 2
             + offset
         );
 
+        x_to_rocker_distance = get_x(0) - (button_rocker_position.x
+            - ROCKER_BRIM_SIZE - (control_clearance + tolerance) * 2);
+
         if (top) {
             z = battery_holder_position.z + battery_holder_dimensions.z;
             y = ENCLOSURE_WALL - e;
 
+            length = battery_holder_dimensions.y + tolerance * 4
+                + lip_length;
+
             for (x = [
-                get_x(ENCLOSURE_INNER_WALL) - dimensions.x / 6,
-                get_x(ENCLOSURE_INNER_WALL) + dimensions.x / 6
+                get_x(ENCLOSURE_INNER_WALL) - x_to_rocker_distance,
+                get_x(ENCLOSURE_INNER_WALL) + x_to_rocker_distance
             ]) {
                 translate([x, y, z]) {
                     cube([
                         ENCLOSURE_INNER_WALL,
-                        battery_holder_dimensions.y,
+                        length,
                         dimensions.z - z - e
+                    ]);
+                }
+
+                translate([x, y + length - lip_length, z - lip_height - e]) {
+                    cube([
+                        ENCLOSURE_INNER_WALL,
+                        lip_length,
+                        lip_height + e
                     ]);
                 }
             }
@@ -443,7 +458,7 @@ module enclosure(
                 cube([
                     coverage,
                     depth,
-                    height + e
+                    under_pcb_fixture_height + e
                 ]);
             }
 
@@ -458,7 +473,7 @@ module enclosure(
                         top_length = 0,
                         bottom_width = depth,
                         bottom_length = coverage + e,
-                        height = height + e,
+                        height = battery_holder_dimensions.z / 2 + e,
                         top_weight_y = 0
                     );
                 }
