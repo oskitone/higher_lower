@@ -1,10 +1,13 @@
 # Higher Lower
 
-WiP electronic game about guessing musical interval directions
+![Drawing, traces of speakers and batteries, prospective enclosure layouts](misc/drawing-parts.png)
+
+A handheld electronic game you can play with your eyes closed.
+
+In development!
 
 ## TODO
 
-- Better description ^
 - Reduce power usage
 - Difficulty settings
 - Minimum viable Arduboy setup
