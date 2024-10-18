@@ -161,8 +161,10 @@ module enclosure(
             remove_lip = !lip,
             lip_height = lip_height,
             fillet = quick_preview ? 0 : fillet,
+            inner_fillet = quick_preview ? 0 : fillet,
             tolerance = tolerance * 1.5, // intentionally kinda loose
             include_tongue_and_groove = true,
+            tongue_and_groove_snap = [.5, 1, .5, 1],
             include_disassembly_cavities = true,
             outer_color = outer_color,
             cavity_color = cavity_color,
