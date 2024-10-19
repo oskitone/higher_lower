@@ -166,7 +166,7 @@ module enclosure(
             include_tongue_and_groove = true,
             tongue_and_groove_snap = [.5, 1, .5, 1],
             tongue_and_groove_pull = .3,
-            include_disassembly_cavities = true,
+            include_disassembly_wedge = true,
             outer_color = outer_color,
             cavity_color = cavity_color,
             $fn = quick_preview ? undef : DEFAULT_ROUNDING
