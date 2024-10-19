@@ -49,6 +49,7 @@ module enclosure(
     lip_height = ENCLOSURE_LIP_HEIGHT,
 
     fillet = ENCLOSURE_FILLET,
+    inner_chamfer = ENCLOSURE_INNER_CHAMFER,
 
     pcb_width = 0,
     pcb_length = 0,
@@ -161,7 +162,7 @@ module enclosure(
             remove_lip = !lip,
             lip_height = lip_height,
             fillet = quick_preview ? 0 : fillet,
-            inner_fillet = quick_preview ? 0 : fillet,
+            inner_chamfer = quick_preview ? 0 : inner_chamfer,
             tolerance = tolerance * 1.5, // intentionally kinda loose
             include_tongue_and_groove = true,
             tongue_and_groove_snap = [.5, 1, .5, 1],
