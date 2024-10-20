@@ -69,11 +69,6 @@ void setRoundsWon(uint8_t r) {
     return;
   }
 
-  // TODO: rethink when to do this
-  if (roundsWon == 1) {
-    initRandomSeed();
-  }
-
   randomize();
   index = STARTING_INDEX;
 
@@ -95,6 +90,7 @@ void reset() {
 }
 
 void setup() {
+  initRandomSeed();
   setupInterface();
   setupSerial();
   reset();
