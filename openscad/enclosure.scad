@@ -413,11 +413,9 @@ module enclosure(
     }
 
     module _battery_holder_fixture(
-        top = false,
         depth = ENCLOSURE_INNER_WALL,
-        lip_length = ENCLOSURE_WALL,
-        lip_height = ENCLOSURE_WALL,
-        coverage = 5
+        catch_height = 4,
+        coverage = 20
     ) {
         function get_x(width, offset = 0) = (
             battery_holder_position.x + (battery_holder_dimensions.x - width) / 2
@@ -427,62 +425,36 @@ module enclosure(
         x_to_rocker_distance = get_x(0) - (button_rocker_position.x
             - ROCKER_BRIM_SIZE - (control_clearance + tolerance) * 2);
 
-        if (top) {
-            z = battery_holder_position.z + battery_holder_dimensions.z;
-            y = ENCLOSURE_WALL - e;
+        translate([
+            get_x(coverage),
+            battery_holder_position.y + battery_holder_dimensions.y
+                - tolerance, // NOTE: intentionally tight at bottom
+            ENCLOSURE_FLOOR_CEILING - e
+        ]) {
+            flat_top_rectangular_pyramid(
+                top_width = coverage,
+                top_length = depth,
+                bottom_width = coverage,
+                bottom_length = depth + catch_height,
+                height = catch_height + e,
+                top_y = tolerance * 3
+            );
+        }
 
-            length = battery_holder_dimensions.y + tolerance * 4
-                + lip_length;
-
-            for (x = [
-                get_x(ENCLOSURE_INNER_WALL) - x_to_rocker_distance,
-                get_x(ENCLOSURE_INNER_WALL) + x_to_rocker_distance
-            ]) {
-                translate([x, y, z]) {
-                    cube([
-                        ENCLOSURE_INNER_WALL,
-                        length,
-                        dimensions.z - z - e
-                    ]);
-                }
-
-                translate([x, y + length - lip_length, z - lip_height - e]) {
-                    cube([
-                        ENCLOSURE_INNER_WALL,
-                        lip_length,
-                        lip_height + e
-                    ]);
-                }
-            }
-        } else {
-            translate([
-                get_x(coverage),
-                battery_holder_position.y + battery_holder_dimensions.y
-                    + tolerance * 2,
-                ENCLOSURE_FLOOR_CEILING - e
-            ]) {
-                cube([
-                    coverage,
-                    depth,
-                    under_pcb_fixture_height + e
-                ]);
-            }
-
-            for (x = [
-                battery_holder_position.x - (depth + tolerance * 2),
-                battery_holder_position.x
-                    + battery_holder_dimensions.x + tolerance * 2
-            ]) {
-                translate([x, ENCLOSURE_WALL - e, ENCLOSURE_FLOOR_CEILING - e]) {
-                    flat_top_rectangular_pyramid(
-                        top_width = depth,
-                        top_length = 0,
-                        bottom_width = depth,
-                        bottom_length = coverage + e,
-                        height = battery_holder_dimensions.z / 2 + e,
-                        top_weight_y = 0
-                    );
-                }
+        for (x = [
+            battery_holder_position.x - (depth + tolerance * 2),
+            battery_holder_position.x
+                + battery_holder_dimensions.x + tolerance * 2
+        ]) {
+            translate([x, ENCLOSURE_WALL - e, ENCLOSURE_FLOOR_CEILING - e]) {
+                flat_top_rectangular_pyramid(
+                    top_width = depth,
+                    top_length = 0,
+                    bottom_width = depth,
+                    bottom_length = coverage + e,
+                    height = battery_holder_dimensions.z / 2 + e,
+                    top_weight_y = 0
+                );
             }
         }
     }
@@ -521,7 +493,6 @@ module enclosure(
                     _speaker_fixture();
                     _switch_clutch_fixture(top = true);
                     _lightpipe_exposure(fixture = true, top = true);
-                    _battery_holder_fixture(top = true);
                 }
             }
 
