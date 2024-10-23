@@ -346,7 +346,8 @@ module enclosure(
     ) {
         x = pcb_position.x + led_position_on_pcb.x;
         y = pcb_position.y + pcb_length + tolerance;
-        led_center_z = pcb_position.z + pcb_height + LIGHTPIPE_DIAMETER / 2;
+        led_center_z = pcb_position.z + pcb_height
+            + PCB_Z_OFF_PCB + LED_BASE_HEIGHT + LIGHTPIPE_DIAMETER / 2;
 
         fixture_width = diameter + ENCLOSURE_INNER_WALL * 2 + 4;
         fixture_length = dimensions.y - y - e;

@@ -30,6 +30,7 @@ PCB_BOTTOM_CLEARANCE = 2;
 PCB_SWITCH_Y = 16.54;
 
 PCB_LED_POSITION = get_translated_xy([120.145 + 2.5, 80.52 + .6]);
+PCB_Z_OFF_PCB = 1;
 
 module pcb(
     show_board = true,
@@ -72,7 +73,7 @@ module pcb(
     ]);
 
     if (show_led) {
-        _translate(PCB_LED_POSITION) {
+        _translate(PCB_LED_POSITION, z = PCB_HEIGHT + PCB_Z_OFF_PCB) {
             # led();
         }
     }

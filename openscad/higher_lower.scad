@@ -137,7 +137,9 @@ module higher_lower(
             - 6.3],
     ];
 
-    enclosure_bottom_height = pcb_position.z + PCB_HEIGHT + LIGHTPIPE_DIAMETER / 2;
+    enclosure_bottom_height = pcb_position.z + PCB_HEIGHT
+        + PCB_Z_OFF_PCB + LED_BASE_HEIGHT
+        + LIGHTPIPE_DIAMETER / 2;
     enclosure_top_height = height - enclosure_bottom_height;
 
     echo("Enclosure", width / 25.4, length / 25.4, height / 25.4);
