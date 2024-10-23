@@ -23,8 +23,7 @@ PCB_HOLE_POSITIONS = [
 ];
 PCB_HOLE_DIAMETER = 3.2;
 
-// NOTE: caps lie flat, leads must be trimmed
-PCB_TOP_CLEARANCE = 10;
+PCB_TOP_CLEARANCE = 12 + 1;
 PCB_BOTTOM_CLEARANCE = 2;
 
 PCB_SWITCH_Y = 16.54;
