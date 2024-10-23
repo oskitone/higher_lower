@@ -18,7 +18,7 @@ module higher_lower(
     length = 25.4 * 3,
     height = 25.4 * 1,
 
-    reduce_height = true,
+    derive_height = true,
 
     pcb_width = PCB_WIDTH,
     pcb_length = PCB_LENGTH,
@@ -98,7 +98,7 @@ module higher_lower(
     speaker_position = [
         speaker_grill_position.x + speaker_grill_size / 2,
         speaker_grill_position.y + speaker_grill_size / 2,
-        reduce_height
+        derive_height
             ? pcb_z_min + PCB_HEIGHT + pcb_top_clearance
             : height - ENCLOSURE_FLOOR_CEILING - SPEAKER_HEIGHT
     ];
@@ -108,10 +108,10 @@ module higher_lower(
     pcb_position = [
         (width - pcb_width) / 2,
         speaker_position.y - pcb_length / 2,
-        reduce_height ? pcb_z_min : pcb_z_max
+        derive_height ? pcb_z_min : pcb_z_max
     ];
 
-    height = reduce_height
+    height = derive_height
         ? speaker_position.z + SPEAKER_HEIGHT + ENCLOSURE_FLOOR_CEILING
         : height;
 
@@ -348,7 +348,7 @@ DEFAULT_TOLERANCE = .1;
 // rotate([0,180,0])
 difference() {
 higher_lower(
-    // reduce_height = $t >= .5,
+    // derive_height = $t >= .5,
 
     show_enclosure_bottom = SHOW_ENCLOSURE_BOTTOM,
     show_battery_holder = SHOW_BATTERY_HOLDER,
