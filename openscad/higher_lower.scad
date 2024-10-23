@@ -18,7 +18,7 @@ module higher_lower(
     length = 25.4 * 3,
     height = 25.4 * 1,
 
-    derive_height = true,
+    derive_height = false,
 
     pcb_width = PCB_WIDTH,
     pcb_length = PCB_LENGTH,
