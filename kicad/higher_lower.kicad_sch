@@ -1382,6 +1382,11 @@
     (uuid ff18b5ca-b742-45de-ac91-cb9db81cee72)
   )
 
+  (text "AIN0 and A0 are not the same thing.\nTODO: swap CTRL and UP; bodge on this rev"
+    (at 85.725 125.73 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 07d02498-98e6-4a97-90f7-d649212851cf)
+  )
   (text "NOTE: duplication intentional\nto test switch layout on PCB\nTODO: de-dupe!"
     (at 144.78 144.145 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))

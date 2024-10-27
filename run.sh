@@ -114,6 +114,9 @@ if [ "$1" == 'deploy' ]; then
     compile_for_attiny85
     upload_with_programmer
 
+    # TODO: offer advice on "programmer operation not supported"
+    # could be CTRL pot needs adjustment
+
     exit
 fi
 

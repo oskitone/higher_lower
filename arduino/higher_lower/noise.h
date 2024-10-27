@@ -17,24 +17,29 @@ void _tone(int16_t t, int16_t duration) {
   digitalWrite(LED_PIN, LOW);
 }
 
-inline int16_t getDuration(int16_t duration, uint8_t roundsWon) {
+inline int16_t getDuration(int16_t duration, uint8_t progress) {
   return max(MIN_TONE_OR_INTERVAL_PAUSE_DURATION,
-             duration * pow(DURATION_DIMINISH, roundsWon));
+             duration * pow(DURATION_DIMINISH, progress));
 }
 
-void playInterval(int16_t tone1, int16_t tone2, uint8_t roundsWon) {
+void playInterval(int16_t tone1, int16_t tone2, uint8_t progress) {
   delay(PRE_INTERVAL_PAUSE);
 
-  _tone(tone1, getDuration(LAST_TONE_DURATION, roundsWon));
-  delay(getDuration(MID_INTERVAL_PAUSE, roundsWon));
-  _tone(tone1, getDuration(CURRENT_TONE_DURATION, roundsWon));
-  delay(getDuration(MID_INTERVAL_PAUSE, roundsWon));
-  _tone(tone2, getDuration(CURRENT_TONE_DURATION, roundsWon));
+  _tone(tone1, getDuration(LAST_TONE_DURATION, progress));
+  delay(getDuration(MID_INTERVAL_PAUSE, progress));
+  _tone(tone1, getDuration(CURRENT_TONE_DURATION, progress));
+  delay(getDuration(MID_INTERVAL_PAUSE, progress));
+  _tone(tone2, getDuration(CURRENT_TONE_DURATION, progress));
 }
 
 void _theme_tone(int16_t t) { _tone(t, THEME_NOTE_LENGTH); }
 
-void playIntro() {
+void playIntro(uint8_t introBeepCount) {
+  for (uint8_t i = 0; i < introBeepCount; i++) {
+    _theme_tone(NOTE_G5);
+    _theme_tone(NOTE_REST);
+  }
+
   _theme_tone(NOTE_C5);
   _theme_tone(NOTE_REST);
   _theme_tone(NOTE_E5);

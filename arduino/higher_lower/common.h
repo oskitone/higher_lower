@@ -1,15 +1,15 @@
 #ifdef __AVR_ATtiny85__
 #define SPKR_PIN 4
 #define LED_PIN 1
-#define UP_BUTTON 2
-#define DOWN_BUTTON 3
-#define SKIP_BUTTON 0
+#define UP_PIN 0
+#define DOWN_PIN 3
+#define CTRL_PIN A1
 #else
 #define SPKR_PIN 5
 #define LED_PIN 9
-#define UP_BUTTON A0
-#define DOWN_BUTTON A3
-#define SKIP_BUTTON 8
+#define UP_PIN A0
+#define DOWN_PIN A3
+#define CTRL_PIN 8
 #endif
 
 #define THEME_NOTE_LENGTH 180
@@ -45,3 +45,9 @@
 
 #define INTERVAL_DIMINISH .65
 #define DURATION_DIMINISH .75
+
+#define MIN_DIFFICULTY 0
+#define MAX_DIFFICULTY 4
+
+// NOTE: For emulation, in lieu of analog input
+#define DEFAULT_DIFFICULTY 1

@@ -2,6 +2,8 @@
 
 #include "noise.h"
 
+uint8_t difficulty = DEFAULT_DIFFICULTY;
+
 int16_t tones[TONES_PER_ROUND];
 uint8_t index = STARTING_INDEX;
 
@@ -10,6 +12,8 @@ uint8_t roundsWon = 0;
 // TODO: guess countdown timer
 
 #include "interface.h"
+
+inline uint8_t getProgress() { return roundsWon * difficulty; }
 
 inline uint8_t getLevelsWon() { return roundsWon / ROUNDS_PER_LEVEL; }
 
@@ -34,9 +38,9 @@ int16_t getNextTone(uint8_t previousIndex) {
   int16_t nextTone = tones[previousIndex];
 
   for (uint8_t i = 0; i < (GUESSES_PER_ROUND - previousIndex); i++) {
-    nextTone +=
-        direction * random(MIN_INTERVAL,
-                           INTERVAL_CHUNK * pow(INTERVAL_DIMINISH, roundsWon));
+    nextTone += direction *
+                random(MIN_INTERVAL,
+                       INTERVAL_CHUNK * pow(INTERVAL_DIMINISH, getProgress()));
   }
 
   if (nextTone == tones[previousIndex]) {
@@ -56,7 +60,8 @@ void randomize() {
                  : tones[TONES_PER_ROUND - 1];
 
   for (uint8_t i = 1; i < TONES_PER_ROUND; i++) {
-    tones[i] = roundsWon == 0 ? getNextToneInScale(i - 1) : getNextTone(i - 1);
+    tones[i] =
+        getProgress() == 0 ? getNextToneInScale(i - 1) : getNextTone(i - 1);
   }
 }
 
@@ -78,11 +83,13 @@ void setRoundsWon(uint8_t r) {
   printBlankLineToSerial();
 
   printIntervalToSerial(index);
-  playInterval(tones[index - 1], tones[index], roundsWon);
+  playInterval(tones[index - 1], tones[index], getProgress());
 }
 
 void reset() {
-  playIntro();
+  difficulty = getDifficulty();
+
+  playIntro(difficulty);
   delay(NEW_ROUND_PAUSE);
 
   printBlankLineToSerial();
@@ -114,7 +121,7 @@ void handleGuess(bool success) {
     increment();
 
     printIntervalToSerial(index);
-    playInterval(tones[index - 1], tones[index], roundsWon);
+    playInterval(tones[index - 1], tones[index], getProgress());
 
     return;
   }
@@ -126,16 +133,11 @@ void handleGuess(bool success) {
 }
 
 void loop() {
-  if (justPressed(SKIP_BUTTON)) {
-    index = TONES_PER_ROUND - 1;
-    handleGuess(true);
-  }
-
-  if (justPressed(DOWN_BUTTON)) {
+  if (justPressed(DOWN_PIN)) {
     handleGuess(tones[index] < tones[index - 1]);
   }
 
-  if (justPressed(UP_BUTTON)) {
+  if (justPressed(UP_PIN)) {
     handleGuess(tones[index] > tones[index - 1]);
   }
 }

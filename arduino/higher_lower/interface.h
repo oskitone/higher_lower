@@ -6,9 +6,16 @@ void setupInterface() {
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, LOW);
 
-  pinMode(UP_BUTTON, INPUT_PULLUP);
-  pinMode(DOWN_BUTTON, INPUT_PULLUP);
-  pinMode(SKIP_BUTTON, INPUT_PULLUP);
+  pinMode(UP_PIN, INPUT_PULLUP);
+  pinMode(DOWN_PIN, INPUT_PULLUP);
+}
+
+uint8_t getDifficulty() {
+#ifdef __AVR_ATtiny85__ -
+  return map(analogRead(CTRL_PIN), 0, 1023, MIN_DIFFICULTY, MAX_DIFFICULTY);
+#else
+  return DEFAULT_DIFFICULTY;
+#endif
 }
 
 // NOTE: this works much better on real hardware than emulator
