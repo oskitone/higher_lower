@@ -144,6 +144,13 @@ module higher_lower(
             - 6.3],
     ];
 
+    // This is the closest it can get into speaker
+    // TODO: derive
+    lightpipe_position = [
+        speaker_position.x - (SPEAKER_DIAMETER / 2 - 2.35),
+        speaker_position.y + (SPEAKER_DIAMETER / 2 - 2.35)
+    ];
+
     enclosure_bottom_height = pcb_position.z + PCB_HEIGHT
         + PCB_Z_OFF_PCB + LED_BASE_HEIGHT
         + LIGHTPIPE_DIAMETER / 2;
@@ -237,6 +244,8 @@ module higher_lower(
             speaker_position = speaker_position,
             speaker_grill_dimensions = [speaker_grill_size, speaker_grill_size],
             speaker_grill_position = speaker_grill_position,
+
+            lightpipe_position = lightpipe_position,
 
             button_dimensions = [button_width, button_length],
             button_rocker_position = button_rocker_position,
