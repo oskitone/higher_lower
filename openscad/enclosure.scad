@@ -4,6 +4,7 @@ include <../../parts_cafe/openscad/enclosure_engraving.scad>;
 include <../../parts_cafe/openscad/enclosure.scad>;
 include <../../parts_cafe/openscad/flat_top_rectangular_pyramid.scad>;
 include <../../parts_cafe/openscad/pcb_mounting_columns.scad>;
+include <../../parts_cafe/openscad/ring.scad>;
 
 include <pcb.scad>;
 
@@ -32,6 +33,8 @@ module enclosure(
     speaker_position = [0,0,0],
     speaker_grill_dimensions = [0,0,0],
     speaker_grill_position = [0,0,0],
+
+    lightpipe_position = [0,0],
 
     button_dimensions = [0,0],
     button_rocker_position = [0,0,0],
@@ -341,76 +344,32 @@ module enclosure(
     module _lightpipe_exposure(
         diameter = LIGHTPIPE_DIAMETER + tolerance * 2,
         fixture = false,
-        bottom = false,
-        top = false,
-        gasket_depth = ENCLOSURE_INNER_WALL,
         gasket_brim = ENCLOSURE_INNER_WALL,
         $fn = 24
     ) {
-        x = pcb_position.x + led_position_on_pcb.x;
-        y = pcb_position.y + pcb_length + tolerance;
-        led_center_z = pcb_position.z + pcb_height
-            + PCB_Z_OFF_PCB + LED_BASE_HEIGHT + LIGHTPIPE_DIAMETER / 2;
-
-        fixture_width = diameter + ENCLOSURE_INNER_WALL * 2 + 4;
-        fixture_length = dimensions.y - y - e;
-
         if (fixture) {
-            z = bottom
-                ? ENCLOSURE_FLOOR_CEILING - e
-                : led_center_z + e;
+            inner_diameter =  diameter + tolerance * 2;
+            z = pcb_position.z + PCB_HEIGHT;
 
-            difference() {
-                translate([x - fixture_width / 2, y, z]) {
-                    cube([
-                        fixture_width,
-                        fixture_length,
-                        bottom
-                            ? led_center_z - z
-                            : dimensions.z - z - ENCLOSURE_FLOOR_CEILING + e
-                    ]);
-                }
-
-                if (top) {
-                    translate([
-                        speaker_position.x,
-                        speaker_position.y,
-                        z - e
-                    ]) {
-                        cylinder(
-                            d = speaker_cavity_diameter + ENCLOSURE_INNER_WALL / 2,
-                            h = dimensions.z - z + e * 2
-                        );
-                    }
-                }
+            translate([lightpipe_position.x, lightpipe_position.y, z]) {
+                ring(
+                    diameter = inner_diameter
+                        + ENCLOSURE_INNER_WALL * 2,
+                    height = dimensions.z - z - ENCLOSURE_FLOOR_CEILING + e,
+                    inner_diameter = inner_diameter
+                );
             }
         } else {
-            translate([x, y - e, led_center_z]) {
-                rotate([-90, 0, 0]) cylinder(
-                    d = diameter,
-                    h = dimensions.y - y - gasket_depth + e
-                );
-            }
-
-            translate([x, dimensions.y - gasket_depth - e, led_center_z]) {
-                rotate([-90, 0, 0]) cylinder(
+            // TODO: move closer to speaker
+            translate([
+                lightpipe_position.x,
+                lightpipe_position.y,
+                dimensions.z - ENCLOSURE_FLOOR_CEILING - e
+            ]) {
+                cylinder(
                     d = diameter - gasket_brim * 2,
-                    h = gasket_depth + e * 2
+                    h = ENCLOSURE_FLOOR_CEILING + e * 2
                 );
-            }
-
-            if (bottom) {
-                translate([
-                    x - (fixture_width + tolerance * 2) / 2,
-                    y - e,
-                    led_center_z - e
-                ]) {
-                    cube([
-                        (fixture_width + tolerance * 2),
-                        fixture_length + e * 2,
-                        ENCLOSURE_LIP_HEIGHT + e * 2
-                    ]);
-                }
             }
         }
     }
@@ -430,7 +389,6 @@ module enclosure(
                 color(outer_color) {
                     _bottom_pcb_fixtures();
                     _switch_clutch_fixture(top = false);
-                    _lightpipe_exposure(fixture = true, bottom = true);
                     battery_holder_fixtures(
                         web_length = web_length,
                         web_height = pcb_position.z + PCB_HEIGHT - ENCLOSURE_FLOOR_CEILING,
@@ -443,7 +401,6 @@ module enclosure(
             color(cavity_color) {
                 _bottom_engraving();
                 _switch_clutch_exposure();
-                _lightpipe_exposure(fixture = false, bottom = true);
             }
         }
     }
@@ -460,7 +417,7 @@ module enclosure(
                 color(outer_color) {
                     _speaker_fixture();
                     _switch_clutch_fixture(top = true);
-                    _lightpipe_exposure(fixture = true, top = true);
+                    _lightpipe_exposure(fixture = true);
                 }
             }
 
@@ -470,7 +427,7 @@ module enclosure(
                 _button_rocker_cavity();
                 _top_engraving();
                 _switch_clutch_exposure();
-                _lightpipe_exposure(fixture = false, top = true);
+                _lightpipe_exposure(fixture = false);
             }
         }
     }
