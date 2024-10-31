@@ -28,6 +28,7 @@ PCB_BOTTOM_CLEARANCE = 2;
 
 PCB_SWITCH_Y = 16.54;
 
+// TODO: move to top left
 PCB_LED_POSITION = get_translated_xy([120.145 + 2.5, 80.52 + .6]);
 PCB_Z_OFF_PCB = 1;
 
@@ -44,6 +45,8 @@ module pcb(
     width = 0,
     length = 0,
     height = PCB_HEIGHT,
+
+    led_position = PCB_LED_POSITION,
 
     switch_centers = [],
 
@@ -75,7 +78,7 @@ module pcb(
     ]);
 
     if (show_led) {
-        _translate(PCB_LED_POSITION, z = PCB_HEIGHT + PCB_Z_OFF_PCB) {
+        _translate(led_position, z = PCB_HEIGHT + PCB_Z_OFF_PCB) {
             # led();
         }
     }

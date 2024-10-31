@@ -284,6 +284,12 @@ module higher_lower(
             show_led = show_pcb,
             show_clearance = show_clearance,
 
+            // TODO: ditch
+            led_position = [
+                lightpipe_position.x - pcb_position.x,
+                lightpipe_position.y - pcb_position.y,
+            ],
+
             switch_centers = pcb_switch_centers,
 
             side_switch_position = side_switch_position,

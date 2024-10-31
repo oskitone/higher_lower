@@ -352,6 +352,7 @@ module enclosure(
             outer_diameter = inner_diameter + ENCLOSURE_INNER_WALL * 2;
             z = pcb_position.z + PCB_HEIGHT;
 
+            // TODO: angle fixture
             translate([lightpipe_position.x, lightpipe_position.y, z]) {
                 ring(
                     diameter = outer_diameter,
