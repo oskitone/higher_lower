@@ -144,11 +144,10 @@ module higher_lower(
             - 6.3],
     ];
 
-    // This is the closest it can get into speaker
-    // TODO: derive
+    // NOTE: eyeballed! the closest it can get into speaker
     lightpipe_position = [
-        speaker_position.x - (SPEAKER_DIAMETER / 2 - 2.35),
-        speaker_position.y + (SPEAKER_DIAMETER / 2 - 2.35)
+        speaker_position.x - (SPEAKER_DIAMETER / 2 - 2.4),
+        speaker_position.y + (SPEAKER_DIAMETER / 2 - 2.4)
     ];
 
     enclosure_bottom_height = pcb_position.z + PCB_HEIGHT
