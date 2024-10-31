@@ -342,32 +342,35 @@ module enclosure(
     }
 
     module _lightpipe_exposure(
-        diameter = LIGHTPIPE_DIAMETER + tolerance * 2,
+        diameter = LIGHTPIPE_DIAMETER,
         fixture = false,
-        gasket_brim = ENCLOSURE_INNER_WALL,
+        exposure_diameter = 4,
         $fn = 24
     ) {
         if (fixture) {
             inner_diameter =  diameter + tolerance * 2;
+            outer_diameter = inner_diameter + ENCLOSURE_INNER_WALL * 2;
             z = pcb_position.z + PCB_HEIGHT;
 
             translate([lightpipe_position.x, lightpipe_position.y, z]) {
                 ring(
-                    diameter = inner_diameter
-                        + ENCLOSURE_INNER_WALL * 2,
+                    diameter = outer_diameter,
                     height = dimensions.z - z - ENCLOSURE_FLOOR_CEILING + e,
                     inner_diameter = inner_diameter
                 );
             }
         } else {
-            // TODO: move closer to speaker
+            // NOTE: eyeballed!
+            bump = 1;
+
             translate([
-                lightpipe_position.x,
-                lightpipe_position.y,
+                lightpipe_position.x + bump,
+                lightpipe_position.y - bump,
                 dimensions.z - ENCLOSURE_FLOOR_CEILING - e
             ]) {
+                // TODO: chamfer
                 cylinder(
-                    d = diameter - gasket_brim * 2,
+                    d = exposure_diameter,
                     h = ENCLOSURE_FLOOR_CEILING + e * 2
                 );
             }
