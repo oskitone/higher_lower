@@ -24,7 +24,8 @@ module button_rocker(
 
     plunge = 0,
 
-    gutter = 0,
+    xy_clearance = 0,
+    z_clearance = 0,
 
     brim_size = ROCKER_BRIM_SIZE,
     brim_height = ROCKER_BRIM_HEIGHT,
@@ -43,7 +44,7 @@ module button_rocker(
 
     brim_dimensions = [
         width + brim_size * 2,
-        length * 2 + gutter + brim_size * 2,
+        length * 2 + xy_clearance + brim_size * 2,
         brim_height
     ];
 
@@ -84,7 +85,7 @@ module button_rocker(
 
     difference() {
         color(outer_color) {
-            for (y = [0, length + gutter]) {
+            for (y = [0, length + xy_clearance]) {
                 translate([0, y, -e]) {
                     cap_blank(
                         dimensions = [width, length, height + e],
@@ -115,7 +116,7 @@ module button_rocker(
         }
 
         color(cavity_color) {
-            _engraving(length + gutter + length / 2, 0);
+            _engraving(length + xy_clearance + length / 2, 0);
             _engraving(length / 2, 180);
             _actuator_cavities();
         }

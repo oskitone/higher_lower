@@ -34,7 +34,7 @@ module enclosure(
 
     button_dimensions = [0,0],
     button_rocker_position = [0,0,0],
-    button_gutter = 0,
+    rocker_xy_clearance = 0,
 
     battery_holder_dimensions = [0,0,0],
     battery_holder_position = [0,0,0],
@@ -193,7 +193,7 @@ module enclosure(
             button_rocker_position.x
                 + (button_dimensions.x - ENCLOSURE_INNER_WALL) / 2,
             button_rocker_position.y
-                + button_dimensions.y + button_gutter / 2
+                + button_dimensions.y + rocker_xy_clearance / 2
                 - button_support_length / 2,
             ENCLOSURE_FLOOR_CEILING - e
         ]) {
@@ -282,7 +282,7 @@ module enclosure(
             cube([
                 button_dimensions.x + gutter * 2,
                 button_dimensions.y * 2
-                    + button_gutter + gutter * 2,
+                    + rocker_xy_clearance + gutter * 2,
                 ENCLOSURE_FLOOR_CEILING + e * 2
             ]);
         }

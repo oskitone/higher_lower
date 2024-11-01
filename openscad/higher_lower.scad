@@ -39,7 +39,8 @@ module higher_lower(
 
     outer_gutter = OUTER_GUTTER,
     default_gutter = SCOUT_DEFAULT_GUTTER,
-    button_gutter = SCOUT_DEFAULT_GUTTER / -2,
+    rocker_xy_clearance = SCOUT_DEFAULT_GUTTER / -2,
+    rocker_z_clearance = .8, // TODO: refine (WUB is .8 for knobs, .2 switches)
     label_gutter = 2,
 
     accessory_fillet = 1,
@@ -77,7 +78,7 @@ module higher_lower(
     // It will look odd if enclosure width > length.
     speaker_grill_size = (width - outer_gutter * 2 - default_gutter) / 3 * 2;
     button_width = speaker_grill_size / 2;
-    button_length = (speaker_grill_size - button_gutter) / 2;
+    button_length = (speaker_grill_size - rocker_xy_clearance) / 2;
 
     battery_holder_dimensions = get_battery_holder_dimensions(
         battery_count,
@@ -118,22 +119,23 @@ module higher_lower(
     button_rocker_position = [
         speaker_grill_position.x + speaker_grill_size + default_gutter,
         speaker_grill_position.y,
-        height - ENCLOSURE_FLOOR_CEILING - ROCKER_BRIM_HEIGHT - e
+        height - ENCLOSURE_FLOOR_CEILING - ROCKER_BRIM_HEIGHT
+            - rocker_z_clearance
     ];
     button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
 
     pcb_rocker_center_x = button_rocker_position.x - pcb_position.x
         + button_width / 2;
     rocker_center_y = button_rocker_position.y - pcb_position.y
-        + button_length + button_gutter / 2;
+        + button_length + rocker_xy_clearance / 2;
     pcb_switch_centers = [
-        [pcb_rocker_center_x, rocker_center_y - (button_width + button_gutter) / 2],
-        [pcb_rocker_center_x, rocker_center_y + (button_length + button_gutter) / 2],
+        [pcb_rocker_center_x, rocker_center_y - (button_width + rocker_xy_clearance) / 2],
+        [pcb_rocker_center_x, rocker_center_y + (button_length + rocker_xy_clearance) / 2],
 
         // TODO: de-dupe
-        [pcb_rocker_center_x, rocker_center_y - (button_width + button_gutter) / 2
+        [pcb_rocker_center_x, rocker_center_y - (button_width + rocker_xy_clearance) / 2
             + 6.3],
-        [pcb_rocker_center_x, rocker_center_y + (button_length + button_gutter) / 2
+        [pcb_rocker_center_x, rocker_center_y + (button_length + rocker_xy_clearance) / 2
             - 6.3],
     ];
 
@@ -203,7 +205,7 @@ module higher_lower(
                 switch_centers = switch_centers,
                 plunge = button_rocker_position.z
                     - (pcb_position.z + PCB_HEIGHT + SPST_ACTUATOR_HEIGHT_OFF_PCB),
-                gutter = button_gutter,
+                xy_clearance = rocker_xy_clearance,
                 brim_height = ROCKER_BRIM_HEIGHT,
                 fillet = quick_preview ? 0 : accessory_fillet,
                 tolerance = tolerance * 2, // intentionally loose
@@ -233,7 +235,7 @@ module higher_lower(
 
             button_dimensions = [button_width, button_length],
             button_rocker_position = button_rocker_position,
-            button_gutter = button_gutter,
+            rocker_xy_clearance = rocker_xy_clearance,
 
             battery_holder_dimensions = battery_holder_dimensions,
             battery_holder_position = battery_holder_position,
