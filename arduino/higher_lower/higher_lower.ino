@@ -97,8 +97,10 @@ void reset() {
 }
 
 void setup() {
+  // NOTE: seed before setup, before input pins are pulled
   initRandomSeed();
   setupInterface();
+
   setupSerial();
   reset();
 }

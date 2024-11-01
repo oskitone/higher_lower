@@ -12,7 +12,7 @@
 #define CTRL_PIN 8
 #endif
 
-#define SEED_PIN OUTPUT_PIN
+#define SEED_PIN UP_PIN
 
 #define THEME_NOTE_LENGTH 180
 
