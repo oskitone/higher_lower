@@ -19,7 +19,7 @@ uint8_t getDifficulty() {
 }
 
 // NOTE: this works much better on real hardware than emulator
-void initRandomSeed() { randomSeed(analogRead(SPKR_PIN)); }
+void initRandomSeed() { randomSeed(analogRead(SEED_PIN)); }
 
 inline bool justPressed(uint8_t button) {
   // HACK: relying on tone delay to skip debouncing

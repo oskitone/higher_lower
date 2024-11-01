@@ -1,16 +1,18 @@
 #ifdef __AVR_ATtiny85__
-#define SPKR_PIN 4
+#define OUTPUT_PIN 4
 #define LED_PIN 1
 #define UP_PIN 0
 #define DOWN_PIN 3
 #define CTRL_PIN A1
 #else
-#define SPKR_PIN 5
+#define OUTPUT_PIN 5
 #define LED_PIN 9
 #define UP_PIN A0
 #define DOWN_PIN A3
 #define CTRL_PIN 8
 #endif
+
+#define SEED_PIN OUTPUT_PIN
 
 #define THEME_NOTE_LENGTH 180
 

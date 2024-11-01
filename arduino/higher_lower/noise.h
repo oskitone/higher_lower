@@ -7,10 +7,10 @@ int16_t scale[] = {
 
 void _tone(int16_t t, int16_t duration) {
   if (t == NOTE_REST) {
-    noTone(SPKR_PIN);
+    noTone(OUTPUT_PIN);
   } else {
     digitalWrite(LED_PIN, HIGH);
-    tone(SPKR_PIN, t, duration);
+    tone(OUTPUT_PIN, t, duration);
   }
 
   delay(duration);
