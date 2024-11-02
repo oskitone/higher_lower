@@ -40,7 +40,7 @@ module higher_lower(
     outer_gutter = OUTER_GUTTER,
     default_gutter = SCOUT_DEFAULT_GUTTER,
     rocker_xy_clearance = SCOUT_DEFAULT_GUTTER / -2,
-    rocker_z_clearance = .8, // TODO: refine (WUB is .8 for knobs, .2 switches)
+    rocker_z_clearance = 1,
     label_gutter = 2,
 
     accessory_fillet = 1,
