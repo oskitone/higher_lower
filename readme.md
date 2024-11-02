@@ -9,8 +9,15 @@ In development!
 ## TODO
 
 - Reduce power usage
-- Difficulty settings
+- Finalize circuit
+- PCB + enclosure fit
 - Minimum viable Arduboy setup
+
+## Running
+
+    ./run.sh -h
+
+Requires arduino-cli to compile, [Ardens](https://github.com/tiberiusbrown/Ardens) to emulate, then a [Sparkfun programmer](https://www.sparkfun.com/products/9825) to upload. (Other programmers may work just as well, but I've only tested this one.)
 
 ## 3D Models
 
