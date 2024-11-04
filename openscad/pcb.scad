@@ -6,6 +6,12 @@ include <../../parts_cafe/openscad/switch-OS102011MA1QN1.scad>;
 
 use <../../scout/openscad/switch_clutch.scad>;
 
+// If pcb_position is kept as it is, centered in the enclosure,
+// then these are about the dimensions it'd need to have the
+// LED where we want it. TODO: use'm or lose'm
+// PCB_WIDTH = 2.6 * 25.4;
+// PCB_LENGTH = 1.65 * 25.4;
+
 PCB_WIDTH = 2.5 * 25.4;
 PCB_LENGTH = 1.5 * 25.4;
 PCB_HEIGHT = 1.6;
