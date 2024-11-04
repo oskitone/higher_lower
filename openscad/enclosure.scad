@@ -124,13 +124,13 @@ module enclosure(
         }
     }
 
-    module _speaker_cavity(rim = 2) {
+    module _speaker_cavity() {
         z = dimensions.z - ENCLOSURE_FLOOR_CEILING;
 
         render() intersection() {
             translate([speaker_position.x, speaker_position.y, z - e]) {
                 _c(
-                    speaker_cavity_diameter - rim * 2,
+                    speaker_cavity_diameter,
                     ENCLOSURE_FLOOR_CEILING + e * 2,
                     chamfer = 0
                 );
