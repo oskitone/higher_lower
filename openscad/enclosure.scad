@@ -119,7 +119,9 @@ module enclosure(
             render() diagonal_grill(
                 speaker_grill_dimensions.x,
                 speaker_grill_dimensions.y,
-                depth + e
+                depth + e,
+                size = DIAGONAL_GRILL_SIZE,
+                offset = sqrt(2 * pow(DIAGONAL_GRILL_SIZE, 2))
             );
         }
     }
