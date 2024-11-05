@@ -395,4 +395,7 @@ higher_lower(
 
 // middle
 // translate([38, -1, -1]) cube([100, 100, 100]);
+
+// lightpipe
+// translate([9, -1, -1]) cube([100, 100, 100]);
 }

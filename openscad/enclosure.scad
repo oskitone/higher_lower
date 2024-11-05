@@ -344,7 +344,7 @@ module enclosure(
     module _lightpipe_exposure(
         diameter = LIGHTPIPE_DIAMETER,
         fixture = false,
-        exposure_diameter = 4,
+        exposure_diameter = DIAGONAL_GRILL_SIZE,
         $fn = 24
     ) {
         if (fixture) {
@@ -362,17 +362,16 @@ module enclosure(
             }
         } else {
             // NOTE: eyeballed!
-            bump = 1;
+            bump = 1.6;
 
             translate([
                 lightpipe_position.x + bump,
                 lightpipe_position.y - bump,
                 dimensions.z - ENCLOSURE_FLOOR_CEILING - e
             ]) {
-                // TODO: chamfer
                 cylinder(
                     d = exposure_diameter,
-                    h = ENCLOSURE_FLOOR_CEILING + e * 2
+                    h = ENCLOSURE_FLOOR_CEILING - ENCLOSURE_ENGRAVING_DEPTH + e * 2
                 );
             }
         }
