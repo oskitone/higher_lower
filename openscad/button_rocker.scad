@@ -2,9 +2,11 @@ include <../../parts_cafe/openscad/cap_blank.scad>;
 include <../../parts_cafe/openscad/engraving.scad>;
 include <../../parts_cafe/openscad/flat_top_rectangular_pyramid.scad>;
 
-// NOTE: must be well less than SCOUT_DEFAULT_GUTTER
+// NOTES: must be well less than SCOUT_DEFAULT_GUTTER,
+// chamfer is eyeballed against ENCLOSURE_INNER_CHAMFER
 ROCKER_BRIM_SIZE = 2;
-ROCKER_BRIM_HEIGHT = 1;
+ROCKER_BRIM_HEIGHT = 1.2;
+ROCKER_BRIM_CHAMFER = .6;
 
 function get_rocker_switch_center(
     xy = [0,0],
@@ -29,6 +31,7 @@ module button_rocker(
 
     brim_size = ROCKER_BRIM_SIZE,
     brim_height = ROCKER_BRIM_HEIGHT,
+    brim_chamfer = ROCKER_BRIM_CHAMFER,
 
     fillet = 0,
     chamfer = ENCLOSURE_ENGRAVING_CHAMFER,
@@ -101,7 +104,21 @@ module button_rocker(
             }
 
             translate([-brim_size, -brim_size, 0]) {
-                cube(brim_dimensions);
+                cube([
+                    brim_dimensions.x,
+                    brim_dimensions.y,
+                    brim_dimensions.z - brim_chamfer + e
+                ]);
+
+                translate([0, 0, brim_dimensions.z - brim_chamfer]) {
+                    flat_top_rectangular_pyramid(
+                        top_width = brim_dimensions.x - brim_chamfer * 2,
+                        top_length = brim_dimensions.y - brim_chamfer * 2,
+                        bottom_width = brim_dimensions.x,
+                        bottom_length = brim_dimensions.y,
+                        height = brim_chamfer
+                    );
+                }
             }
 
             translate([-brim_size + offset, -brim_size + offset, -plunge]) {
