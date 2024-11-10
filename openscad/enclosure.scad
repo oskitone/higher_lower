@@ -415,26 +415,19 @@ module enclosure(
     module _battery_holder_fixture(
         depth = ENCLOSURE_INNER_WALL,
         catch_height = 4,
-        coverage = 20
+        width = 20,
+        length = 5 // NOTE: eyeballed against terminal contact
     ) {
-        function get_x(width, offset = 0) = (
-            battery_holder_position.x + (battery_holder_dimensions.x - width) / 2
-            + offset
-        );
-
-        x_to_rocker_distance = get_x(0) - (button_rocker_position.x
-            - ROCKER_BRIM_SIZE - (control_clearance + tolerance) * 2);
-
         translate([
-            get_x(coverage),
+            battery_holder_position.x + (battery_holder_dimensions.x - width) / 2,
             battery_holder_position.y + battery_holder_dimensions.y
                 - tolerance, // NOTE: intentionally tight at bottom
             ENCLOSURE_FLOOR_CEILING - e
         ]) {
             flat_top_rectangular_pyramid(
-                top_width = coverage,
+                top_width = width,
                 top_length = depth,
-                bottom_width = coverage,
+                bottom_width = width,
                 bottom_length = depth + catch_height,
                 height = catch_height + e,
                 top_y = tolerance * 3
@@ -451,7 +444,7 @@ module enclosure(
                     top_width = depth,
                     top_length = 0,
                     bottom_width = depth,
-                    bottom_length = coverage + e,
+                    bottom_length = length + e,
                     height = battery_holder_dimensions.z / 2 + e,
                     top_weight_y = 0
                 );
