@@ -1,3 +1,4 @@
+include <../../parts_cafe/openscad/battery_holder_fixtures.scad>;
 include <../../parts_cafe/openscad/diagonal_grill.scad>;
 include <../../parts_cafe/openscad/enclosure_engraving.scad>;
 include <../../parts_cafe/openscad/enclosure.scad>;
@@ -412,44 +413,6 @@ module enclosure(
         }
     }
 
-    module _battery_holder_fixture(
-        depth = ENCLOSURE_INNER_WALL,
-        catch_height = 4,
-        width = 20,
-        length = 5 // NOTE: eyeballed against terminal contact
-    ) {
-        translate([
-            battery_holder_position.x + (battery_holder_dimensions.x - width) / 2,
-            battery_holder_position.y + battery_holder_dimensions.y
-                - tolerance, // NOTE: intentionally tight at bottom
-            ENCLOSURE_FLOOR_CEILING - e
-        ]) {
-            flat_top_rectangular_pyramid(
-                top_width = width,
-                top_length = depth,
-                bottom_width = width,
-                bottom_length = depth + catch_height,
-                height = catch_height + e,
-                top_y = tolerance * 3
-            );
-        }
-
-        translate([
-            battery_holder_position.x - (depth + tolerance * 2),
-            ENCLOSURE_WALL - e,
-            ENCLOSURE_FLOOR_CEILING - e
-        ]) {
-            flat_top_rectangular_pyramid(
-                top_width = depth,
-                top_length = 0,
-                bottom_width = depth,
-                bottom_length = length + e,
-                height = battery_holder_dimensions.z / 2 + e,
-                top_weight_y = 0
-            );
-        }
-    }
-
     if (show_bottom) {
         difference() {
             union() {
@@ -459,7 +422,16 @@ module enclosure(
                     _bottom_pcb_fixtures();
                     _switch_clutch_fixture(top = false);
                     _lightpipe_exposure(fixture = true, bottom = true);
-                    _battery_holder_fixture();
+                    battery_holder_fixtures(
+                        include_right_side_aligner = false,
+                        web_length = pcb_position.y -
+                            (battery_holder_position.y + battery_holder_dimensions.y)
+                            // TODO: tidy against endstop_y
+                            - (ENCLOSURE_INNER_WALL + tolerance * 4),
+                        web_height = pcb_position.z + PCB_HEIGHT - ENCLOSURE_FLOOR_CEILING,
+                        battery_holder_position = battery_holder_position,
+                        tolerance = tolerance
+                    );
                 }
             }
 
