@@ -104,7 +104,10 @@ module higher_lower(
             : height - ENCLOSURE_FLOOR_CEILING - SPEAKER_HEIGHT
     ];
 
-    pcb_z_max = speaker_position.z - PCB_HEIGHT - pcb_top_clearance;
+    pcb_z_max = max(
+        pcb_z_min,
+        speaker_position.z - PCB_HEIGHT - pcb_top_clearance
+    );
 
     pcb_position = [
         (width - pcb_width) / 2,
