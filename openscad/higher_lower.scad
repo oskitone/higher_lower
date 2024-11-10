@@ -281,8 +281,6 @@ module higher_lower(
 
             side_switch_position = side_switch_position,
 
-            bleed = tolerance,
-
             width = pcb_width,
             length = pcb_length
         );
