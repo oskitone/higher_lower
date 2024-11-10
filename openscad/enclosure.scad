@@ -434,21 +434,19 @@ module enclosure(
             );
         }
 
-        for (x = [
+        translate([
             battery_holder_position.x - (depth + tolerance * 2),
-            battery_holder_position.x
-                + battery_holder_dimensions.x + tolerance * 2
+            ENCLOSURE_WALL - e,
+            ENCLOSURE_FLOOR_CEILING - e
         ]) {
-            translate([x, ENCLOSURE_WALL - e, ENCLOSURE_FLOOR_CEILING - e]) {
-                flat_top_rectangular_pyramid(
-                    top_width = depth,
-                    top_length = 0,
-                    bottom_width = depth,
-                    bottom_length = length + e,
-                    height = battery_holder_dimensions.z / 2 + e,
-                    top_weight_y = 0
-                );
-            }
+            flat_top_rectangular_pyramid(
+                top_width = depth,
+                top_length = 0,
+                bottom_width = depth,
+                bottom_length = length + e,
+                height = battery_holder_dimensions.z / 2 + e,
+                top_weight_y = 0
+            );
         }
     }
 
