@@ -85,7 +85,7 @@ module higher_lower(
         tolerance
     );
     battery_holder_position = [
-        width - battery_holder_dimensions.x - ENCLOSURE_WALL - tolerance * 2,
+        (width - battery_holder_dimensions.x) * (2/3),
         ENCLOSURE_WALL + tolerance * 2,
         ENCLOSURE_FLOOR_CEILING
     ];
@@ -175,7 +175,6 @@ module higher_lower(
                     count = battery_count,
 
                     fillet = quick_preview ? 0 : BATTERY_HOLDER_FILLET,
-                    end_terminal_bottom_right = false,
 
                     include_wire_relief_hitches = false,
                     include_wire_channel = true,

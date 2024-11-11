@@ -423,7 +423,6 @@ module enclosure(
                     _switch_clutch_fixture(top = false);
                     _lightpipe_exposure(fixture = true, bottom = true);
                     battery_holder_fixtures(
-                        include_right_side_aligner = false,
                         web_length = pcb_position.y -
                             (battery_holder_position.y + battery_holder_dimensions.y)
                             // TODO: tidy against endstop_y
