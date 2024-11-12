@@ -52,7 +52,7 @@ module button_rocker(
     ];
 
     plunge = plunge + actuator_cavity_height;
-    offset = plunge * .75; // TODO: smarter
+    offset = plunge * .75;
 
     module _engraving(y, rotation, size = min(width, length) * .5) {
         translate([width / 2, y, height - ENCLOSURE_ENGRAVING_DEPTH]) {

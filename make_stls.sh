@@ -124,7 +124,6 @@ function run() {
     echo "Finished in $runtime seconds"
 }
 
-# TODO: tidy
 while getopts "h?b?p:d:e?c?t?q:" opt; do
     case "$opt" in
         h) help; exit ;;
