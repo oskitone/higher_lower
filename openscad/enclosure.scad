@@ -428,7 +428,7 @@ module enclosure(
                         web_length = pcb_position.y -
                             (battery_holder_position.y + battery_holder_dimensions.y)
                             // TODO: tidy against endstop_y
-                            - (ENCLOSURE_INNER_WALL + tolerance * 4),
+                            - (ENCLOSURE_WALL + tolerance * 4),
                         web_height = pcb_position.z + PCB_HEIGHT - ENCLOSURE_FLOOR_CEILING,
                         battery_holder_position = battery_holder_position,
                         tolerance = tolerance
