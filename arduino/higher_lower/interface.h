@@ -38,12 +38,10 @@ void printBlankLineToSerial() {
 #endif
 }
 
-void printLevelAndRoundToSerial(uint8_t level, uint8_t roundsWon) {
+void printRoundToSerial(uint8_t roundsWon) {
 #ifndef __AVR_ATtiny85__
-  Serial.print(F("LEVEL "));
-  Serial.print(level + 1);
-  Serial.print(F("  ROUND "));
-  Serial.print((roundsWon % ROUNDS_PER_LEVEL) + 1);
+  Serial.print(F("ROUND "));
+  Serial.print(roundsWon);
 
   Serial.println();
 #endif

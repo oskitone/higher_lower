@@ -15,8 +15,6 @@ uint8_t roundsWon = 0;
 
 inline uint8_t getProgress() { return roundsWon * difficulty; }
 
-inline uint8_t getLevelsWon() { return roundsWon / ROUNDS_PER_LEVEL; }
-
 inline int8_t getDirection() { return random(0, 2) ? -1 : 1; }
 
 int16_t getNextToneInScale(uint8_t previousIndex) {
@@ -68,8 +66,7 @@ void randomize() {
 void setRoundsWon(uint8_t r) {
   roundsWon = r;
 
-  // TODO: make this easier to reach!
-  if (getLevelsWon() == LEVELS_PER_GAME) {
+  if (roundsWon >= ROUNDS_PER_GAME) {
     playWinnerSong();
     delay(RESET_PAUSE);
     reset();
@@ -79,7 +76,7 @@ void setRoundsWon(uint8_t r) {
   randomize();
   index = STARTING_INDEX;
 
-  printLevelAndRoundToSerial(getLevelsWon(), r);
+  printRoundToSerial(r);
   printBlankLineToSerial();
   printAllTones();
   printBlankLineToSerial();
