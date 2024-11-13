@@ -68,8 +68,10 @@ void randomize() {
 void setRoundsWon(uint8_t r) {
   roundsWon = r;
 
+  // TODO: make this easier to reach!
   if (getLevelsWon() == LEVELS_PER_GAME) {
-    // TODO: something special!
+    playWinnerSong();
+    delay(RESET_PAUSE);
     reset();
     return;
   }
