@@ -13,11 +13,16 @@ In development!
 - PCB + enclosure fit
 - Minimum viable Arduboy setup
 
-## Running
+## Running, deploying
 
     ./run.sh -h
 
 Requires arduino-cli to compile, [Ardens](https://github.com/tiberiusbrown/Ardens) to emulate, then a [Sparkfun programmer](https://www.sparkfun.com/products/9825) to upload. (Other programmers may work just as well, but I've only tested this one.)
+
+### Troubleshooting
+
+- `Could not find USBtiny device`: Programmer not connected?
+- `Programmer operation not supported`: Some pins to programmer are shared with game inputs. Try setting "CTRL" pot to its middle value.
 
 ## 3D Models
 
