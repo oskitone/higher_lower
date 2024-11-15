@@ -9,8 +9,6 @@ uint8_t index = STARTING_INDEX;
 
 uint8_t roundsWon = 0;
 
-// TODO: guess countdown timer
-
 #include "interface.h"
 
 inline uint8_t getProgress() { return roundsWon * difficulty; }

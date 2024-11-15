@@ -13,6 +13,13 @@ In development!
 - PCB + enclosure fit
 - Minimum viable Arduboy setup
 
+## Rainy day ideas (ie, probably not doing)
+
+- Countdown timer for each guess
+- Rocker design with fulcrum piece that wraps around switches
+- Proper random seeding
+- UART header
+
 ## Running, deploying
 
     ./run.sh -h
