@@ -2,19 +2,19 @@
 #include "interface.h"
 #include "noise.h"
 
-int16_t tones[TONES_PER_ROUND];
-uint8_t difficulty = DEFAULT_DIFFICULTY;
-uint8_t index = STARTING_INDEX;
+int16_t tones[tonesPerRound];
+uint8_t difficulty = defaultDifficulty;
+uint8_t index = startingIndex;
 uint8_t roundsWon = 0;
 
 inline uint8_t getProgress() { return roundsWon * difficulty; }
 
 inline bool isBeyondMinMax(int16_t nextTone) {
-  return nextTone < MIN_TONE || nextTone > MAX_TONE;
+  return nextTone < minTone || nextTone > maxTone;
 }
 
 int16_t getNextToneInScale(uint8_t previousIndex) {
-  int16_t nextTone = scale[random(0, SCALE_TONES_COUNT)];
+  int16_t nextTone = scale[random(0, scaleTonesCount)];
 
   if (nextTone == tones[previousIndex]) {
     return getNextToneInScale(previousIndex);
@@ -27,10 +27,10 @@ int16_t getNextTone(uint8_t previousIndex) {
   int8_t direction = random(0, 2) ? -1 : 1;
   int16_t nextTone = tones[previousIndex];
 
-  for (uint8_t i = 0; i < (GUESSES_PER_ROUND - previousIndex); i++) {
+  for (uint8_t i = 0; i < (guessesPerRound - previousIndex); i++) {
     nextTone += direction *
-                random(MIN_INTERVAL,
-                       INTERVAL_CHUNK * pow(INTERVAL_DIMINISH, getProgress()));
+                random(minInterval,
+                       intervalChunk * pow(intervalDiminish, getProgress()));
   }
 
   if (nextTone == tones[previousIndex]) {
@@ -45,11 +45,11 @@ int16_t getNextTone(uint8_t previousIndex) {
 }
 
 void randomize() {
-  tones[0] = roundsWon == 0 || isBeyondMinMax(tones[TONES_PER_ROUND - 1])
+  tones[0] = roundsWon == 0 || isBeyondMinMax(tones[tonesPerRound - 1])
                  ? NOTE_C5
-                 : tones[TONES_PER_ROUND - 1];
+                 : tones[tonesPerRound - 1];
 
-  for (uint8_t i = 1; i < TONES_PER_ROUND; i++) {
+  for (uint8_t i = 1; i < tonesPerRound; i++) {
     tones[i] =
         getProgress() == 0 ? getNextToneInScale(i - 1) : getNextTone(i - 1);
   }
@@ -58,15 +58,15 @@ void randomize() {
 void setRoundsWon(uint8_t r) {
   roundsWon = r;
 
-  if (roundsWon >= ROUNDS_PER_GAME) {
+  if (roundsWon >= roundsPerGame) {
     playWinnerSong();
-    delay(RESET_PAUSE);
+    delay(resetPause);
     reset();
     return;
   }
 
   randomize();
-  index = STARTING_INDEX;
+  index = startingIndex;
 
   printRoundToSerial(r);
   printBlankLineToSerial();
@@ -81,7 +81,7 @@ void reset() {
   difficulty = getDifficulty();
 
   playIntro(difficulty);
-  delay(NEW_ROUND_PAUSE);
+  delay(newRoundPause);
 
   printBlankLineToSerial();
   setRoundsWon(0);
@@ -97,12 +97,12 @@ void setup() {
 }
 
 void handleGuess(bool success) {
-  delay(POST_BUTTON_PRESS_PAUSE);
+  delay(postButtonPressPause);
 
   if (success) {
-    if (index == TONES_PER_ROUND - 1) {
+    if (index == tonesPerRound - 1) {
       playSuccessSound(roundsWon + 1);
-      delay(NEW_ROUND_PAUSE);
+      delay(newRoundPause);
       printBlankLineToSerial();
       setRoundsWon(roundsWon + 1);
 
@@ -118,17 +118,17 @@ void handleGuess(bool success) {
   }
 
   playGameOverSound(roundsWon);
-  delay(RESET_PAUSE);
+  delay(resetPause);
 
   reset();
 }
 
 void loop() {
-  if (justPressed(DOWN_PIN)) {
+  if (justPressed(downPin)) {
     handleGuess(tones[index] < tones[index - 1]);
   }
 
-  if (justPressed(UP_PIN)) {
+  if (justPressed(upPin)) {
     handleGuess(tones[index] > tones[index - 1]);
   }
 }

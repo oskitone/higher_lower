@@ -3,38 +3,38 @@
 int16_t scale[] = {
     NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6,
 };
-#define SCALE_TONES_COUNT 8
+const int scaleTonesCount = 8;
 
 void _tone(int16_t t, int16_t duration) {
   if (t == NOTE_REST) {
-    noTone(OUTPUT_PIN);
+    noTone(outputPin);
   } else {
-    digitalWrite(LED_PIN, HIGH);
-    tone(OUTPUT_PIN, t, duration);
+    digitalWrite(ledPin, HIGH);
+    tone(outputPin, t, duration);
   }
 
   delay(duration);
-  digitalWrite(LED_PIN, LOW);
+  digitalWrite(ledPin, LOW);
 }
 
 inline int16_t getDuration(int16_t duration, uint8_t progress) {
-  return max(MIN_TONE_OR_INTERVAL_PAUSE_DURATION,
-             duration * pow(DURATION_DIMINISH, progress));
+  return max(minToneOrIntervalPauseDuration,
+             duration * pow(durationDiminish, progress));
 }
 
 void playInterval(int16_t tone1, int16_t tone2, uint8_t progress) {
-  delay(PRE_INTERVAL_PAUSE);
+  delay(preIntervalPause);
 
-  _tone(tone1, getDuration(LAST_TONE_DURATION, progress));
-  delay(getDuration(MID_INTERVAL_PAUSE, progress));
-  _tone(tone1, getDuration(CURRENT_TONE_DURATION, progress));
-  delay(getDuration(MID_INTERVAL_PAUSE, progress));
-  _tone(tone2, getDuration(CURRENT_TONE_DURATION, progress));
+  _tone(tone1, getDuration(lastToneDuration, progress));
+  delay(getDuration(midIntervalPause, progress));
+  _tone(tone1, getDuration(currentToneDuration, progress));
+  delay(getDuration(midIntervalPause, progress));
+  _tone(tone2, getDuration(currentToneDuration, progress));
 }
 
-void _theme_tone(int16_t t) { _tone(t, THEME_NOTE_LENGTH); }
+void _theme_tone(int16_t t) { _tone(t, themeNoteLength); }
 void _theme_tone(int16_t t, uint8_t speed) {
-  _tone(t, max(1, THEME_NOTE_LENGTH / speed));
+  _tone(t, max(1, themeNoteLength / speed));
 }
 
 void playThemeCountIn(uint8_t count) {
@@ -118,8 +118,8 @@ void playSuccessSound(uint8_t count) {
 }
 
 void playGameOverSound(uint8_t count) {
-  _tone(NOTE_G2, RESET_PAUSE);
-  delay(RESET_PAUSE);
+  _tone(NOTE_G2, resetPause);
+  delay(resetPause);
 
   for (uint8_t i = 0; i < count; i++) {
     _tone(NOTE_C4, 17);

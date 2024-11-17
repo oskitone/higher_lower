@@ -3,23 +3,23 @@
 // the full consequence of that!
 
 void setupInterface() {
-  pinMode(LED_PIN, OUTPUT);
-  digitalWrite(LED_PIN, LOW);
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, LOW);
 
-  pinMode(UP_PIN, INPUT_PULLUP);
-  pinMode(DOWN_PIN, INPUT_PULLUP);
+  pinMode(upPin, INPUT_PULLUP);
+  pinMode(downPin, INPUT_PULLUP);
 }
 
 uint8_t getDifficulty() {
 #ifdef __AVR_ATtiny85__ -
-  return map(analogRead(CTRL_PIN), 0, 1023, MIN_DIFFICULTY, MAX_DIFFICULTY);
+  return map(analogRead(ctrlPin), 0, 1023, minDifficulty, maxDifficulty);
 #else
-  return DEFAULT_DIFFICULTY;
+  return defaultDifficulty;
 #endif
 }
 
 // NOTE: this works much better on real hardware than emulator
-void initRandomSeed() { randomSeed(analogRead(SEED_PIN)); }
+void initRandomSeed() { randomSeed(analogRead(seedPin)); }
 
 inline bool justPressed(uint8_t button) {
   // HACK: relying on tone delay to skip debouncing
@@ -67,7 +67,7 @@ uint8_t printIntervalToSerial(uint8_t i, int16_t *tones) {
 
 void printAllTones(int16_t *tones) {
 #ifndef __AVR_ATtiny85__
-  for (uint8_t i = 0; i < GUESSES_PER_ROUND; i++) {
+  for (uint8_t i = 0; i < guessesPerRound; i++) {
     Serial.print(i);
     Serial.print(": ");
     Serial.println(tones[i]);

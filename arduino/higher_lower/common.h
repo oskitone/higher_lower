@@ -1,56 +1,54 @@
-// TODO: prefer consts
-
 #ifdef __AVR_ATtiny85__
-#define OUTPUT_PIN 4
-#define LED_PIN 1
-#define UP_PIN 0
-#define DOWN_PIN 3
-#define CTRL_PIN A1
+const int outputPin = 4;
+const int ledPin = 1;
+const int upPin = 0;
+const int downPin = 3;
+const int ctrlPin = A1;
 #else
-#define OUTPUT_PIN 5
-#define LED_PIN 9
-#define UP_PIN A0
-#define DOWN_PIN A3
-#define CTRL_PIN 8
+const int outputPin = 5;
+const int ledPin = 9;
+const int upPin = A0;
+const int downPin = A3;
+const int ctrlPin = 8;
 #endif
 
-#define SEED_PIN UP_PIN
+const int seedPin = upPin;
 
-#define THEME_NOTE_LENGTH 180
+const int themeNoteLength = 180;
 
 // NOTES: max human-audible frequency is ~20k and max for int16_t is ~32k,
 // but this max is the max that doesn't hurt my ears.
-#define MIN_TONE 60
-#define MAX_TONE 1000
+const int minTone = 60;
+const int maxTone = 1000;
 
-#define GUESSES_PER_ROUND 4
-#define ROUNDS_PER_GAME 20
+const int guessesPerRound = 4;
+const int roundsPerGame = 20;
 
-#define TONES_PER_ROUND (GUESSES_PER_ROUND + 1)
+const int tonesPerRound = (guessesPerRound + 1);
 
 // NOTE: Yes, we start at 1 instead of 0,
 // because we want an interval between tones.
 // Ya can't diff off nuthin, charlie!
-#define STARTING_INDEX 1
+const int startingIndex = 1;
 
-#define LAST_TONE_DURATION THEME_NOTE_LENGTH * 4
-#define CURRENT_TONE_DURATION (LAST_TONE_DURATION / 2)
-#define MIN_TONE_OR_INTERVAL_PAUSE_DURATION 8
+const int lastToneDuration = themeNoteLength * 4;
+const int currentToneDuration = (lastToneDuration / 2);
+const int minToneOrIntervalPauseDuration = 8;
 
-#define RESET_PAUSE 1000
-#define POST_BUTTON_PRESS_PAUSE 125
-#define NEW_ROUND_PAUSE 500
-#define PRE_INTERVAL_PAUSE THEME_NOTE_LENGTH / 2
-#define MID_INTERVAL_PAUSE PRE_INTERVAL_PAUSE / 2
+const int resetPause = 1000;
+const int postButtonPressPause = 125;
+const int newRoundPause = 500;
+const int preIntervalPause = themeNoteLength / 2;
+const int midIntervalPause = preIntervalPause / 2;
 
-#define INTERVAL_CHUNK ((MAX_TONE - MIN_TONE) / TONES_PER_ROUND)
-#define MIN_INTERVAL 5
+const int intervalChunk = ((maxTone - minTone) / tonesPerRound);
+const int minInterval = 5;
 
-#define INTERVAL_DIMINISH .65
-#define DURATION_DIMINISH .75
+const float intervalDiminish = .65;
+const float durationDiminish = .75;
 
-#define MIN_DIFFICULTY 0
-#define MAX_DIFFICULTY 4
+const int minDifficulty = 0;
+const int maxDifficulty = 4;
 
 // NOTE: For emulation, in lieu of analog input
-#define DEFAULT_DIFFICULTY 1
+const int defaultDifficulty = 1;
