@@ -1,3 +1,6 @@
+// NOTE: This theme code isn't nearly as compact as it could be.
+// That's fine! It's legible, at least, hopefully...
+
 #include "pitches.h"
 
 int16_t scale[] = {
