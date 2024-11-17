@@ -61,7 +61,8 @@ void setRoundsWon(uint8_t r) {
   if (roundsWon >= roundsPerGame) {
     playWinnerSong();
     delay(resetPause);
-    reset();
+    resetWithoutIntro();
+
     return;
   }
 
@@ -77,14 +78,16 @@ void setRoundsWon(uint8_t r) {
   playInterval(tones[index - 1], tones[index], getProgress());
 }
 
-void reset() {
-  difficulty = getDifficulty();
+void resetWithoutIntro() {
+  printBlankLineToSerial();
+  setRoundsWon(0);
+}
 
+void reset() {
   playIntro(difficulty);
   delay(newRoundPause);
 
-  printBlankLineToSerial();
-  setRoundsWon(0);
+  resetWithoutIntro();
 }
 
 void setup() {
@@ -93,6 +96,9 @@ void setup() {
   setupInterface();
 
   setupSerial();
+
+  difficulty = getDifficulty();
+
   reset();
 }
 

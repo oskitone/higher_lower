@@ -101,7 +101,7 @@ void playIntro(uint8_t introBeepCount) {
 
 void playWinnerSong() {
   playThemeCountInWithDescent(4);
-  for (uint8_t i = 2; i < 255; i++) {
+  for (uint8_t i = 1; i < 255; i++) {
     playThemeMotif(i);
   }
   playThemeMotifEnd();
