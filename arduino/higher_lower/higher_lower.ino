@@ -1,19 +1,17 @@
 #include "common.h"
-
+#include "interface.h"
 #include "noise.h"
 
-uint8_t difficulty = DEFAULT_DIFFICULTY;
-
 int16_t tones[TONES_PER_ROUND];
+uint8_t difficulty = DEFAULT_DIFFICULTY;
 uint8_t index = STARTING_INDEX;
-
 uint8_t roundsWon = 0;
-
-#include "interface.h"
 
 inline uint8_t getProgress() { return roundsWon * difficulty; }
 
-inline int8_t getDirection() { return random(0, 2) ? -1 : 1; }
+inline bool isBeyondMinMax(int16_t nextTone) {
+  return nextTone < MIN_TONE || nextTone > MAX_TONE;
+}
 
 int16_t getNextToneInScale(uint8_t previousIndex) {
   int16_t nextTone = scale[random(0, SCALE_TONES_COUNT)];
@@ -25,12 +23,8 @@ int16_t getNextToneInScale(uint8_t previousIndex) {
   return nextTone;
 }
 
-inline bool isBeyondMinMax(int16_t nextTone) {
-  return nextTone < MIN_TONE || nextTone > MAX_TONE;
-}
-
 int16_t getNextTone(uint8_t previousIndex) {
-  int8_t direction = getDirection();
+  int8_t direction = random(0, 2) ? -1 : 1;
   int16_t nextTone = tones[previousIndex];
 
   for (uint8_t i = 0; i < (GUESSES_PER_ROUND - previousIndex); i++) {
@@ -76,10 +70,10 @@ void setRoundsWon(uint8_t r) {
 
   printRoundToSerial(r);
   printBlankLineToSerial();
-  printAllTones();
+  printAllTones(tones);
   printBlankLineToSerial();
 
-  printIntervalToSerial(index);
+  printIntervalToSerial(index, tones);
   playInterval(tones[index - 1], tones[index], getProgress());
 }
 
@@ -102,8 +96,6 @@ void setup() {
   reset();
 }
 
-void increment() { index = constrain(index + 1, 0, TONES_PER_ROUND - 1); }
-
 void handleGuess(bool success) {
   delay(POST_BUTTON_PRESS_PAUSE);
 
@@ -117,9 +109,9 @@ void handleGuess(bool success) {
       return;
     }
 
-    increment();
+    index = index + 1;
 
-    printIntervalToSerial(index);
+    printIntervalToSerial(index, tones);
     playInterval(tones[index - 1], tones[index], getProgress());
 
     return;

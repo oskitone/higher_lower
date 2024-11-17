@@ -1,3 +1,5 @@
+// TODO: prefer consts
+
 #ifdef __AVR_ATtiny85__
 #define OUTPUT_PIN 4
 #define LED_PIN 1

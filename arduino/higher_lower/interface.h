@@ -47,7 +47,7 @@ void printRoundToSerial(uint8_t roundsWon) {
 #endif
 }
 
-uint8_t printIntervalToSerial(uint8_t i) {
+uint8_t printIntervalToSerial(uint8_t i, int16_t *tones) {
 #ifndef __AVR_ATtiny85__
   Serial.print(i);
   Serial.print(F(": "));
@@ -65,7 +65,7 @@ uint8_t printIntervalToSerial(uint8_t i) {
   return i;
 }
 
-void printAllTones() {
+void printAllTones(int16_t *tones) {
 #ifndef __AVR_ATtiny85__
   for (uint8_t i = 0; i < GUESSES_PER_ROUND; i++) {
     Serial.print(i);
