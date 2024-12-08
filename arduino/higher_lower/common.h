@@ -22,7 +22,7 @@ const int minTone = 60;
 const int maxTone = 1000;
 
 const int guessesPerRound = 4;
-const int roundsPerGame = 20;
+const int roundsPerGame = 10;
 
 const int tonesPerRound = (guessesPerRound + 1);
 
