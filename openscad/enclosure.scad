@@ -347,9 +347,10 @@ module enclosure(
         exposure_diameter = DIAGONAL_GRILL_SIZE,
         $fn = 24
     ) {
+        fixture_inner_diameter =  diameter + tolerance * 2;
+
         if (fixture) {
-            inner_diameter =  diameter + tolerance * 2;
-            outer_diameter = inner_diameter + ENCLOSURE_INNER_WALL * 2;
+            outer_diameter = fixture_inner_diameter + ENCLOSURE_INNER_WALL * 2;
             z = pcb_position.z + PCB_HEIGHT;
 
             // TODO: angle fixture
@@ -357,16 +358,16 @@ module enclosure(
                 ring(
                     diameter = outer_diameter,
                     height = dimensions.z - z - ENCLOSURE_FLOOR_CEILING + e,
-                    inner_diameter = inner_diameter
+                    inner_diameter = fixture_inner_diameter
                 );
             }
         } else {
-            // NOTE: eyeballed!
-            bump = 1.6;
+            radius_difference = (fixture_inner_diameter - exposure_diameter) / 2;
+            xy_bump = sqrt(pow(radius_difference, 2) / 2);
 
             translate([
-                lightpipe_position.x + bump,
-                lightpipe_position.y - bump,
+                lightpipe_position.x + xy_bump,
+                lightpipe_position.y - xy_bump,
                 dimensions.z - ENCLOSURE_FLOOR_CEILING - e
             ]) {
                 cylinder(
