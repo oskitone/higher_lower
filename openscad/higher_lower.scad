@@ -142,10 +142,13 @@ module higher_lower(
             - 6.3],
     ];
 
-    // NOTE: eyeballed! the closest it can get into speaker
+    // NOTE: ie, the closest it can get to speaker
+    radius_difference = SPEAKER_DIAMETER / 2 + LIGHTPIPE_DIAMETER / 2
+        + tolerance * 2 + ENCLOSURE_INNER_WALL;
+    bump_xy = sqrt(pow(radius_difference, 2) / 2);
     lightpipe_position = [
-        speaker_position.x - (SPEAKER_DIAMETER / 2 - 2.4),
-        speaker_position.y + (SPEAKER_DIAMETER / 2 - 2.4)
+        speaker_position.x - bump_xy,
+        speaker_position.y + bump_xy
     ];
 
     enclosure_bottom_height = pcb_position.z + PCB_HEIGHT
