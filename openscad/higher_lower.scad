@@ -13,6 +13,10 @@ include <pcb.scad>;
 SCOUT_DEFAULT_GUTTER = 3.4; // default_gutter = keys_x = ENCLOSURE_WALL + key_gutter
 OUTER_GUTTER = 5;
 
+// A quarter inch of standard "1/4" glue stick
+LIGHTPIPE_DIAMETER = 7;
+LIGHTPIPE_LENGTH = 25.4 / 4;
+
 module higher_lower(
     width = 25.4 * 3,
     length = 25.4 * 3,
@@ -30,7 +34,9 @@ module higher_lower(
     show_switch_clutch = true,
     show_speaker = true,
     show_rocker = true,
+    show_lightpipe = true,
     show_enclosure_top = true,
+
     show_clearance = false,
 
     button_exposure = 4,
@@ -349,6 +355,19 @@ module higher_lower(
         }
     }
 
+    if (show_lightpipe) {
+        % translate([
+            lightpipe_position.x,
+            lightpipe_position.y,
+            height - ENCLOSURE_FLOOR_CEILING - LIGHTPIPE_LENGTH - e
+        ]) {
+            % cylinder(
+                d = LIGHTPIPE_DIAMETER,
+                h = LIGHTPIPE_LENGTH
+            );
+        }
+    }
+
     if (show_clearance) {
         translate([
             ENCLOSURE_WALL + SOCKET_INNER_HEIGHT + e,
@@ -367,6 +386,7 @@ SHOW_PCB = true;
 SHOW_SWITCH_CLUTCH = true;
 SHOW_SPEAKER = true;
 SHOW_ROCKER = true;
+SHOW_LIGHTPIPE = true;
 SHOW_ENCLOSURE_TOP = true;
 
 SHOW_CLEARANCE = false;
@@ -385,7 +405,9 @@ higher_lower(
     show_switch_clutch = SHOW_SWITCH_CLUTCH,
     show_speaker = SHOW_SPEAKER,
     show_rocker = SHOW_ROCKER,
+    show_lightpipe = SHOW_LIGHTPIPE,
     show_enclosure_top = SHOW_ENCLOSURE_TOP,
+
     show_clearance = SHOW_CLEARANCE,
 
     tolerance = DEFAULT_TOLERANCE,
@@ -400,5 +422,5 @@ higher_lower(
 // translate([38, -1, -1]) cube([100, 100, 100]);
 
 // lightpipe
-// translate([9, -1, -1]) cube([100, 100, 100]);
+// translate([10, -1, -1]) cube([100, 100, 100]);
 }

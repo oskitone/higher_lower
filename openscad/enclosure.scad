@@ -14,9 +14,6 @@ SWITCH_CLUTCH_GRIP_HEIGHT = 7;
 DEFAULT_ROUNDING = 24;
 HIDEF_ROUNDING = 120;
 
-// "1/4" glue stick
-LIGHTPIPE_DIAMETER = 7;
-
 module enclosure(
     show_top = true,
     show_bottom = true,
