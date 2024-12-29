@@ -24,10 +24,12 @@ function get_translated_xy(xy) = (
 
 // Copied from higher_lower.kicad_pcb
 PCB_HOLE_POSITIONS = [
-  get_translated_xy([140.97, 110.49]),
-  get_translated_xy([114.935, 110.49]),
-  get_translated_xy([107.315, 110.49]),
-  get_translated_xy([105.41, 80.01]),
+    get_translated_xy([156.21, 110.49]),
+    get_translated_xy([156.21, 80.01]),
+    get_translated_xy([113.03, 110.49 -90]),
+    get_translated_xy([105.41, 110.49]),
+    get_translated_xy([120.65, 110.49 -90]),
+    get_translated_xy([113.03, 80.01]),
 ];
 PCB_HOLE_DIAMETER = 3.2;
 
@@ -43,9 +45,13 @@ PCB_BOTTOM_CLEARANCE = 2;
 
 PCB_SWITCH_Y = 16.54;
 
-// TODO: move to top left
-PCB_LED_POSITION = get_translated_xy([120.145 + 2.5, 80.52 + .6]);
+PCB_LED_POSITION = get_translated_xy([102.746 + 2.5, 78.742 + .6]);
 PCB_Z_OFF_PCB = 1;
+
+PCB_SWITCH_POSITONS = [
+    get_translated_xy([152.733432, 89.825]),
+    get_translated_xy([159.233432, 102.58]),
+];
 
 module pcb(
     show_board = true,
@@ -61,7 +67,11 @@ module pcb(
 
     speaker_position = [0,0],
     led_position = PCB_LED_POSITION,
-    switch_centers = [],
+
+    switch_centers = [
+        [PCB_SWITCH_POSITONS[0].x + 6.5 / 2, PCB_SWITCH_POSITONS[0].y - 4.5 / 2],
+        [PCB_SWITCH_POSITONS[1].x - 6.5 / 2, PCB_SWITCH_POSITONS[1].y + 4.5 / 2],
+    ],
 
     side_switch_position = 0,
 
@@ -87,11 +97,6 @@ module pcb(
             children();
         }
     }
-
-    echo("PCB switch_centers", [
-        [4 + switch_centers[0].x / 25.4, 4.5 - switch_centers[0].y / 25.4,],
-        [4 + switch_centers[1].x / 25.4, 4.5 - switch_centers[1].y / 25.4,]
-    ]);
 
     if (show_led) {
         _translate(led_position, z = PCB_HEIGHT + PCB_Z_OFF_PCB) {
@@ -127,7 +132,7 @@ module pcb(
                 if (show_silkscreen) {
                     color(silkscreen_color) intersection() {
                         // NOTE: eyeballed
-                        translate([-9.08, -20.7, height - e]) {
+                        translate([-.05, -38.2 + 2.54 / 2, height - e]) {
                             linear_extrude(silkscreen_height + e) {
                                 import("../kicad/higher_lower-brd.svg");
                             }
