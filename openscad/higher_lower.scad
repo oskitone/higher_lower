@@ -135,6 +135,7 @@ module higher_lower(
     ];
     button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
 
+    // TODO: remove, rely on static PCB_* values
     pcb_rocker_center_x = button_rocker_position.x - pcb_position.x
         + button_width / 2;
     rocker_center_y = button_rocker_position.y - pcb_position.y
@@ -294,14 +295,6 @@ module higher_lower(
             show_switches = show_pcb,
             show_led = show_pcb,
             show_clearance = show_clearance,
-
-            // TODO: ditch
-            led_position = [
-                lightpipe_position.x - pcb_position.x,
-                lightpipe_position.y - pcb_position.y,
-            ],
-
-            switch_centers = pcb_switch_centers,
 
             speaker_position = [
                 speaker_position.x - pcb_position.x,
