@@ -22,6 +22,7 @@ module higher_lower(
     length = 25.4 * 3,
     height = 25.4 * 1,
 
+    // TODO: pick a lane
     derive_height = false,
 
     pcb_width = PCB_WIDTH,
@@ -56,7 +57,9 @@ module higher_lower(
 
     pcb_post_hole_positions = [
         PCB_HOLE_POSITIONS[0],
-        PCB_HOLE_POSITIONS[3]
+        PCB_HOLE_POSITIONS[1],
+        PCB_HOLE_POSITIONS[3],
+        PCB_HOLE_POSITIONS[5],
     ],
 
     battery_count = 2,
@@ -110,6 +113,15 @@ module higher_lower(
             : height - ENCLOSURE_FLOOR_CEILING - SPEAKER_HEIGHT
     ];
 
+    // NOTE: ie, the closest it can get to speaker
+    radius_difference = SPEAKER_DIAMETER / 2 + LIGHTPIPE_DIAMETER / 2
+        + tolerance * 2 + ENCLOSURE_INNER_WALL;
+    bump_xy = sqrt(pow(radius_difference, 2) / 2);
+    lightpipe_position = [
+        speaker_position.x - bump_xy,
+        speaker_position.y + bump_xy
+    ];
+
     pcb_z_max = max(
         pcb_z_min,
         speaker_position.z
@@ -117,9 +129,10 @@ module higher_lower(
             - PCB_HEIGHT
     );
 
+    // NOTE: This assumes LED is perfectly in top left corner...
     pcb_position = [
-        (width - pcb_width) / 2,
-        speaker_position.y - pcb_length / 2,
+        lightpipe_position.x - LIGHTPIPE_DIAMETER / 2,
+        lightpipe_position.y + LIGHTPIPE_DIAMETER / 2 - pcb_length,
         derive_height ? pcb_z_min : pcb_z_max
     ];
 
@@ -134,31 +147,6 @@ module higher_lower(
             - rocker_z_clearance
     ];
     button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
-
-    // TODO: remove, rely on static PCB_* values
-    pcb_rocker_center_x = button_rocker_position.x - pcb_position.x
-        + button_width / 2;
-    rocker_center_y = button_rocker_position.y - pcb_position.y
-        + button_length + rocker_xy_clearance / 2;
-    pcb_switch_centers = [
-        [pcb_rocker_center_x, rocker_center_y - (button_width + rocker_xy_clearance) / 2],
-        [pcb_rocker_center_x, rocker_center_y + (button_length + rocker_xy_clearance) / 2],
-
-        // TODO: de-dupe
-        [pcb_rocker_center_x, rocker_center_y - (button_width + rocker_xy_clearance) / 2
-            + 6.3],
-        [pcb_rocker_center_x, rocker_center_y + (button_length + rocker_xy_clearance) / 2
-            - 6.3],
-    ];
-
-    // NOTE: ie, the closest it can get to speaker
-    radius_difference = SPEAKER_DIAMETER / 2 + LIGHTPIPE_DIAMETER / 2
-        + tolerance * 2 + ENCLOSURE_INNER_WALL;
-    bump_xy = sqrt(pow(radius_difference, 2) / 2);
-    lightpipe_position = [
-        speaker_position.x - bump_xy,
-        speaker_position.y + bump_xy
-    ];
 
     enclosure_bottom_height = pcb_position.z + PCB_HEIGHT
         + PCB_Z_OFF_PCB + LED_BASE_HEIGHT
@@ -214,10 +202,8 @@ module higher_lower(
         ];
 
         switch_centers = [
-            get_rocker_switch_center(pcb_switch_centers[0], offset),
-            get_rocker_switch_center(pcb_switch_centers[1], offset),
-            get_rocker_switch_center(pcb_switch_centers[2], offset),
-            get_rocker_switch_center(pcb_switch_centers[3], offset),
+            get_rocker_switch_center(PCB_SWITCH_CENTERS[0], offset),
+            get_rocker_switch_center(PCB_SWITCH_CENTERS[1], offset),
         ];
 
         translate(button_rocker_position) {
