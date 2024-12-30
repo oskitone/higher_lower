@@ -26,9 +26,9 @@ function get_translated_xy(xy) = (
 PCB_HOLE_POSITIONS = [
     get_translated_xy([156.21, 110.49]),
     get_translated_xy([156.21, 80.01]),
-    get_translated_xy([113.03, 110.49 -90]),
+    get_translated_xy([113.03, 110.49]),
     get_translated_xy([105.41, 110.49]),
-    get_translated_xy([120.65, 110.49 -90]),
+    get_translated_xy([120.65, 110.49]),
     get_translated_xy([113.03, 80.01]),
 ];
 PCB_HOLE_DIAMETER = 3.2;
@@ -49,8 +49,13 @@ PCB_LED_POSITION = get_translated_xy([102.746 + 2.5, 78.742 + .6]);
 PCB_Z_OFF_PCB = 1;
 
 PCB_SWITCH_POSITONS = [
-    get_translated_xy([152.733432, 89.825]),
-    get_translated_xy([159.233432, 102.58]),
+    get_translated_xy([154.150992, 91.14089]),
+    get_translated_xy([160.650992, 103.26089]),
+];
+
+PCB_SWITCH_CENTERS = [
+    [PCB_SWITCH_POSITONS[0].x + 6.5 / 2, PCB_SWITCH_POSITONS[0].y - 4.5 / 2],
+    [PCB_SWITCH_POSITONS[1].x - 6.5 / 2, PCB_SWITCH_POSITONS[1].y + 4.5 / 2],
 ];
 
 module pcb(
@@ -68,10 +73,7 @@ module pcb(
     speaker_position = [0,0],
     led_position = PCB_LED_POSITION,
 
-    switch_centers = [
-        [PCB_SWITCH_POSITONS[0].x + 6.5 / 2, PCB_SWITCH_POSITONS[0].y - 4.5 / 2],
-        [PCB_SWITCH_POSITONS[1].x - 6.5 / 2, PCB_SWITCH_POSITONS[1].y + 4.5 / 2],
-    ],
+    switch_centers = PCB_SWITCH_CENTERS,
 
     side_switch_position = 0,
 
@@ -132,7 +134,7 @@ module pcb(
                 if (show_silkscreen) {
                     color(silkscreen_color) intersection() {
                         // NOTE: eyeballed
-                        translate([-.05, -38.2 + 2.54 / 2, height - e]) {
+                        translate([-.05, -.05, height - e]) {
                             linear_extrude(silkscreen_height + e) {
                                 import("../kicad/higher_lower-brd.svg");
                             }
