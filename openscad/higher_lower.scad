@@ -15,7 +15,7 @@ OUTER_GUTTER = 5;
 
 // A quarter inch of standard "1/4" glue stick
 LIGHTPIPE_DIAMETER = 7;
-LIGHTPIPE_LENGTH = 25.4 / 4;
+LIGHTPIPE_LENGTH = 25.4 / 4; // TODO: fix vs LED top re: derive_height
 
 module higher_lower(
     width = 25.4 * 3,
@@ -157,7 +157,7 @@ module higher_lower(
     echo("Button", button_width / 25.4, button_length / 25.4);
     echo("Speaker",
         SPEAKER_DIAMETER / 2,
-        SPEAKER_DIAMETER / 2 + tolerance + ENCLOSURE_INNER_WALL,
+        get_speaker_fixture_diameter(tolerance),
         [
             // consts here are bottom left of PCB in KiCad
             (speaker_position.x - pcb_position.x) + 101.6,
