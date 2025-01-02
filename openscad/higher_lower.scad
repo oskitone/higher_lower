@@ -57,9 +57,8 @@ module higher_lower(
 
     pcb_post_hole_positions = [
         PCB_HOLE_POSITIONS[0],
-        PCB_HOLE_POSITIONS[1],
-        PCB_HOLE_POSITIONS[3],
-        PCB_HOLE_POSITIONS[5],
+        PCB_HOLE_POSITIONS[2],
+        PCB_HOLE_POSITIONS[4],
     ],
 
     battery_count = 2,
@@ -156,10 +155,15 @@ module higher_lower(
     echo("Enclosure", width / 25.4, length / 25.4, height / 25.4);
     echo("PCB", pcb_width / 25.4, pcb_length / 25.4);
     echo("Button", button_width / 25.4, button_length / 25.4);
-    echo("Speaker center on PCB", [
-        (speaker_position.x - pcb_position.x) / 25.4,
-        (speaker_position.y - pcb_position.y) / 25.4,
-    ]);
+    echo("Speaker",
+        SPEAKER_DIAMETER / 2,
+        SPEAKER_DIAMETER / 2 + tolerance + ENCLOSURE_INNER_WALL,
+        [
+            // consts here are bottom left of PCB in KiCad
+            (speaker_position.x - pcb_position.x) + 101.6,
+            114.3 - (speaker_position.y - pcb_position.y),
+        ]
+    );
 
     if (show_batteries || show_battery_holder) {
         translate([
