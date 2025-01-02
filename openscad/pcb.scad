@@ -24,12 +24,11 @@ function get_translated_xy(xy) = (
 
 // Copied from higher_lower.kicad_pcb
 PCB_HOLE_POSITIONS = [
-    get_translated_xy([156.21, 110.49]),
-    get_translated_xy([156.21, 80.01]),
-    get_translated_xy([113.03, 110.49]),
+    get_translated_xy([157.400992, 110.49]),
+    get_translated_xy([152.4, 84.455]),
     get_translated_xy([105.41, 110.49]),
-    get_translated_xy([120.65, 110.49]),
-    get_translated_xy([113.03, 80.01]),
+    get_translated_xy([160.02, 84.455]),
+    get_translated_xy([133.35, 79.375]),
 ];
 PCB_HOLE_DIAMETER = 3.2;
 
@@ -45,7 +44,7 @@ PCB_BOTTOM_CLEARANCE = 2;
 
 PCB_SWITCH_Y = 16.54;
 
-PCB_LED_POSITION = get_translated_xy([102.746 + 2.5, 78.742 + .6]);
+PCB_LED_POSITION = get_translated_xy([102.746 + 2.5, 78.742 + .75]);
 PCB_Z_OFF_PCB = 1;
 
 PCB_SWITCH_POSITONS = [
