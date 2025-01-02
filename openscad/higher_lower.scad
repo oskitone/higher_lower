@@ -45,8 +45,7 @@ module higher_lower(
 
     accessory_fillet = 1,
 
-    // NOTE: clearances supercede tolerance
-    pcb_top_clearance = PCB_TOP_CLEARANCE,
+    speaker_to_pcb_component_clearance = 1,
     pcb_bottom_clearance = PCB_BOTTOM_CLEARANCE,
 
     pcb_post_hole_positions = [
@@ -100,13 +99,16 @@ module higher_lower(
         speaker_grill_position.x + speaker_grill_size / 2,
         speaker_grill_position.y + speaker_grill_size / 2,
         derive_height
-            ? pcb_z_min + PCB_HEIGHT + pcb_top_clearance
+            ? pcb_z_min + PCB_HEIGHT + PCB_TOP_CLEARANCE_UNDER_SPEAKER
+                + speaker_to_pcb_component_clearance
             : height - ENCLOSURE_FLOOR_CEILING - SPEAKER_HEIGHT
     ];
 
     pcb_z_max = max(
         pcb_z_min,
-        speaker_position.z - PCB_HEIGHT - pcb_top_clearance
+        speaker_position.z
+            - (speaker_to_pcb_component_clearance + PCB_TOP_CLEARANCE_UNDER_SPEAKER)
+            - PCB_HEIGHT
     );
 
     pcb_position = [
@@ -278,7 +280,13 @@ module higher_lower(
 
             switch_centers = pcb_switch_centers,
 
+            speaker_position = [
+                speaker_position.x - pcb_position.x,
+                speaker_position.y - pcb_position.y
+            ],
             side_switch_position = side_switch_position,
+
+            tolerance = tolerance,
 
             width = pcb_width,
             length = pcb_length

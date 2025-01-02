@@ -1,4 +1,5 @@
 include <../../parts_cafe/openscad/ghost_cube.scad>;
+include <../../parts_cafe/openscad/ghost_cylinder.scad>;
 include <../../parts_cafe/openscad/led.scad>;
 include <../../parts_cafe/openscad/spst.scad>;
 include <../../parts_cafe/openscad/switch-OS102011MA1QN1.scad>;
@@ -24,7 +25,14 @@ PCB_HOLE_POSITIONS = [
 ];
 PCB_HOLE_DIAMETER = 3.2;
 
-PCB_TOP_CLEARANCE = 12 + 1;
+PCB_BIG_CAP_HEIGHT = 12.2;
+PCB_BIG_CAP_DIAMETER = 8.28; // TODO: use'm or lose'm
+PCB_TRIMPOT_HEIGHT = 8.1; // TODO: use'm or lose'm
+PCB_SOCKET_HEIGHT = 8.4; // TODO: use'm or lose'm
+PCB_TOP_CLEARANCE_BEYOND_SPEAKER = PCB_BIG_CAP_HEIGHT;
+PCB_TOP_CLEARANCE_UNDER_SPEAKER = PCB_BIG_CAP_HEIGHT;
+
+// ie, trimmed leads and solder joints on bottom
 PCB_BOTTOM_CLEARANCE = 2;
 
 PCB_SWITCH_Y = 16.54;
@@ -46,15 +54,20 @@ module pcb(
     length = 0,
     height = PCB_HEIGHT,
 
+    speaker_position = [0,0],
+    led_position = PCB_LED_POSITION,
     switch_centers = [],
 
     side_switch_position = 0,
 
-    top_clearance = PCB_TOP_CLEARANCE,
+    top_clearance_beyond_speaker = PCB_TOP_CLEARANCE_BEYOND_SPEAKER,
+    top_clearance_under_speaker = PCB_TOP_CLEARANCE_UNDER_SPEAKER,
     bottom_clearance = PCB_BOTTOM_CLEARANCE,
 
     hole_positions = PCB_HOLE_POSITIONS,
     hole_diameter = PCB_HOLE_DIAMETER,
+
+    tolerance = 0,
 
     bleed = 0,
 
@@ -141,8 +154,19 @@ module pcb(
     }
 
     if (show_clearance) {
+        _translate(speaker_position) {
+            % ghost_cylinder(
+                get_speaker_fixture_diameter(tolerance),
+                top_clearance_under_speaker
+            );
+        }
+
         translate([e, e, height - e]) {
-            % ghost_cube([width - e * 2, length - e * 2, top_clearance + e]);
+            % ghost_cube([
+                width - e * 2,
+                length - e * 2,
+                top_clearance_beyond_speaker + e
+            ]);
         }
 
         translate([e, e, -bottom_clearance]) {
