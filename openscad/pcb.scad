@@ -35,9 +35,9 @@ PCB_HOLE_DIAMETER = 3.2;
 PCB_BIG_CAP_HEIGHT = 12.2;
 PCB_BIG_CAP_DIAMETER = 8.28; // TODO: use'm or lose'm
 PCB_TRIMPOT_HEIGHT = 8.1; // TODO: use'm or lose'm
-PCB_SOCKET_HEIGHT = 8.4; // TODO: use'm or lose'm
+PCB_SOCKET_HEIGHT = 8.4;
 PCB_TOP_CLEARANCE_BEYOND_SPEAKER = PCB_BIG_CAP_HEIGHT;
-PCB_TOP_CLEARANCE_UNDER_SPEAKER = PCB_BIG_CAP_HEIGHT;
+PCB_TOP_CLEARANCE_UNDER_SPEAKER = PCB_SOCKET_HEIGHT;
 
 // ie, trimmed leads and solder joints on bottom
 PCB_BOTTOM_CLEARANCE = 2;
@@ -71,7 +71,6 @@ module pcb(
 
     speaker_position = [0,0],
     led_position = PCB_LED_POSITION,
-
     switch_centers = PCB_SWITCH_CENTERS,
 
     side_switch_position = 0,
