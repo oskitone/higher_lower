@@ -1,3 +1,4 @@
+include <../../parts_cafe/openscad/ghost_cube.scad>;
 include <../../parts_cafe/openscad/led.scad>;
 include <../../parts_cafe/openscad/spst.scad>;
 include <../../parts_cafe/openscad/switch-OS102011MA1QN1.scad>;
@@ -141,11 +142,11 @@ module pcb(
 
     if (show_clearance) {
         translate([e, e, height - e]) {
-            % cube([width - e * 2, length - e * 2, top_clearance + e]);
+            % ghost_cube([width - e * 2, length - e * 2, top_clearance + e]);
         }
 
         translate([e, e, -bottom_clearance]) {
-            % cube([width - e * 2, length - e * 2, bottom_clearance + e]);
+            % ghost_cube([width - e * 2, length - e * 2, bottom_clearance + e]);
         }
     }
 
