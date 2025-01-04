@@ -15,7 +15,7 @@ OUTER_GUTTER = 5;
 
 // A quarter inch of standard "1/4" glue stick
 LIGHTPIPE_DIAMETER = 7;
-LIGHTPIPE_LENGTH = 25.4 / 4; // TODO: fix vs LED top re: derive_height
+LIGHTPIPE_LENGTH = 25.4 / 4;
 
 module higher_lower(
     width = 25.4 * 3,
@@ -52,7 +52,7 @@ module higher_lower(
 
     accessory_fillet = 1,
 
-    speaker_to_pcb_component_clearance = 1,
+    pcb_component_to_outer_part_clearance = 1,
     pcb_bottom_clearance = PCB_BOTTOM_CLEARANCE,
 
     pcb_post_hole_positions = [
@@ -108,7 +108,7 @@ module higher_lower(
         speaker_grill_position.y + speaker_grill_size / 2,
         derive_height
             ? pcb_z_min + PCB_HEIGHT + PCB_TOP_CLEARANCE_UNDER_SPEAKER
-                + speaker_to_pcb_component_clearance
+                + pcb_component_to_outer_part_clearance
             : height - ENCLOSURE_FLOOR_CEILING - SPEAKER_HEIGHT
     ];
 
@@ -123,9 +123,15 @@ module higher_lower(
 
     pcb_z_max = max(
         pcb_z_min,
-        speaker_position.z
-            - (speaker_to_pcb_component_clearance + PCB_TOP_CLEARANCE_UNDER_SPEAKER)
-            - PCB_HEIGHT
+        min(
+            speaker_position.z
+                - (pcb_component_to_outer_part_clearance + PCB_TOP_CLEARANCE_UNDER_SPEAKER)
+                - PCB_HEIGHT,
+            height - ENCLOSURE_FLOOR_CEILING
+                - LIGHTPIPE_LENGTH - pcb_component_to_outer_part_clearance
+                - LED_HEIGHT - PCB_Z_OFF_PCB
+                - PCB_HEIGHT
+        )
     );
 
     // NOTE: This assumes LED is perfectly in top left corner...
@@ -136,7 +142,13 @@ module higher_lower(
     ];
 
     height = derive_height
-        ? speaker_position.z + SPEAKER_HEIGHT + ENCLOSURE_FLOOR_CEILING
+        ? max(
+            speaker_position.z + SPEAKER_HEIGHT + ENCLOSURE_FLOOR_CEILING,
+            pcb_position.z + PCB_HEIGHT
+                + PCB_Z_OFF_PCB + LED_HEIGHT + LIGHTPIPE_LENGTH
+                + pcb_component_to_outer_part_clearance
+                + ENCLOSURE_FLOOR_CEILING
+        )
         : height;
 
     button_rocker_position = [
