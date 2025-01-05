@@ -159,6 +159,8 @@ module higher_lower(
     ];
     button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
 
+    // TODO: fix SW1 obstruction, abandon vestigial lightpipe math
+    // Probably need to still account for possible output jack
     enclosure_bottom_height = pcb_position.z + PCB_HEIGHT
         + PCB_Z_OFF_PCB + LED_BASE_HEIGHT
         + LIGHTPIPE_DIAMETER / 2;
