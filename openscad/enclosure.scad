@@ -178,8 +178,7 @@ module enclosure(
     }
 
     module _bottom_pcb_fixtures(
-        // TODO: shorten
-        button_support_length = 26 // NOTE: eyeballed!
+        button_support_length = 15 // NOTE: eyeballed!
     ) {
         pcb_mounting_columns(
             pcb_position = pcb_position,
