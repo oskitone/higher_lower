@@ -9,7 +9,6 @@ include <../../parts_cafe/openscad/ring.scad>;
 include <pcb.scad>;
 
 SWITCH_CLUTCH_GRIP_LENGTH = 10;
-SWITCH_CLUTCH_GRIP_HEIGHT = 7;
 
 DEFAULT_ROUNDING = 24;
 HIDEF_ROUNDING = 120;
@@ -58,6 +57,7 @@ module enclosure(
 
     pcb_post_hole_positions = [],
 
+    switch_clutch_grip_height = 0,
     switch_clutch_web_length_extension = 0,
 
     tolerance = 0,
@@ -325,7 +325,7 @@ module enclosure(
     ) {
         length = SWITCH_CLUTCH_GRIP_LENGTH + SWITCH_ACTUATOR_TRAVEL
             + tolerance * 4 + length_clearance * 2;
-        height = SWITCH_CLUTCH_GRIP_HEIGHT + tolerance * 4;
+        height = switch_clutch_grip_height + tolerance * 4;
 
         translate([
             -e,

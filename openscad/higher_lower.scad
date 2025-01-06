@@ -159,7 +159,10 @@ module higher_lower(
     ];
     button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
 
-    // TODO: fix SW1 obstruction, abandon vestigial lightpipe math
+    switch_clutch_grip_height = height
+        - (pcb_position.z + PCB_HEIGHT + SWITCH_ACTUATOR_Z) * 2;
+
+    // TODO: abandon vestigial lightpipe math
     // Probably need to still account for possible output jack
     enclosure_bottom_height = pcb_position.z + PCB_HEIGHT
         + PCB_Z_OFF_PCB + LED_BASE_HEIGHT
@@ -280,6 +283,7 @@ module higher_lower(
 
             pcb_post_hole_positions = pcb_post_hole_positions,
 
+            switch_clutch_grip_height = switch_clutch_grip_height,
             switch_clutch_web_length_extension = switch_clutch_web_length_extension,
 
             tolerance = tolerance,
@@ -329,6 +333,8 @@ module higher_lower(
                 enclosure_height = height,
 
                 x_clearance = .2,
+
+                grip_height = switch_clutch_grip_height,
 
                 fillet = accessory_fillet,
                 side_overexposure = switch_exposure,
