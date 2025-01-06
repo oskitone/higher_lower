@@ -46,9 +46,7 @@ module pcb(
     show_switches = true,
     show_led = true,
 
-    // TODO: standardize show vs visualize
     show_clearance = false,
-    visualize_switch_centers = false,
 
     width = 0,
     length = 0,
@@ -172,22 +170,5 @@ module pcb(
         translate([e, e, -bottom_clearance]) {
             % ghost_cube([width - e * 2, length - e * 2, bottom_clearance + e]);
         }
-    }
-
-    // HACK: for visual confirmation on PCB layout
-    if (visualize_switch_centers) {
-        _e = 1;
-        _height = 30;
-
-        translate([switch_centers[0].x - _e / 2, 0, height - e]) {
-            % # cube([_e, length, _height + e]);
-        }
-
-        for (xy = switch_centers) {
-            translate([0, xy.y - _e / 2, height - e]) {
-                % # cube([width, _e, _height + e]);
-            }
-        }
-
     }
 }
