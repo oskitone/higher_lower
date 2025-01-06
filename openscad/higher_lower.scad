@@ -162,11 +162,7 @@ module higher_lower(
     switch_clutch_grip_height = height
         - (pcb_position.z + PCB_HEIGHT + SWITCH_ACTUATOR_Z) * 2;
 
-    // TODO: abandon vestigial lightpipe math
-    // Probably need to still account for possible output jack
-    enclosure_bottom_height = pcb_position.z + PCB_HEIGHT
-        + PCB_Z_OFF_PCB + LED_BASE_HEIGHT
-        + LIGHTPIPE_DIAMETER / 2;
+    enclosure_bottom_height = height / 2;
     enclosure_top_height = height - enclosure_bottom_height;
 
     echo("Enclosure", width / 25.4, length / 25.4, height / 25.4);
