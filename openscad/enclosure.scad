@@ -416,6 +416,13 @@ module enclosure(
     }
 
     if (show_bottom) {
+        web_length = pcb_position.y
+            - get_battery_holder_back_hitch_position(
+                battery_holder_position = battery_holder_position,
+                battery_holder_dimensions = battery_holder_dimensions
+            ).y
+            - ENCLOSURE_WALL - tolerance;
+
         difference() {
             union() {
                 _half(bottom_height, lip = true);
@@ -425,10 +432,7 @@ module enclosure(
                     _switch_clutch_fixture(top = false);
                     _lightpipe_exposure(fixture = true, bottom = true);
                     battery_holder_fixtures(
-                        web_length = pcb_position.y -
-                            (battery_holder_position.y + battery_holder_dimensions.y)
-                            // TODO: tidy against endstop_y
-                            - (ENCLOSURE_WALL + tolerance * 4),
+                        web_length = web_length,
                         web_height = pcb_position.z + PCB_HEIGHT - ENCLOSURE_FLOOR_CEILING,
                         battery_holder_position = battery_holder_position,
                         tolerance = tolerance
