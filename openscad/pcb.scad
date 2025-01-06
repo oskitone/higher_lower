@@ -6,12 +6,6 @@ include <../../parts_cafe/openscad/switch-OS102011MA1QN1.scad>;
 
 use <../../scout/openscad/switch_clutch.scad>;
 
-// If pcb_position is kept as it is, centered in the enclosure,
-// then these are about the dimensions it'd need to have the
-// LED where we want it. TODO: use'm or lose'm
-// PCB_WIDTH = 2.6 * 25.4;
-// PCB_LENGTH = 1.65 * 25.4;
-
 PCB_WIDTH = 2.5 * 25.4;
 PCB_LENGTH = 1.5 * 25.4;
 PCB_HEIGHT = 1.6;
@@ -33,8 +27,6 @@ PCB_HOLE_POSITIONS = [
 PCB_HOLE_DIAMETER = 3.2;
 
 PCB_BIG_CAP_HEIGHT = 12.2;
-PCB_BIG_CAP_DIAMETER = 8.28; // TODO: use'm or lose'm
-PCB_TRIMPOT_HEIGHT = 8.1; // TODO: use'm or lose'm
 PCB_SOCKET_HEIGHT = 8.4;
 PCB_TOP_CLEARANCE_BEYOND_SPEAKER = PCB_BIG_CAP_HEIGHT;
 PCB_TOP_CLEARANCE_UNDER_SPEAKER = PCB_SOCKET_HEIGHT;
