@@ -22,9 +22,6 @@ module higher_lower(
     length = 25.4 * 3,
     height = 25.4 * 1,
 
-    // TODO: pick a lane
-    derive_height = false,
-
     pcb_width = PCB_WIDTH,
     pcb_length = PCB_LENGTH,
 
@@ -97,8 +94,6 @@ module higher_lower(
         ENCLOSURE_FLOOR_CEILING
     ];
 
-    pcb_z_min = ENCLOSURE_FLOOR_CEILING + pcb_bottom_clearance;
-
     speaker_grill_position = [
         outer_gutter,
         length - speaker_grill_size - outer_gutter
@@ -106,10 +101,7 @@ module higher_lower(
     speaker_position = [
         speaker_grill_position.x + speaker_grill_size / 2,
         speaker_grill_position.y + speaker_grill_size / 2,
-        derive_height
-            ? pcb_z_min + PCB_HEIGHT + PCB_TOP_CLEARANCE_UNDER_SPEAKER
-                + pcb_component_to_outer_part_clearance
-            : height - ENCLOSURE_FLOOR_CEILING - SPEAKER_HEIGHT
+        height - ENCLOSURE_FLOOR_CEILING - SPEAKER_HEIGHT
     ];
 
     // NOTE: ie, the closest it can get to speaker
@@ -121,35 +113,23 @@ module higher_lower(
         speaker_position.y + bump_xy
     ];
 
-    pcb_z_max = max(
-        pcb_z_min,
-        min(
-            speaker_position.z
-                - (pcb_component_to_outer_part_clearance + PCB_TOP_CLEARANCE_UNDER_SPEAKER)
-                - PCB_HEIGHT,
-            height - ENCLOSURE_FLOOR_CEILING
-                - LIGHTPIPE_LENGTH - pcb_component_to_outer_part_clearance
-                - LED_HEIGHT - PCB_Z_OFF_PCB
-                - PCB_HEIGHT
-        )
-    );
-
     // NOTE: This assumes LED is perfectly in top left corner...
     pcb_position = [
         lightpipe_position.x - LIGHTPIPE_DIAMETER / 2,
         lightpipe_position.y + LIGHTPIPE_DIAMETER / 2 - pcb_length,
-        derive_height ? pcb_z_min : pcb_z_max
-    ];
-
-    height = derive_height
-        ? max(
-            speaker_position.z + SPEAKER_HEIGHT + ENCLOSURE_FLOOR_CEILING,
-            pcb_position.z + PCB_HEIGHT
-                + PCB_Z_OFF_PCB + LED_HEIGHT + LIGHTPIPE_LENGTH
-                + pcb_component_to_outer_part_clearance
-                + ENCLOSURE_FLOOR_CEILING
+        max(
+            ENCLOSURE_FLOOR_CEILING + pcb_bottom_clearance,
+            min(
+                speaker_position.z
+                    - (pcb_component_to_outer_part_clearance + PCB_TOP_CLEARANCE_UNDER_SPEAKER)
+                    - PCB_HEIGHT,
+                height - ENCLOSURE_FLOOR_CEILING
+                    - LIGHTPIPE_LENGTH - pcb_component_to_outer_part_clearance
+                    - LED_HEIGHT - PCB_Z_OFF_PCB
+                    - PCB_HEIGHT
+            )
         )
-        : height;
+    ];
 
     button_rocker_position = [
         speaker_grill_position.x + speaker_grill_size + default_gutter,
@@ -395,8 +375,6 @@ DEFAULT_TOLERANCE = .1;
 // rotate([0,180,0])
 difference() {
 higher_lower(
-    // derive_height = $t >= .5,
-
     show_enclosure_bottom = SHOW_ENCLOSURE_BOTTOM,
     show_battery_holder = SHOW_BATTERY_HOLDER,
     show_batteries = SHOW_BATTERIES,
