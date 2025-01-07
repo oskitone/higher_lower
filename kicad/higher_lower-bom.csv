@@ -1,0 +1,15 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"SW2,SW3";"SW_PUSH_6mm";2;"SW_SPST";;;
+2;"C1";"C_Disc_D5.0mm_W2.5mm_P5.00mm";1;".1uF";;;
+3;"LS1";"PinHeader_1x02_P2.54mm_Vertical";1;"Speaker";;;
+4;"U1";"DIP-8_W7.62mm";1;"ATTINY85V";;;
+5;"BT1";"PinHeader_1x02_P2.54mm_Vertical";1;"1.8V-5.5V";;;
+6;"Ref**";"branding";1;"Val**";;;
+7;"D1";"LED_D5.0mm-4_RGB_Staggered_Pins";1;"LED_RKGB";;;
+8;"RV2";"Potentiometer_Piher_PT-6-V_Vertical-mirror";1;"1k";;;
+9;"RV1";"Potentiometer_Piher_PT-6-V_Vertical-mirror";1;"10k";;;
+10;"C3";"CP_Radial_D8.0mm_P3.50mm";1;"220uF";;;
+11;"C2";"CP_Radial_D5.0mm_P2.00mm";1;"4.7uF";;;
+12;"J1";"PinHeader_2x03_P2.54mm_Vertical";1;"Conn_02x03";;;
+13;"SW1";"SW_Slide_1P2T_CK_OS102011MS2Q";1;"SW_SPDT";;;
+14;"R2,R1";"R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal";2;"220";;;
