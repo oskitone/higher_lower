@@ -119,7 +119,10 @@ void setup() {
 
 void handleGuess(bool guessSuccess,
                  bool roundSuccess = index == tonesPerRound - 1) {
+  updateDisplay(button);
   delay(postButtonPressPause);
+
+  updateDisplay();
 
   if (guessSuccess) {
     if (roundSuccess) {
@@ -141,12 +144,14 @@ void handleGuess(bool guessSuccess,
 }
 
 void loop() {
+  updateDisplay();
+
   if (justPressed(downPin)) {
-    handleGuess(tones[index] < tones[index - 1]);
+    handleGuess(Button::DOWN, tones[index] < tones[index - 1]);
   }
 
   if (justPressed(upPin)) {
-    handleGuess(tones[index] > tones[index - 1]);
+    handleGuess(Button::UP, tones[index] > tones[index - 1]);
   }
 
   if (justPressed(skipPin)) {

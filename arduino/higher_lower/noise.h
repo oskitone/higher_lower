@@ -7,16 +7,24 @@ int16_t firstRoundTones[] = {
     NOTE_C5, NOTE_E5, NOTE_D5, NOTE_G5, NOTE_C5,
 };
 
+void _delay(int16_t duration) {
+  updateDisplay();
+  delay(duration);
+  updateDisplay();
+}
+
 void _tone(int16_t t, int16_t duration) {
   if (t == NOTE_REST) {
     noTone(outputPin);
   } else {
+    isPlayingSound = true;
     digitalWrite(ledPin, HIGH);
     tone(outputPin, t, duration);
   }
 
-  delay(duration);
+  _delay(duration);
   digitalWrite(ledPin, LOW);
+  isPlayingSound = false;
 }
 
 inline int16_t getDuration(int16_t duration, uint8_t progress) {
@@ -25,10 +33,10 @@ inline int16_t getDuration(int16_t duration, uint8_t progress) {
 }
 
 void playInterval(int16_t tone1, int16_t tone2, uint8_t progress) {
-  delay(preIntervalPause);
+  _delay(preIntervalPause);
 
   _tone(tone1, getDuration(lastToneDuration, progress));
-  delay(getDuration(midIntervalPause, progress));
+  _delay(getDuration(midIntervalPause, progress));
   _tone(tone2, getDuration(currentToneDuration, progress));
 }
 
@@ -96,6 +104,7 @@ void playIntro(uint8_t count) {
 
 void playWinnerSong(uint8_t count) {
   playThemeCountInWithDescent(4);
+  // TODO: fix display(?) slowing this down
   for (uint8_t i = 0; i < 255; i++) {
     playThemeMotif(pow(themeMotifSpeedup, i));
   }
@@ -111,14 +120,14 @@ void playSuccessSound(uint8_t count) {
     _tone(NOTE_C5, 68);
 
     if ((i + 1) % 5 == 0) {
-      delay(68 * 2);
+      _delay(68 * 2);
     }
   }
 }
 
 void playGameOverSound(uint8_t count) {
   _tone(NOTE_G2, resetPause);
-  delay(resetPause);
+  _delay(resetPause);
 
   for (uint8_t i = 0; i < count; i++) {
     _tone(NOTE_C4, 17);
@@ -127,7 +136,7 @@ void playGameOverSound(uint8_t count) {
     _tone(NOTE_G2, 68);
 
     if ((i + 1) % 5 == 0) {
-      delay(68 * 2);
+      _delay(68 * 2);
     }
   }
 }

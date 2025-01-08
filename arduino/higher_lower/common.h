@@ -54,3 +54,7 @@ const int maxStartingDifficulty = 4;
 
 // NOTE: For emulation, in lieu of analog input
 const int defaultDifficulty = 0;
+
+enum Button { NONE, UP, DOWN };
+
+bool isPlayingSound = false;

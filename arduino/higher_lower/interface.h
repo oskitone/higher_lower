@@ -1,6 +1,17 @@
+#ifndef __AVR_ATtiny85__
+#include <Arduboy2.h>
+
+#include "graphics.h"
+#endif
+
+// TODO: this still true? try on attiny w/ and w/o conditional stuff
 // NOTE: We're skipping Arduboy's initialization to
 // get pinMode access to its buttons. I don't know
 // the full consequence of that!
+
+#ifndef __AVR_ATtiny85__
+Arduboy2 arduboy;
+#endif
 
 void setupInterface() {
   pinMode(ledPin, OUTPUT);
@@ -8,6 +19,32 @@ void setupInterface() {
 
   pinMode(upPin, INPUT_PULLUP);
   pinMode(downPin, INPUT_PULLUP);
+
+#ifndef __AVR_ATtiny85__
+  arduboy.begin();
+#endif
+}
+
+void updateDisplay(Button buttonPressed = Button::NONE) {
+#ifndef __AVR_ATtiny85__
+  arduboy.clear();
+
+  if (isPlayingSound) {
+    Sprites::drawOverwrite(21, 8, sound, 0);
+  }
+
+  Sprites::drawOverwrite(32, 1, machine, 0);
+
+  if (buttonPressed == Button::UP) {
+    arduboy.fillRect(77, 14, 4, 3);
+  }
+
+  if (buttonPressed == Button::DOWN) {
+    arduboy.fillRect(77, 24, 4, 3);
+  }
+
+  arduboy.display();
+#endif
 }
 
 uint8_t getStartingDifficulty() {
