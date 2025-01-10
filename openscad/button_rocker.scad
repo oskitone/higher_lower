@@ -51,8 +51,17 @@ module button_rocker(
         brim_height
     ];
 
+    actuator_cavitiy_inner_diameter = SPST_ACTUATOR_DIAMETER + tolerance * 2;
+    actuator_cavitiy_outer_diameter = actuator_cavitiy_inner_diameter + chamfer * 2;
+
+    minimum_walled_actuator_cavities_width =
+        actuator_cavitiy_outer_diameter + ENCLOSURE_INNER_WALL * 2;
+
     plunge = plunge + actuator_cavity_height;
-    offset = plunge * .75;
+    offset = min(
+        (brim_dimensions.x - minimum_walled_actuator_cavities_width) / 2,
+        plunge // ie, a 45 degree chamfer
+    );
 
     module _engraving(y, rotation, size = min(width, length) * .5) {
         translate([width / 2, y, height - ENCLOSURE_ENGRAVING_DEPTH]) {
@@ -68,18 +77,16 @@ module button_rocker(
     }
 
     module _actuator_cavities($fn = quick_preview ? 6 : 24) {
-        inner_diameter = SPST_ACTUATOR_DIAMETER + tolerance * 2;
-
         for (xy = switch_centers) {
             translate([xy.x, xy.y, -(plunge + e)]) {
                 cylinder(
-                    d = inner_diameter,
+                    d = actuator_cavitiy_inner_diameter,
                     h = actuator_cavity_height + e
                 );
 
                 cylinder(
-                    d1 = inner_diameter + chamfer * 2,
-                    d2 = inner_diameter,
+                    d1 = actuator_cavitiy_outer_diameter,
+                    d2 = actuator_cavitiy_inner_diameter,
                     h = chamfer + e
                 );
             }
