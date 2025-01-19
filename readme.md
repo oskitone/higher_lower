@@ -29,7 +29,7 @@ Requires arduino-cli to compile, [Ardens](https://github.com/tiberiusbrown/Arden
 ### Troubleshooting
 
 - `Could not find USBtiny device`: Programmer not connected?
-- `Programmer operation not supported`: Some pins to programmer are shared with game inputs. Try setting "CTRL" pot to its middle value.
+- `Programmer operation not supported`: Make sure board is getting full power. Try setting "CTRL" pot to its middle value. (Some pins to programmer are shared with game inputs.)
 
 ## 3D Models
 
