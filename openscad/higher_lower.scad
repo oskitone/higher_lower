@@ -44,7 +44,7 @@ module higher_lower(
     outer_gutter = OUTER_GUTTER,
     default_gutter = SCOUT_DEFAULT_GUTTER,
     rocker_xy_clearance = SCOUT_DEFAULT_GUTTER / -2,
-    rocker_z_clearance = 1,
+    rocker_z_clearance = 1, // TODO: measure and confirm
     label_gutter = 2,
 
     accessory_fillet = 1,
@@ -137,7 +137,8 @@ module higher_lower(
         height - ENCLOSURE_FLOOR_CEILING - ROCKER_BRIM_HEIGHT
             - rocker_z_clearance
     ];
-    button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure;
+    button_height = ROCKER_BRIM_HEIGHT + ENCLOSURE_FLOOR_CEILING + button_exposure
+        + rocker_z_clearance;
 
     switch_clutch_grip_height = height
         - (pcb_position.z + PCB_HEIGHT + SWITCH_ACTUATOR_Z) * 2;
