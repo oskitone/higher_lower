@@ -102,7 +102,6 @@ function run() {
 
     export_stl 'enclosure_bottom' 'SHOW_ENCLOSURE_BOTTOM'
     export_stl 'battery_holder' 'SHOW_BATTERY_HOLDER'
-    export_stl 'pcb' 'SHOW_PCB'
     export_stl 'switch_clutch' 'SHOW_SWITCH_CLUTCH'
     export_stl 'rocker' 'SHOW_ROCKER'
     export_stl 'enclosure_top' 'SHOW_ENCLOSURE_TOP'

@@ -76,8 +76,6 @@ module pcb(
 
     tolerance = 0,
 
-    bleed = 0,
-
     pcb_color = "purple",
     silkscreen_color = [1,1,1,.25]
 ) {
@@ -112,13 +110,7 @@ module pcb(
         difference() {
             union() {
                 color(pcb_color) {
-                    _translate([-bleed, -bleed], 0) {
-                        cube([
-                            width + bleed * 2,
-                            length + bleed * 2,
-                            height
-                        ]);
-                    }
+                    cube([width, length, height]);
                 }
 
                 if (show_silkscreen) {
@@ -145,7 +137,7 @@ module pcb(
                 for (xy = hole_positions) {
                     translate([xy.x, xy.y, -e]) {
                         cylinder(
-                            d = hole_diameter + bleed * 2,
+                            d = hole_diameter,
                             h = height + silkscreen_height + e * 2,
                             $fn = 12
                         );
