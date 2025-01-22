@@ -41,9 +41,9 @@ This is all tentative and will get replaced with the full documentation site tre
 
 Also:
 
-- 2 2-wire ribbon cables (or similar _small_ gauge, stranded wire)
-  - 1 3" for BT1
-  - 1 3" for LS1
+- 10" of 2-wire ribbon cables (or similar _small_ gauge, stranded wire)
+  - 5" for BT1
+  - 5" for LS1
 - 4 battery terminal contacts for battery holder
   - 1 dual spring+button wire contacts (Keystone 181)
   - 1 tabbed spring contact (Keystone 5204)
