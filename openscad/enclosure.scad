@@ -120,8 +120,7 @@ module enclosure(
                 speaker_grill_dimensions.x,
                 speaker_grill_dimensions.y,
                 depth + e,
-                size = DIAGONAL_GRILL_SIZE,
-                offset = sqrt(2 * pow(DIAGONAL_GRILL_SIZE, 2))
+                size = DIAGONAL_GRILL_SIZE
             );
         }
     }
@@ -341,8 +340,8 @@ module enclosure(
     module _lightpipe_exposure(
         diameter = LIGHTPIPE_DIAMETER,
         fixture = false,
-        exposure_diameter = DIAGONAL_GRILL_SIZE,
-        $fn = 24
+        exposure_diameter = LIGHTPIPE_DIAMETER,
+        $fn = quick_preview ? undef : 24
     ) {
         fixture_inner_diameter =  diameter + tolerance * 2;
 
@@ -358,12 +357,9 @@ module enclosure(
                 );
             }
         } else {
-            radius_difference = (fixture_inner_diameter - exposure_diameter) / 2;
-            xy_bump = sqrt(pow(radius_difference, 2) / 2);
-
             translate([
-                lightpipe_position.x + xy_bump,
-                lightpipe_position.y - xy_bump,
+                lightpipe_position.x,
+                lightpipe_position.y,
                 dimensions.z - ENCLOSURE_FLOOR_CEILING - e
             ]) {
                 cylinder(
