@@ -207,9 +207,24 @@ module enclosure(
         }
     }
 
-    module _speaker_fixture() {
-        switch_clutch_deobstruction_width = 3; // NOTE: arbitrary
+    module _switch_clutch_deobstruction_cavity(
+        width = 3 // NOTE: arbitrary
+    ) {
+        translate([
+            pcb_position.x - width,
+            switch_clutch_aligner_y - tolerance - e,
+            -e
+        ]) {
+            cube([
+                width,
+                switch_clutch_aligner_length
+                    + tolerance * 2 + e * 2,
+                dimensions.z + e * 2
+            ]);
+        }
+    }
 
+    module _speaker_fixture() {
         difference() {
             translate(speaker_position) {
                 speaker_fixture(
@@ -221,17 +236,9 @@ module enclosure(
                 );
             }
 
-            translate([
-                pcb_position.x - switch_clutch_deobstruction_width,
-                switch_clutch_aligner_y - e,
-                speaker_position.z - e
-            ]) {
-                cube([
-                    switch_clutch_deobstruction_width,
-                    switch_clutch_aligner_length + e * 2,
-                    SPEAKER_HEIGHT + e * 3
-                ]);
-            }
+            // NOTE: Defensive! Only needed when fixture flows
+            // into clutch's area
+            _switch_clutch_deobstruction_cavity();
         }
     }
 
@@ -346,15 +353,28 @@ module enclosure(
         fixture_inner_diameter =  diameter + tolerance * 2;
 
         if (fixture) {
-            outer_diameter = fixture_inner_diameter + ENCLOSURE_INNER_WALL * 2;
-            z = pcb_position.z + PCB_HEIGHT;
+            outer_diameter = fixture_inner_diameter + ENCLOSURE_WALL * 2;
+            z = pcb_position.z + PCB_HEIGHT + PCB_Z_OFF_PCB;
+            height = dimensions.z - z - ENCLOSURE_FLOOR_CEILING;
 
-            translate([lightpipe_position.x, lightpipe_position.y, z]) {
-                ring(
-                    diameter = outer_diameter,
-                    height = dimensions.z - z - ENCLOSURE_FLOOR_CEILING + e,
-                    inner_diameter = fixture_inner_diameter
-                );
+            difference() {
+                translate([lightpipe_position.x, lightpipe_position.y, z]) {
+                    ring(
+                        diameter = outer_diameter,
+                        height = height + e,
+                        inner_diameter = fixture_inner_diameter
+                    );
+                }
+
+                translate([speaker_position.x, speaker_position.y, z - e]) {
+                    _c(
+                        speaker_cavity_diameter,
+                        height + e * 3,
+                        chamfer = 0
+                    );
+                }
+
+                _switch_clutch_deobstruction_cavity();
             }
         } else {
             translate([
