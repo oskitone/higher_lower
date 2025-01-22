@@ -211,6 +211,9 @@ module higher_lower(
                     - (pcb_position.z + PCB_HEIGHT + SPST_ACTUATOR_HEIGHT_OFF_PCB),
                 xy_clearance = rocker_xy_clearance,
                 brim_height = ROCKER_BRIM_HEIGHT,
+                fixture_retraction = control_clearance,
+                fixture_cavity_height = ENCLOSURE_FLOOR_CEILING + rocker_z_clearance
+                    + .2, // NOTE: arbitrary
                 fillet = quick_preview ? 0 : accessory_fillet,
                 tolerance = tolerance,
                 outer_color = control_outer_color,
@@ -406,4 +409,7 @@ higher_lower(
 
 // ceiling off
 // translate([-1,-1,23]) cube([100, 100, 10]);
+
+// rocker fixture
+// translate([-1, -1, -1]) cube([100, 51.25, 100]);
 }

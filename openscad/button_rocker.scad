@@ -8,6 +8,8 @@ ROCKER_BRIM_SIZE = 2;
 ROCKER_BRIM_HEIGHT = 1.2;
 ROCKER_BRIM_CHAMFER = .6;
 
+ROCKER_ENCLOSURE_FIXTURE_DEPTH = .4;
+
 function get_rocker_switch_center(
     xy = [0,0],
     offset = [0,0]
@@ -32,6 +34,9 @@ module button_rocker(
     brim_size = ROCKER_BRIM_SIZE,
     brim_height = ROCKER_BRIM_HEIGHT,
     brim_chamfer = ROCKER_BRIM_CHAMFER,
+
+    fixture_retraction = 0,
+    fixture_cavity_height = 2,
 
     fillet = 0,
     chamfer = ENCLOSURE_ENGRAVING_CHAMFER,
@@ -94,6 +99,20 @@ module button_rocker(
         }
     }
 
+    module _enclosure_fixture_cavity() {
+        radius = ROCKER_ENCLOSURE_FIXTURE_DEPTH + fixture_retraction + tolerance;
+
+        for (x = [-fixture_retraction, width + fixture_retraction]) {
+            translate([x, length + xy_clearance / 2, brim_dimensions.z]) {
+                cylinder(
+                    r = radius,
+                    h = fixture_cavity_height,
+                    $fn = 8
+                );
+            }
+        }
+    }
+
     difference() {
         color(outer_color) {
             for (y = [0, length + xy_clearance]) {
@@ -144,6 +163,7 @@ module button_rocker(
             _engraving(length + xy_clearance + length / 2, 0);
             _engraving(length / 2, 180);
             _actuator_cavities();
+            _enclosure_fixture_cavity();
         }
     }
 }

@@ -289,17 +289,29 @@ module enclosure(
     module _button_rocker_cavity() {
         gutter = control_clearance + tolerance;
 
+        width = button_dimensions.x + gutter * 2;
+        length = button_dimensions.y * 2
+            + rocker_xy_clearance + gutter * 2;
+        height = ENCLOSURE_FLOOR_CEILING + e * 2;
+
         translate([
             button_rocker_position.x - gutter,
             button_rocker_position.y - gutter,
             dimensions.z - ENCLOSURE_FLOOR_CEILING - e
         ]) {
-            cube([
-                button_dimensions.x + gutter * 2,
-                button_dimensions.y * 2
-                    + rocker_xy_clearance + gutter * 2,
-                ENCLOSURE_FLOOR_CEILING + e * 2
-            ]);
+            difference() {
+                cube([width, length, height]);
+
+                for (x = [0, width]) {
+                    translate([x, length / 2, -e]) {
+                        cylinder(
+                            r = gutter + ROCKER_ENCLOSURE_FIXTURE_DEPTH,
+                            h = height + e * 2,
+                            $fn = 8
+                        );
+                    }
+                }
+            }
         }
     }
 
