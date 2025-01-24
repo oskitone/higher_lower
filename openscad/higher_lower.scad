@@ -44,7 +44,7 @@ module higher_lower(
     outer_gutter = OUTER_GUTTER,
     default_gutter = SCOUT_DEFAULT_GUTTER,
     rocker_xy_clearance = SCOUT_DEFAULT_GUTTER / -2,
-    rocker_z_clearance = 1, // TODO: measure and confirm
+    rocker_z_clearance = .8,
     label_gutter = 2,
 
     accessory_fillet = 1,
