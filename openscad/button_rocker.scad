@@ -51,7 +51,8 @@ module button_rocker(
         brim_height
     ];
 
-    actuator_cavitiy_inner_diameter = SPST_ACTUATOR_DIAMETER + tolerance * 2;
+    actuator_cavitiy_inner_diameter = SPST_ACTUATOR_DIAMETER
+        + tolerance * 4; // doubled to be intentionally loose
     actuator_cavitiy_outer_diameter = actuator_cavitiy_inner_diameter + chamfer * 2;
 
     minimum_walled_actuator_cavities_width =

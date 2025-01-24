@@ -212,7 +212,7 @@ module higher_lower(
                 xy_clearance = rocker_xy_clearance,
                 brim_height = ROCKER_BRIM_HEIGHT,
                 fillet = quick_preview ? 0 : accessory_fillet,
-                tolerance = tolerance * 2, // intentionally loose
+                tolerance = tolerance,
                 outer_color = control_outer_color,
                 cavity_color = control_cavity_color,
                 quick_preview = quick_preview
