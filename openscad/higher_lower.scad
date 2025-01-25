@@ -364,15 +364,15 @@ module higher_lower(
     }
 }
 
-SHOW_ENCLOSURE_BOTTOM = 0;
-SHOW_BATTERY_HOLDER = 0;
-SHOW_BATTERIES = 0;
-SHOW_PCB = 0;
-SHOW_SWITCH_CLUTCH = 0;
-SHOW_SPEAKER = 0;
-SHOW_ROCKER = 1;
-SHOW_LIGHTPIPE = 0;
-SHOW_ENCLOSURE_TOP = 1;
+SHOW_ENCLOSURE_BOTTOM = true;
+SHOW_BATTERY_HOLDER = true;
+SHOW_BATTERIES = true;
+SHOW_PCB = true;
+SHOW_SWITCH_CLUTCH = true;
+SHOW_SPEAKER = true;
+SHOW_ROCKER = true;
+SHOW_LIGHTPIPE = true;
+SHOW_ENCLOSURE_TOP = true;
 
 SHOW_CLEARANCE = false;
 
@@ -412,10 +412,4 @@ higher_lower(
 
 // rocker fixture
 // translate([-1, -1, -1]) cube([100, 51.25, 100]);
-
-// HACK: rocker fixture test
-translate([-1, -1, -1]) cube([100, 25, 100]);
-translate([-1, -1, -1]) cube([45, 100, 100]);
-translate([-1, -1, -1]) cube([100, 100, 21]);
-translate([-1, -1, 27]) cube([100, 100, 100]);
 }

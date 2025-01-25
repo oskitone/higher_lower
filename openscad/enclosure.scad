@@ -468,7 +468,7 @@ module enclosure(
                     }
                 }
 
-                * color(outer_color) {
+                color(outer_color) {
                     _speaker_fixture();
                     _switch_clutch_fixture(top = true);
                     _lightpipe_exposure(fixture = true);
