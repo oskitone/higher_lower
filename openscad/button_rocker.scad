@@ -57,7 +57,7 @@ module button_rocker(
     ];
 
     actuator_cavitiy_inner_diameter = SPST_ACTUATOR_DIAMETER
-        + tolerance * 4; // doubled to be intentionally loose
+        + tolerance * 4; // NOTE: doubled to be intentionally loose
     actuator_cavitiy_outer_diameter = actuator_cavitiy_inner_diameter + chamfer * 2;
 
     minimum_walled_actuator_cavities_width =
@@ -100,9 +100,10 @@ module button_rocker(
     }
 
     module _enclosure_fixture_cavity() {
-        radius = ROCKER_ENCLOSURE_FIXTURE_DEPTH + fixture_retraction + tolerance;
+        radius = ROCKER_ENCLOSURE_FIXTURE_DEPTH + fixture_retraction
+            + tolerance * 4; // NOTE: again, doubled to be intentionally loose
 
-        for (x = [-fixture_retraction, width + fixture_retraction]) {
+        for (x = [-(fixture_retraction + tolerance), width + fixture_retraction]) {
             translate([x, length + xy_clearance / 2, brim_dimensions.z]) {
                 cylinder(
                     r = radius,

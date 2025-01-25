@@ -212,8 +212,8 @@ module higher_lower(
                 xy_clearance = rocker_xy_clearance,
                 brim_height = ROCKER_BRIM_HEIGHT,
                 fixture_retraction = control_clearance,
-                fixture_cavity_height = ENCLOSURE_FLOOR_CEILING + rocker_z_clearance
-                    + .2, // NOTE: arbitrary
+                fixture_cavity_height = ENCLOSURE_FLOOR_CEILING
+                    + rocker_z_clearance * 2,
                 fillet = quick_preview ? 0 : accessory_fillet,
                 tolerance = tolerance,
                 outer_color = control_outer_color,
