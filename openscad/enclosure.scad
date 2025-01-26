@@ -231,6 +231,7 @@ module enclosure(
                 speaker_fixture(
                     height = SPEAKER_HEIGHT + e,
                     wall = ENCLOSURE_INNER_WALL,
+                    tab_cavity_count = 2,
                     tab_cavity_rotation = 0,
                     tolerance = tolerance,
                     quick_preview = quick_preview
