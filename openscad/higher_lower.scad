@@ -295,9 +295,10 @@ module higher_lower(
     }
 
     if (show_switch_clutch) {
-        // HACK: lots of arbitrary values here to make Scout's clutch work. eh
+        // HACK: lots of arbitrary values here to make Scout's clutch work.
+        // boooooooooooo
         translate([
-            pcb_position.x + SWITCH_ORIGIN.x,
+            pcb_position.x + SWITCH_ORIGIN.x + .15,
             pcb_position.y + PCB_SWITCH_Y + SWITCH_ORIGIN.y,
             0
         ]) {
@@ -309,13 +310,14 @@ module higher_lower(
 
                 enclosure_height = height,
 
-                x_clearance = .2,
+                // Negative here to make up for bigger tolerance below
+                x_clearance = -.2,
 
                 grip_height = switch_clutch_grip_height,
 
                 fillet = accessory_fillet,
                 side_overexposure = switch_exposure,
-                tolerance = tolerance,
+                tolerance = tolerance * 2, // NOTE: intentionally loose
 
                 outer_color = control_outer_color,
                 cavity_color = control_cavity_color,
