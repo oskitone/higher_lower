@@ -355,15 +355,21 @@ module enclosure(
         fixture_inner_diameter =  diameter + tolerance * 2;
 
         if (fixture) {
-            outer_diameter = fixture_inner_diameter + ENCLOSURE_WALL * 2;
+            outer_diameter = min(
+                fixture_inner_diameter + ENCLOSURE_WALL * 2,
+                (
+                    min(lightpipe_position.x, dimensions.y - lightpipe_position.y)
+                    - ENCLOSURE_WALL - tolerance * 2
+                ) * 2
+            );
             z = pcb_position.z + PCB_HEIGHT + PCB_Z_OFF_PCB;
-            height = dimensions.z - z - ENCLOSURE_FLOOR_CEILING;
+            height = dimensions.z - z - ENCLOSURE_FLOOR_CEILING + e;
 
             difference() {
                 translate([lightpipe_position.x, lightpipe_position.y, z]) {
                     ring(
                         diameter = outer_diameter,
-                        height = height + e,
+                        height = height,
                         inner_diameter = fixture_inner_diameter
                     );
                 }
@@ -371,7 +377,7 @@ module enclosure(
                 translate([speaker_position.x, speaker_position.y, z - e]) {
                     _c(
                         speaker_cavity_diameter,
-                        height + e * 3,
+                        height + e * 2,
                         chamfer = 0
                     );
                 }
