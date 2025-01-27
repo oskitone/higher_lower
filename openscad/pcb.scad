@@ -36,7 +36,7 @@ PCB_BOTTOM_CLEARANCE = 2;
 
 PCB_SWITCH_Y = 16.54;
 
-PCB_LED_POSITION = get_translated_xy([102.746 + 2.5, 78.742 + .75]);
+PCB_LED_POSITION = get_translated_xy([102.746 + 2.4, 78.742 + .75]);
 PCB_Z_OFF_PCB = 1;
 
 PCB_SWITCH_POSITONS = [

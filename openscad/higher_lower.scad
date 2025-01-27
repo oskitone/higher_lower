@@ -113,10 +113,9 @@ module higher_lower(
         speaker_position.y + bump_xy
     ];
 
-    // NOTE: This assumes LED is perfectly in top left corner...
     pcb_position = [
-        lightpipe_position.x - LIGHTPIPE_DIAMETER / 2,
-        lightpipe_position.y + LIGHTPIPE_DIAMETER / 2 - pcb_length,
+        lightpipe_position.x - PCB_LED_POSITION.x,
+        lightpipe_position.y - PCB_LED_POSITION.y,
         max(
             ENCLOSURE_FLOOR_CEILING + pcb_bottom_clearance,
             min(
@@ -345,7 +344,8 @@ module higher_lower(
         ]) {
             % cylinder(
                 d = LIGHTPIPE_DIAMETER,
-                h = LIGHTPIPE_LENGTH
+                h = LIGHTPIPE_LENGTH,
+                $fn = 12
             );
         }
     }
