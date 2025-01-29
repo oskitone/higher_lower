@@ -8,7 +8,7 @@ use <../../scout/openscad/switch_clutch.scad>;
 
 PCB_WIDTH = 2.5 * 25.4;
 PCB_LENGTH = 1.5 * 25.4;
-PCB_HEIGHT = 1.6; // TODO: measure and confirm
+PCB_HEIGHT = 1.7;
 
 PCB_MINIMUM_LENGTH = 25.4; // NOTE: arbitrary but reasonable!
 
@@ -37,7 +37,7 @@ PCB_BOTTOM_CLEARANCE = 2;
 PCB_SWITCH_Y = 16.54;
 
 PCB_LED_POSITION = get_translated_xy([102.746 + 2.4, 78.742 + .75]);
-PCB_Z_OFF_PCB = 1;
+PCB_Z_OFF_PCB = 2.3;
 
 PCB_SWITCH_POSITONS = [
     get_translated_xy([154.150992, 91.14089]),

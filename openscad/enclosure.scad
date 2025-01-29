@@ -188,6 +188,7 @@ module enclosure(
             tolerance = tolerance,
             enclosure_floor_ceiling = ENCLOSURE_FLOOR_CEILING,
             pcb_hole_diameter = PCB_HOLE_DIAMETER,
+            registration_nub_height = PCB_HEIGHT,
             support_web_length = (pcb_position.z - ENCLOSURE_FLOOR_CEILING) / 2,
             quick_preview = quick_preview
         );
