@@ -402,7 +402,7 @@ higher_lower(
 // translate([38, -1, -1]) cube([100, 100, 100]);
 
 // lightpipe
-// translate([10, -1, -1]) cube([100, 100, 100]);
+// translate([8.4, -1, -1]) cube([100, 100, 100]);
 
 // ceiling off
 // translate([-1,-1,23]) cube([100, 100, 10]);
