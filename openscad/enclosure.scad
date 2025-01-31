@@ -365,7 +365,7 @@ module enclosure(
     module _lightpipe_exposure(
         diameter = LIGHTPIPE_DIAMETER,
         fixture = false,
-        exposure_diameter = LIGHTPIPE_DIAMETER,
+        exposure_diameter = DIAGONAL_GRILL_SIZE * 2.75,
         $fn = quick_preview ? undef : 24
     ) {
         fixture_inner_diameter =  diameter + tolerance * 4; // NOTE: intentionally loose
@@ -415,15 +415,19 @@ module enclosure(
                 _disassembly_channel();
             }
         } else {
-            translate([
-                lightpipe_position.x,
-                lightpipe_position.y,
-                dimensions.z - ENCLOSURE_FLOOR_CEILING - e
-            ]) {
-                cylinder(
-                    d = exposure_diameter,
-                    h = ENCLOSURE_FLOOR_CEILING - ENCLOSURE_ENGRAVING_DEPTH + e * 2
-                );
+            intersection() {
+                translate([
+                    lightpipe_position.x,
+                    lightpipe_position.y,
+                    dimensions.z - ENCLOSURE_FLOOR_CEILING - e
+                ]) {
+                    cylinder(
+                        d = exposure_diameter,
+                        h = ENCLOSURE_FLOOR_CEILING - ENCLOSURE_ENGRAVING_DEPTH + e * 2
+                    );
+                }
+
+                _speaker_grill(ENCLOSURE_FLOOR_CEILING + e * 2);
             }
         }
     }
