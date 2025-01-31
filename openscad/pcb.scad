@@ -10,8 +10,6 @@ PCB_WIDTH = 2.5 * 25.4;
 PCB_LENGTH = 1.5 * 25.4;
 PCB_HEIGHT = 1.7;
 
-PCB_MINIMUM_LENGTH = 25.4; // NOTE: arbitrary but reasonable!
-
 function get_translated_xy(xy) = (
     [xy.x - 4 * 25.4, 4.5 * 25.4 - xy.y]
 );
