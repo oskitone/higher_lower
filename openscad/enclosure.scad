@@ -436,7 +436,8 @@ module enclosure(
         web_length = pcb_position.y
             - get_battery_holder_back_hitch_position(
                 battery_holder_position = battery_holder_position,
-                battery_holder_dimensions = battery_holder_dimensions
+                battery_holder_dimensions = battery_holder_dimensions,
+                tolerance = tolerance
             ).y
             - ENCLOSURE_WALL - tolerance;
 
