@@ -1,22 +1,15 @@
 # Higher Lower
 
-![Drawing, traces of speakers and batteries, prospective enclosure layouts](misc/drawing-parts.png)
+![Higher Lower game model animation](/misc/header-960-100.gif)
 
 A handheld electronic game you can play with your eyes closed.
 
-In development!
+Finalizing development. Kits coming soon!
 
 ## TODO
 
-- Reduce power usage
-- Finalize circuit
-- PCB + enclosure fit
-- Minimum viable Arduboy setup
-- Rainy day ideas (ie, probably not doing)
-  - Countdown timer for each guess
-  - Rocker design with fulcrum piece that wraps around switches
-  - Proper random seeding
-  - UART header
+- Finalize PCB
+- Assembly documentation
 
 ## Assembly Instructions
 
@@ -123,3 +116,7 @@ STLs are generated with `make_stls.sh`. Run `./make_stls.sh -h` for full flags l
 Designed by Oskitone. Please support future synth projects by purchasing from [Oskitone](https://www.oskitone.com/).
 
 Creative Commons Attribution/Share-Alike, all text above must be included in any redistribution. See license.txt for additional details.
+
+![Drawing, traces of speakers and batteries, prospective enclosure layouts](misc/drawing-parts.png)
+
+(drawing by me and my son)
