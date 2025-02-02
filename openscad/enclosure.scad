@@ -448,7 +448,8 @@ module enclosure(
                 color(outer_color) {
                     _bottom_pcb_fixtures();
                     _switch_clutch_fixture(top = false);
-                    battery_holder_fixtures(
+                    battery_holder_enclosure_fixtures(
+                        battery_holder_dimensions = battery_holder_dimensions,
                         web_length = web_length,
                         web_height = pcb_position.z + PCB_HEIGHT - ENCLOSURE_FLOOR_CEILING,
                         battery_holder_position = battery_holder_position,
