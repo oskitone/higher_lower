@@ -5,6 +5,7 @@
 int16_t tones[tonesPerRound];
 uint8_t difficulty = defaultDifficulty;
 uint8_t index = startingIndex;
+uint8_t gamesPlayed = 0;
 uint8_t roundsWon = 0;
 
 inline uint8_t getProgress() { return roundsWon * difficulty; }
@@ -55,35 +56,50 @@ void randomize() {
   }
 }
 
+void playNextInterval() {
+  printIntervalToSerial(index, tones);
+  playInterval(tones[index - 1], tones[index], getProgress());
+}
+
+void handleGameOver() {
+  playGameOverSound(roundsWon);
+  delay(resetPause);
+
+  gamesPlayed += 1;
+  reset();
+}
+
+void handleGameWon() {
+  playWinnerSong();
+  delay(resetPause);
+
+  gamesPlayed += 1;
+
+  printGameToSerial(gamesPlayed, getDifficulty());
+  resetWithoutIntro();
+}
+
 void setRoundsWon(uint8_t r) {
   roundsWon = r;
 
   if (roundsWon >= roundsPerGame) {
-    playWinnerSong();
-    delay(resetPause);
-    resetWithoutIntro();
-
+    handleGameWon();
     return;
   }
 
   randomize();
   index = startingIndex;
 
-  printRoundToSerial(r);
-  printBlankLineToSerial();
-  printAllTones(tones);
-  printBlankLineToSerial();
+  printRoundToSerial(r, tones);
 
-  printIntervalToSerial(index, tones);
-  playInterval(tones[index - 1], tones[index], getProgress());
+  playNextInterval();
 }
 
-void resetWithoutIntro() {
-  printBlankLineToSerial();
-  setRoundsWon(0);
-}
+void resetWithoutIntro() { setRoundsWon(0); }
 
 void reset() {
+  printGameToSerial(gamesPlayed, getDifficulty());
+
   playIntro(difficulty);
   delay(newRoundPause);
 
@@ -109,7 +125,6 @@ void handleGuess(bool success) {
     if (index == tonesPerRound - 1) {
       playSuccessSound(roundsWon + 1);
       delay(newRoundPause);
-      printBlankLineToSerial();
       setRoundsWon(roundsWon + 1);
 
       return;
@@ -117,16 +132,12 @@ void handleGuess(bool success) {
 
     index = index + 1;
 
-    printIntervalToSerial(index, tones);
-    playInterval(tones[index - 1], tones[index], getProgress());
+    playNextInterval();
 
     return;
   }
 
-  playGameOverSound(roundsWon);
-  delay(resetPause);
-
-  reset();
+  handleGameOver();
 }
 
 void loop() {

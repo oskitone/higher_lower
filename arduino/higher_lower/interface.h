@@ -29,19 +29,37 @@ inline bool justPressed(uint8_t button) {
 void setupSerial() {
 #ifndef __AVR_ATtiny85__
   Serial.begin(9600);
+
+  // HACK: We need to wait a little before printing to the serial monitor. The
+  // value here is MAGIC but seems to work.
+  delay(10);
 #endif
 }
 
-void printBlankLineToSerial() {
+void printGameToSerial(uint8_t game, uint8_t difficulty) {
 #ifndef __AVR_ATtiny85__
+  Serial.print(F("GAME "));
+  Serial.print(game);
+  Serial.print(F("  DIFFICULTY "));
+  Serial.print(difficulty);
+
   Serial.println();
 #endif
 }
 
-void printRoundToSerial(uint8_t roundsWon) {
+void printRoundToSerial(uint8_t roundsWon, int16_t *tones) {
 #ifndef __AVR_ATtiny85__
-  Serial.print(F("ROUND "));
+  Serial.print(F("  ROUND "));
   Serial.print(roundsWon);
+
+  Serial.print(F(": "));
+  for (uint8_t i = 0; i <= guessesPerRound; i++) {
+    Serial.print(tones[i]);
+
+    if (i < guessesPerRound) {
+      Serial.print(F(","));
+    }
+  }
 
   Serial.println();
 #endif
@@ -49,6 +67,7 @@ void printRoundToSerial(uint8_t roundsWon) {
 
 uint8_t printIntervalToSerial(uint8_t i, int16_t *tones) {
 #ifndef __AVR_ATtiny85__
+  Serial.print(F("    "));
   Serial.print(i);
   Serial.print(F(": "));
   Serial.print(tones[i - 1]);
@@ -63,14 +82,4 @@ uint8_t printIntervalToSerial(uint8_t i, int16_t *tones) {
   // HACK: unused return response avoids compilation warning
   // when targeting ATtiny85
   return i;
-}
-
-void printAllTones(int16_t *tones) {
-#ifndef __AVR_ATtiny85__
-  for (uint8_t i = 0; i < guessesPerRound; i++) {
-    Serial.print(i);
-    Serial.print(": ");
-    Serial.println(tones[i]);
-  }
-#endif
 }
