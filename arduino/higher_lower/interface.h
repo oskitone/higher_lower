@@ -18,8 +18,12 @@ uint8_t getDifficulty() {
 #endif
 }
 
-// NOTE: this works much better on real hardware than emulator
-void initRandomSeed() { randomSeed(analogRead(seedPin)); }
+void initRandomSeed() {
+#ifndef __AVR_ATtiny85__
+  Serial.println("  SEED RNG");
+#endif
+  randomSeed(millis());
+}
 
 inline bool justPressed(uint8_t button) {
   // HACK: relying on tone delay to skip debouncing

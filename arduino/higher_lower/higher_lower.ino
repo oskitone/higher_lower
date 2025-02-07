@@ -14,14 +14,8 @@ inline bool isBeyondMinMax(int16_t nextTone) {
   return nextTone < minTone || nextTone > maxTone;
 }
 
-int16_t getNextToneInScale(uint8_t previousIndex) {
-  int16_t nextTone = scale[random(0, scaleTonesCount)];
-
-  if (nextTone == tones[previousIndex]) {
-    return getNextToneInScale(previousIndex);
-  }
-
-  return nextTone;
+int16_t getNextToneInFirstRound(uint8_t previousIndex) {
+  return firstRoundTones[previousIndex + 1];
 }
 
 int16_t getNextTone(uint8_t previousIndex) {
@@ -51,8 +45,8 @@ void randomize() {
                  : tones[tonesPerRound - 1];
 
   for (uint8_t i = 1; i < tonesPerRound; i++) {
-    tones[i] =
-        getProgress() == 0 ? getNextToneInScale(i - 1) : getNextTone(i - 1);
+    tones[i] = getProgress() == 0 ? getNextToneInFirstRound(i - 1)
+                                  : getNextTone(i - 1);
   }
 }
 
@@ -87,6 +81,10 @@ void setRoundsWon(uint8_t r) {
     return;
   }
 
+  if (gamesPlayed == 0 && roundsWon == 1) {
+    initRandomSeed();
+  }
+
   randomize();
   index = startingIndex;
 
@@ -107,10 +105,7 @@ void reset() {
 }
 
 void setup() {
-  // NOTE: seed before setup, before input pins are pulled
-  initRandomSeed();
   setupInterface();
-
   setupSerial();
 
   difficulty = getDifficulty();

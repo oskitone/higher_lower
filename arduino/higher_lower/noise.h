@@ -3,10 +3,9 @@
 
 #include "pitches.h"
 
-int16_t scale[] = {
-    NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6,
+int16_t firstRoundTones[] = {
+    NOTE_C5, NOTE_E5, NOTE_D5, NOTE_G5, NOTE_C5,
 };
-const int scaleTonesCount = 8;
 
 void _tone(int16_t t, int16_t duration) {
   if (t == NOTE_REST) {

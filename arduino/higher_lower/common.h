@@ -12,8 +12,6 @@ const int downPin = A3;
 const int ctrlPin = 8;
 #endif
 
-const int seedPin = upPin;
-
 const int themeNoteLength = 180;
 
 // NOTES: max human-audible frequency is ~20k and max for int16_t is ~32k,
