@@ -33,9 +33,7 @@ void playInterval(int16_t tone1, int16_t tone2, uint8_t progress) {
 }
 
 void _theme_tone(int16_t t) { _tone(t, themeNoteLength); }
-void _theme_tone(int16_t t, uint8_t speed) {
-  _tone(t, max(1, themeNoteLength / speed));
-}
+void _theme_tone(int16_t t, float speed) { _tone(t, themeNoteLength / speed); }
 
 void playThemeCountIn(uint8_t count) {
   for (uint8_t i = 0; i < count; i++) {
@@ -60,7 +58,7 @@ void playThemeCountInWithDescent(uint8_t count) {
   _theme_tone(NOTE_REST);
 }
 
-void playThemeMotif(uint8_t speed) {
+void playThemeMotif(float speed) {
   _theme_tone(NOTE_C5, speed);
   _theme_tone(NOTE_REST, speed);
   _theme_tone(NOTE_E5, speed);
@@ -98,8 +96,8 @@ void playIntro(uint8_t introBeepCount) {
 
 void playWinnerSong() {
   playThemeCountInWithDescent(4);
-  for (uint8_t i = 1; i < 255; i++) {
-    playThemeMotif(i);
+  for (uint8_t i = 0; i < 255; i++) {
+    playThemeMotif(pow(themeMotifSpeedup, i));
   }
   playThemeMotifEnd();
 }
