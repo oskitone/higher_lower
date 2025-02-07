@@ -29,8 +29,6 @@ void playInterval(int16_t tone1, int16_t tone2, uint8_t progress) {
 
   _tone(tone1, getDuration(lastToneDuration, progress));
   delay(getDuration(midIntervalPause, progress));
-  _tone(tone1, getDuration(currentToneDuration, progress));
-  delay(getDuration(midIntervalPause, progress));
   _tone(tone2, getDuration(currentToneDuration, progress));
 }
 
