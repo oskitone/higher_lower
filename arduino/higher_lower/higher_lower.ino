@@ -108,6 +108,8 @@ void setup() {
   setupInterface();
   setupSerial();
 
+  delay(bootPause);
+
   difficulty = getDifficulty();
 
   reset();
