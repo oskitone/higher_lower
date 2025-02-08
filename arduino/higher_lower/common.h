@@ -33,7 +33,7 @@ const int lastToneDuration = themeNoteLength * 4;
 const int currentToneDuration = (lastToneDuration / 2);
 const int minToneOrIntervalPauseDuration = 8;
 
-const int bootPause = 500;
+const int bootPause = 250;
 const int resetPause = 1000;
 const int postButtonPressPause = 250;
 const int newRoundPause = 500;
