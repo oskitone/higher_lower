@@ -88,17 +88,18 @@ void playThemeMotifEnd() {
   _theme_tone(NOTE_C4);
 }
 
-void playIntro(uint8_t introBeepCount) {
-  playThemeCountIn(introBeepCount);
+void playIntro(uint8_t count) {
+  playThemeCountIn(count);
   playThemeMotif(1);
   playThemeMotifEnd();
 }
 
-void playWinnerSong() {
+void playWinnerSong(uint8_t count) {
   playThemeCountInWithDescent(4);
   for (uint8_t i = 0; i < 255; i++) {
     playThemeMotif(pow(themeMotifSpeedup, i));
   }
+  playThemeCountIn(count);
   playThemeMotifEnd();
 }
 

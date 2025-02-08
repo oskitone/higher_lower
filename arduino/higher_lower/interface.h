@@ -10,9 +10,10 @@ void setupInterface() {
   pinMode(downPin, INPUT_PULLUP);
 }
 
-uint8_t getDifficulty() {
+uint8_t getStartingDifficulty() {
 #ifdef __AVR_ATtiny85__ -
-  return map(analogRead(ctrlPin), 0, 1023, minDifficulty, maxDifficulty);
+  return map(analogRead(ctrlPin), 0, 1023, minStartingDifficulty,
+             maxStartingDifficulty);
 #else
   return defaultDifficulty;
 #endif

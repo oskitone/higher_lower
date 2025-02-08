@@ -47,8 +47,8 @@ const float intervalDiminish = .65;
 const float durationDiminish = .9;
 const float themeMotifSpeedup = 1.125;
 
-const int minDifficulty = 0;
-const int maxDifficulty = 4;
+const int minStartingDifficulty = 0;
+const int maxStartingDifficulty = 4;
 
 // NOTE: For emulation, in lieu of analog input
 const int defaultDifficulty = 1;

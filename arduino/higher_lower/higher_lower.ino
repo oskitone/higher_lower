@@ -3,10 +3,11 @@
 #include "noise.h"
 
 int16_t tones[tonesPerRound];
-uint8_t difficulty = defaultDifficulty;
 uint8_t index = startingIndex;
-uint8_t gamesPlayed = 0;
 uint8_t roundsWon = 0;
+
+uint8_t difficulty = defaultDifficulty;
+uint8_t consecutiveGamesWon = 0;
 
 inline uint8_t getProgress() { return roundsWon * difficulty; }
 
@@ -59,17 +60,17 @@ void handleGameOver() {
   playGameOverSound(roundsWon);
   delay(resetPause);
 
-  gamesPlayed += 1;
   reset();
 }
 
 void handleGameWon() {
-  playWinnerSong();
+  consecutiveGamesWon += 1;
+  difficulty += 1;
+
+  playWinnerSong(difficulty);
   delay(resetPause);
 
-  gamesPlayed += 1;
-
-  printGameToSerial(gamesPlayed, getDifficulty());
+  printGameToSerial(consecutiveGamesWon, difficulty);
   resetWithoutIntro();
 }
 
@@ -81,7 +82,7 @@ void setRoundsWon(uint8_t r) {
     return;
   }
 
-  if (gamesPlayed == 0 && roundsWon == 1) {
+  if (consecutiveGamesWon == 0 && roundsWon == 1) {
     initRandomSeed();
   }
 
@@ -96,7 +97,10 @@ void setRoundsWon(uint8_t r) {
 void resetWithoutIntro() { setRoundsWon(0); }
 
 void reset() {
-  printGameToSerial(gamesPlayed, getDifficulty());
+  consecutiveGamesWon = 0;
+  difficulty = getStartingDifficulty();
+
+  printGameToSerial(consecutiveGamesWon, difficulty);
 
   playIntro(difficulty);
   delay(newRoundPause);
@@ -109,8 +113,6 @@ void setup() {
   setupSerial();
 
   delay(bootPause);
-
-  difficulty = getDifficulty();
 
   reset();
 }
