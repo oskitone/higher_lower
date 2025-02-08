@@ -19,10 +19,14 @@ uint8_t getDifficulty() {
 }
 
 void initRandomSeed() {
+  unsigned long ms = millis();
+
 #ifndef __AVR_ATtiny85__
-  Serial.println("  SEED RNG");
+  Serial.print("  SEED: ");
+  Serial.println(ms);
 #endif
-  randomSeed(millis());
+
+  randomSeed(ms);
 }
 
 inline bool justPressed(uint8_t button) {
