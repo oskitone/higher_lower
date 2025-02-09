@@ -87,10 +87,16 @@ Also:
 
 Requires arduino-cli to compile, [Ardens](https://github.com/tiberiusbrown/Ardens) to emulate, then a [Sparkfun programmer](https://www.sparkfun.com/products/9825) to upload. (Other programmers may work just as well, but I've only tested this one.)
 
-### Troubleshooting
+### Deployment troubleshooting
 
 - `Could not find USBtiny device`: Programmer not connected?
 - `Programmer operation not supported`: Make sure board is getting full power. Try setting "CTRL" pot to its middle value. (Some pins to programmer are shared with game inputs.)
+
+### Arduboy
+
+You can also deploy to an [Arduboy](https://www.arduboy.com/) using the Arduino IDE. Play using the device's Up/Down buttons.
+
+![Higher Lower on Arduboy](/misc/arduboy.gif)
 
 ## 3D Models
 
