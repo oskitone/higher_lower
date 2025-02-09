@@ -112,7 +112,8 @@ module higher_lower(
     bump_xy = sqrt(pow(radius_difference, 2) / 2);
     lightpipe_position = [
         speaker_position.x - bump_xy,
-        speaker_position.y + bump_xy
+        speaker_position.y + bump_xy,
+        height - ENCLOSURE_FLOOR_CEILING - LIGHTPIPE_LENGTH
     ];
 
     pcb_position = [
@@ -342,11 +343,7 @@ module higher_lower(
     }
 
     if (show_lightpipe) {
-        % translate([
-            lightpipe_position.x,
-            lightpipe_position.y,
-            height - ENCLOSURE_FLOOR_CEILING - LIGHTPIPE_LENGTH - e
-        ]) {
+        % translate(lightpipe_position) translate([0,0,-e]) {
             % cylinder(
                 d = LIGHTPIPE_DIAMETER,
                 h = LIGHTPIPE_LENGTH,

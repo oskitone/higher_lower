@@ -233,9 +233,8 @@ module enclosure(
                     height = SPEAKER_HEIGHT + e,
                     wall = ENCLOSURE_INNER_WALL,
 
-                    // NOTE: eyeballed against lightpipe _disassembly_channel
                     tab_cavity_count = 2,
-                    tab_cavity_rotation = 30,
+                    tab_cavity_rotation = 0,
 
                     tolerance = tolerance,
                     quick_preview = quick_preview
@@ -363,38 +362,27 @@ module enclosure(
     }
 
     module _lightpipe_exposure(
-        diameter = LIGHTPIPE_DIAMETER,
         fixture = false,
+        fixture_wall = ENCLOSURE_INNER_WALL,
         exposure_diameter = DIAGONAL_GRILL_SIZE * 2.75,
         $fn = quick_preview ? undef : 24
     ) {
-        fixture_inner_diameter =  diameter + tolerance * 4; // NOTE: intentionally loose
+        // NOTE: intentionally loose
+        fixture_inner_diameter =  LIGHTPIPE_DIAMETER + tolerance * 4;
+
         fixture_outer_diameter = min(
-            fixture_inner_diameter + ENCLOSURE_WALL * 2,
+            fixture_inner_diameter + fixture_wall * 2,
             (
                 min(lightpipe_position.x, dimensions.y - lightpipe_position.y)
-                - ENCLOSURE_WALL - tolerance * 2
+                - fixture_wall - tolerance * 2
             ) * 2
         );
 
-        fixture_z = pcb_position.z + PCB_HEIGHT;
-        fixture_height = dimensions.z - fixture_z - ENCLOSURE_FLOOR_CEILING + e;
-
-        module _disassembly_channel(width = DIAGONAL_GRILL_SIZE, angle = 180 + (90 / 2)) {
-            translate([
-                lightpipe_position.x,
-                lightpipe_position.y,
-                fixture_z - e
-            ]) {
-                rotate([0, 0, angle]) translate([width / -2, 0, 0]) {
-                    cube([width, fixture_outer_diameter / 2 + e, fixture_height + e * 2]);
-                }
-            }
-        }
+        fixture_height = LIGHTPIPE_LENGTH + e;
 
         if (fixture) {
             difference() {
-                translate([lightpipe_position.x, lightpipe_position.y, fixture_z]) {
+                translate(lightpipe_position) {
                     ring(
                         diameter = fixture_outer_diameter,
                         height = fixture_height,
@@ -402,7 +390,7 @@ module enclosure(
                     );
                 }
 
-                translate([speaker_position.x, speaker_position.y, fixture_z - e]) {
+                translate([speaker_position.x, speaker_position.y, lightpipe_position.z - e]) {
                     _c(
                         speaker_cavity_diameter,
                         fixture_height + e * 2,
@@ -411,8 +399,6 @@ module enclosure(
                 }
 
                 _switch_clutch_deobstruction_cavity();
-
-                _disassembly_channel();
             }
         } else {
             intersection() {

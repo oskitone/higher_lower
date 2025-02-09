@@ -41,8 +41,9 @@ Also:
   - 1 dual spring+button wire contacts (Keystone 181)
   - 1 tabbed spring contact (Keystone 5204)
   - 1 tabbed button contact (Keystone 5226)
-- 1 hot glue stick for LED lightpipe
-  - Standard 1/4" diameter, cut to 1/4" length
+- LED lightpipe
+  - Hot glue stick, standard 1/4" diameter, cut to 1/4" length
+  - An inch or so of electrical tape
 
 ### PCB assembly
 
