@@ -46,8 +46,8 @@ void randomize() {
                  : tones[tonesPerRound - 1];
 
   for (uint8_t i = 1; i < tonesPerRound; i++) {
-    tones[i] = getProgress() == 0 ? getNextToneInFirstRound(i - 1)
-                                  : getNextTone(i - 1);
+    tones[i] =
+        roundsWon == 0 ? getNextToneInFirstRound(i - 1) : getNextTone(i - 1);
   }
 }
 
