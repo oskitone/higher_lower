@@ -22,11 +22,12 @@ void updateDisplay(Button buttonPressed = Button::NONE) {
 #ifndef __AVR_ATtiny85__
   arduboy.clear();
 
+  Sprites::drawOverwrite(32, 1, machine, 0);
+
   if (isPlayingSound) {
     Sprites::drawOverwrite(21, 8, sound, 0);
+    arduboy.fillRect(39, 8, 2, 2);
   }
-
-  Sprites::drawOverwrite(32, 1, machine, 0);
 
   if (buttonPressed == Button::UP) {
     arduboy.fillRect(77, 14, 4, 3);
