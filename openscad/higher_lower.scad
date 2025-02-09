@@ -1,6 +1,7 @@
 include <../../parts_cafe/openscad/batteries-aaa.scad>;
 include <../../parts_cafe/openscad/battery_holder.scad>;
 include <../../parts_cafe/openscad/console.scad>;
+include <../../parts_cafe/openscad/print_test.scad>;
 include <../../parts_cafe/openscad/socket-35PM2A.scad>;
 include <../../parts_cafe/openscad/speaker-AZ40R.scad>;
 
@@ -36,6 +37,7 @@ module higher_lower(
     show_rocker = true,
     show_lightpipe = true,
     show_enclosure_top = true,
+    show_print_test = false,
 
     show_clearance = false,
 
@@ -361,6 +363,10 @@ module higher_lower(
             % socket();
         }
     }
+
+    if (show_print_test) {
+        print_test(quick_preview = quick_preview);
+    }
 }
 
 SHOW_ENCLOSURE_BOTTOM = true;
@@ -372,6 +378,7 @@ SHOW_SPEAKER = true;
 SHOW_ROCKER = true;
 SHOW_LIGHTPIPE = true;
 SHOW_ENCLOSURE_TOP = true;
+SHOW_PRINT_TEST = false;
 
 SHOW_CLEARANCE = false;
 DEFAULT_TOLERANCE = .1;
@@ -389,6 +396,7 @@ higher_lower(
     show_rocker = SHOW_ROCKER,
     show_lightpipe = SHOW_LIGHTPIPE,
     show_enclosure_top = SHOW_ENCLOSURE_TOP,
+    show_print_test = SHOW_PRINT_TEST,
 
     show_clearance = SHOW_CLEARANCE,
 

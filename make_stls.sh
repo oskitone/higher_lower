@@ -72,6 +72,7 @@ function export_stl() {
             -D "SHOW_SPEAKER=false " \
             -D "SHOW_ROCKER=false " \
             -D "SHOW_ENCLOSURE_TOP=false " \
+            -D "SHOW_PRINT_TEST=false " \
             -D "Y_ROTATION=$y_rotation " \
             -D "$override=true" \
             & \
@@ -107,6 +108,7 @@ function run() {
     export_stl switch_clutch 90
     export_stl rocker
     export_stl enclosure_top 180
+    export_stl print_test 180
     wait
 
     end=`date +%s`
