@@ -4,12 +4,14 @@ const int ledPin = 1;
 const int upPin = 0;
 const int downPin = 3;
 const int ctrlPin = A1;
+const int skipPin;
 #else
 const int outputPin = 5;
 const int ledPin = 9;
 const int upPin = A0;
 const int downPin = A3;
 const int ctrlPin = 8;
+const int skipPin = A1;
 #endif
 
 const int themeNoteLength = 180;
@@ -51,4 +53,4 @@ const int minStartingDifficulty = 0;
 const int maxStartingDifficulty = 4;
 
 // NOTE: For emulation, in lieu of analog input
-const int defaultDifficulty = 1;
+const int defaultDifficulty = 0;

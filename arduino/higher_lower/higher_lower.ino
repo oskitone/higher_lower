@@ -117,11 +117,12 @@ void setup() {
   reset();
 }
 
-void handleGuess(bool success) {
+void handleGuess(bool guessSuccess,
+                 bool roundSuccess = index == tonesPerRound - 1) {
   delay(postButtonPressPause);
 
-  if (success) {
-    if (index == tonesPerRound - 1) {
+  if (guessSuccess) {
+    if (roundSuccess) {
       playSuccessSound(roundsWon + 1);
       delay(newRoundPause);
       setRoundsWon(roundsWon + 1);
@@ -146,5 +147,9 @@ void loop() {
 
   if (justPressed(upPin)) {
     handleGuess(tones[index] > tones[index - 1]);
+  }
+
+  if (justPressed(skipPin)) {
+    handleGuess(true, true);
   }
 }
