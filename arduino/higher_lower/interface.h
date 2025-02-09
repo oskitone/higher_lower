@@ -2,14 +2,7 @@
 #include <Arduboy2.h>
 
 #include "graphics.h"
-#endif
 
-// TODO: this still true? try on attiny w/ and w/o conditional stuff
-// NOTE: We're skipping Arduboy's initialization to
-// get pinMode access to its buttons. I don't know
-// the full consequence of that!
-
-#ifndef __AVR_ATtiny85__
 Arduboy2 arduboy;
 #endif
 
@@ -45,6 +38,15 @@ void updateDisplay(Button buttonPressed = Button::NONE) {
 
   arduboy.display();
 #endif
+}
+
+// HACK: Work around delay blocking display updates...
+// This would be lousy for more complex graphics, but
+// seems fine here.
+void _delay(int16_t duration, Button buttonPressed = Button::NONE) {
+  updateDisplay(buttonPressed);
+  delay(duration);
+  updateDisplay();
 }
 
 uint8_t getStartingDifficulty() {

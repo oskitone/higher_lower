@@ -1,5 +1,6 @@
 #include "common.h"
 #include "interface.h"
+
 #include "noise.h"
 
 int16_t tones[tonesPerRound];
@@ -54,11 +55,12 @@ void randomize() {
 void playNextInterval() {
   printIntervalToSerial(index, tones);
   playInterval(tones[index - 1], tones[index], getProgress());
+  updateDisplay();
 }
 
 void handleGameOver() {
   playGameOverSound(roundsWon);
-  delay(resetPause);
+  _delay(resetPause);
 
   reset();
 }
@@ -68,7 +70,7 @@ void handleGameWon() {
   difficulty += 1;
 
   playWinnerSong(difficulty);
-  delay(resetPause);
+  _delay(resetPause);
 
   printGameToSerial(consecutiveGamesWon, difficulty);
   resetWithoutIntro();
@@ -103,7 +105,7 @@ void reset() {
   printGameToSerial(consecutiveGamesWon, difficulty);
 
   playIntro(difficulty);
-  delay(newRoundPause);
+  _delay(newRoundPause);
 
   resetWithoutIntro();
 }
@@ -112,22 +114,19 @@ void setup() {
   setupInterface();
   setupSerial();
 
-  delay(bootPause);
+  _delay(bootPause);
 
   reset();
 }
 
-void handleGuess(bool guessSuccess,
+void handleGuess(Button button, bool guessSuccess,
                  bool roundSuccess = index == tonesPerRound - 1) {
-  updateDisplay(button);
-  delay(postButtonPressPause);
-
-  updateDisplay();
+  _delay(postButtonPressPause, button);
 
   if (guessSuccess) {
     if (roundSuccess) {
       playSuccessSound(roundsWon + 1);
-      delay(newRoundPause);
+      _delay(newRoundPause);
       setRoundsWon(roundsWon + 1);
 
       return;
@@ -144,8 +143,6 @@ void handleGuess(bool guessSuccess,
 }
 
 void loop() {
-  updateDisplay();
-
   if (justPressed(downPin)) {
     handleGuess(Button::DOWN, tones[index] < tones[index - 1]);
   }
@@ -155,6 +152,6 @@ void loop() {
   }
 
   if (justPressed(skipPin)) {
-    handleGuess(true, true);
+    handleGuess(Button::NONE, true, true);
   }
 }

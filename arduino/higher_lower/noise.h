@@ -7,12 +7,6 @@ int16_t firstRoundTones[] = {
     NOTE_C5, NOTE_E5, NOTE_D5, NOTE_G5, NOTE_C5,
 };
 
-void _delay(int16_t duration) {
-  updateDisplay();
-  delay(duration);
-  updateDisplay();
-}
-
 void _tone(int16_t t, int16_t duration) {
   if (t == NOTE_REST) {
     noTone(outputPin);
@@ -102,9 +96,9 @@ void playIntro(uint8_t count) {
   playThemeMotifEnd();
 }
 
+// KNOWN ISSUE: This is super gnarly (but not broken!) in emulator.
 void playWinnerSong(uint8_t count) {
   playThemeCountInWithDescent(4);
-  // TODO: fix display(?) slowing this down
   for (uint8_t i = 0; i < 255; i++) {
     playThemeMotif(pow(themeMotifSpeedup, i));
   }
