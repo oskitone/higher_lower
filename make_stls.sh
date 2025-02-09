@@ -51,7 +51,8 @@ Examples:
 
 function export_stl() {
     stub="$1"
-    override="$2"
+    override=$(echo "SHOW_${stub}" | tr '[a-z]' '[A-Z]')
+    y_rotation="${2:-0}"
 
     function _run() {
         filename="$dir/$prefix-$timestamp-$commit_hash-$stub.stl"
@@ -63,14 +64,15 @@ function export_stl() {
             --quiet \
             -o "$filename" \
             --export-format "binstl" \
-            -D 'SHOW_ENCLOSURE_BOTTOM=false ' \
-            -D 'SHOW_BATTERY_HOLDER=false ' \
-            -D 'SHOW_BATTERIES=false ' \
-            -D 'SHOW_PCB=false ' \
-            -D 'SHOW_SWITCH_CLUTCH=false ' \
-            -D 'SHOW_SPEAKER=false ' \
-            -D 'SHOW_ROCKER=false ' \
-            -D 'SHOW_ENCLOSURE_TOP=false ' \
+            -D "SHOW_ENCLOSURE_BOTTOM=false " \
+            -D "SHOW_BATTERY_HOLDER=false " \
+            -D "SHOW_BATTERIES=false " \
+            -D "SHOW_PCB=false " \
+            -D "SHOW_SWITCH_CLUTCH=false " \
+            -D "SHOW_SPEAKER=false " \
+            -D "SHOW_ROCKER=false " \
+            -D "SHOW_ENCLOSURE_TOP=false " \
+            -D "Y_ROTATION=$y_rotation " \
             -D "$override=true" \
             & \
     }
@@ -100,11 +102,11 @@ function run() {
 
     start=`date +%s`
 
-    export_stl 'enclosure_bottom' 'SHOW_ENCLOSURE_BOTTOM'
-    export_stl 'battery_holder' 'SHOW_BATTERY_HOLDER'
-    export_stl 'switch_clutch' 'SHOW_SWITCH_CLUTCH'
-    export_stl 'rocker' 'SHOW_ROCKER'
-    export_stl 'enclosure_top' 'SHOW_ENCLOSURE_TOP'
+    export_stl enclosure_bottom
+    export_stl battery_holder
+    export_stl switch_clutch 90
+    export_stl rocker
+    export_stl enclosure_top 180
     wait
 
     end=`date +%s`

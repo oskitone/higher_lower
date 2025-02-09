@@ -374,10 +374,10 @@ SHOW_LIGHTPIPE = true;
 SHOW_ENCLOSURE_TOP = true;
 
 SHOW_CLEARANCE = false;
-
 DEFAULT_TOLERANCE = .1;
+Y_ROTATION = 0;
 
-// rotate([0,180,0])
+rotate([0, Y_ROTATION, 0])
 difference() {
 higher_lower(
     show_enclosure_bottom = SHOW_ENCLOSURE_BOTTOM,
