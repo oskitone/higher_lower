@@ -8,6 +8,8 @@ ROCKER_BRIM_SIZE = 2;
 ROCKER_BRIM_HEIGHT = 1.2;
 ROCKER_BRIM_CHAMFER = .6;
 
+BUTTON_ROCKER_TOP_CHAMFER = 2;
+
 ROCKER_ENCLOSURE_FIXTURE_DEPTH = .4;
 
 function get_rocker_switch_center(
@@ -123,7 +125,7 @@ module button_rocker(
                         contact_dimensions = [
                             width - SCOUT_DEFAULT_GUTTER,
                             length - SCOUT_DEFAULT_GUTTER,
-                            2
+                            BUTTON_ROCKER_TOP_CHAMFER
                         ],
 
                         fillet = fillet
