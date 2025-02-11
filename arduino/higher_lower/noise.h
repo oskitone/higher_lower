@@ -12,12 +12,12 @@ void _tone(int16_t t, int16_t duration) {
     noTone(outputPin);
   } else {
     isPlayingSound = true;
-    digitalWrite(ledPin, HIGH);
+    digitalWrite(ledPin, LOW);
     tone(outputPin, t, duration);
   }
 
   _delay(duration);
-  digitalWrite(ledPin, LOW);
+  digitalWrite(ledPin, HIGH);
   isPlayingSound = false;
 }
 

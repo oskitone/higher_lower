@@ -8,7 +8,7 @@ Arduboy2 arduboy;
 
 void setupInterface() {
   pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, LOW);
+  digitalWrite(ledPin, HIGH);
 
   pinMode(upPin, INPUT_PULLUP);
   pinMode(downPin, INPUT_PULLUP);
