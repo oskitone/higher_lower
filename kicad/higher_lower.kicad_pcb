@@ -5660,7 +5660,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "1k"
 			(at 5.08 0 180)
 			(layer "F.Fab")
 			(uuid "b4ddef27-9e8b-4c9f-ba6b-bbd22b45d51a")
@@ -6030,7 +6030,7 @@
 				)
 			)
 		)
-		(property "Value" "220"
+		(property "Value" "1k"
 			(at 5.08 0 180)
 			(layer "F.Fab")
 			(uuid "d827258b-50c4-46fc-b3a5-4b37a0dc9ee6")

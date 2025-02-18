@@ -11,4 +11,4 @@
 10;"RV1";"Potentiometer_Piher_PT-6-V_Vertical-mirror";1;"10k";;;
 11;"C2";"CP_Radial_D8.0mm_P3.50mm";1;"220uF";;;
 12;"J1";"PinHeader_2x03_P2.54mm_Vertical";1;"Conn_02x03";;;
-13;"R2,R1";"R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal";2;"220";;;
+13;"R2,R1";"R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal";2;"1k";;;

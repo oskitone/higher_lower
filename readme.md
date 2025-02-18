@@ -17,19 +17,19 @@ This is all tentative and will get replaced with the full documentation site tre
 
 ### BOM
 
-| Designator | Quantity | Designation        | Marking       | Footprint                                         |
-| ---------- | -------- | ------------------ | ------------- | ------------------------------------------------- |
-| C1         | 1        | .1uF               | 104           | C_Disc_D5.0mm_W2.5mm_P5.00mm                      |
-| C2         | 1        | 220uF              |               | CP_Radial_D8.0mm_P3.50mm                          |
-| D1         | 1        | LED_RKGB           |               | LED_D5.0mm-4_RGB_Staggered_Pins                   |
-| J1         | 1        | Conn_02x03         |               | PinHeader_2x03_P2.54mm_Vertical                   |
-| LS1        | 1        | AZ40R              |               | 40mm x 5mm                                        |
-| R1,R2      | 2        | 220                | Red Red Brown | R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal |
-| RV1        | 1        | 10k                | 103           | Potentiometer_Piher_PT-6-V_Vertical-mirror        |
-| RV2        | 1        | 1k                 | 102           | Potentiometer_Piher_PT-6-V_Vertical-mirror        |
-| SW1        | 1        | SW_SPDT            |               | SW_Slide_SPDT_Angled_CK_OS102011MA1Q              |
-| SW2,SW3    | 2        | SW_SPST            |               | SW_PUSH_6mm                                       |
-| U1         | 1        | ATTINY85V + socket |               | DIP-8_W7.62mm                                     |
+| Designator | Quantity | Designation        | Marking         | Footprint                                         |
+| ---------- | -------- | ------------------ | --------------- | ------------------------------------------------- |
+| C1         | 1        | .1uF               | 104             | C_Disc_D5.0mm_W2.5mm_P5.00mm                      |
+| C2         | 1        | 220uF              |                 | CP_Radial_D8.0mm_P3.50mm                          |
+| D1         | 1        | LED_RKGB           |                 | LED_D5.0mm-4_RGB_Staggered_Pins                   |
+| J1         | 1        | Conn_02x03         |                 | PinHeader_2x03_P2.54mm_Vertical                   |
+| LS1        | 1        | AZ40R              |                 | 40mm x 5mm                                        |
+| R1,R2      | 2        | 1k                 | Brown Black Red | R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal |
+| RV1        | 1        | 10k                | 103             | Potentiometer_Piher_PT-6-V_Vertical-mirror        |
+| RV2        | 1        | 1k                 | 102             | Potentiometer_Piher_PT-6-V_Vertical-mirror        |
+| SW1        | 1        | SW_SPDT            |                 | SW_Slide_SPDT_Angled_CK_OS102011MA1Q              |
+| SW2,SW3    | 2        | SW_SPST            |                 | SW_PUSH_6mm                                       |
+| U1         | 1        | ATTINY85V + socket |                 | DIP-8_W7.62mm                                     |
 
 Also:
 
