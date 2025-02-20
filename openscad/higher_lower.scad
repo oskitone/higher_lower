@@ -18,8 +18,6 @@ OUTER_GUTTER = 5;
 LIGHTPIPE_DIAMETER = 7;
 LIGHTPIPE_LENGTH = 25.4 / 4;
 
-SWITCH_AND_ROCKER_EXPOSURE = BUTTON_ROCKER_TOP_CHAMFER;
-
 module higher_lower(
     width = 25.4 * 3,
     length = 25.4 * 3,
@@ -41,8 +39,8 @@ module higher_lower(
 
     show_clearance = false,
 
-    button_exposure = SWITCH_AND_ROCKER_EXPOSURE,
-    switch_exposure = SWITCH_AND_ROCKER_EXPOSURE,
+    button_exposure = 3,
+    switch_exposure = 2,
     control_clearance = .6,
 
     outer_gutter = OUTER_GUTTER,
