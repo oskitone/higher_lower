@@ -364,11 +364,13 @@ module enclosure(
     module _lightpipe_exposure(
         fixture = false,
         fixture_wall = ENCLOSURE_INNER_WALL,
+        fixture_shim_width = 1,
+        fixture_shim_length = .2,
+        fixture_shim_count = 3,
         exposure_diameter = DIAGONAL_GRILL_SIZE * 2.75,
         $fn = quick_preview ? undef : 24
     ) {
-        // NOTE: intentionally loose
-        fixture_inner_diameter =  LIGHTPIPE_DIAMETER + tolerance * 4;
+        fixture_inner_diameter =  LIGHTPIPE_DIAMETER + fixture_shim_length * 2;
 
         fixture_outer_diameter = min(
             fixture_inner_diameter + fixture_wall * 2,
@@ -388,6 +390,22 @@ module enclosure(
                         height = fixture_height,
                         inner_diameter = fixture_inner_diameter
                     );
+
+                    for (i = [0 : fixture_shim_count - 1]) {
+                        rotate([0, 0, (360 / fixture_shim_count) * i]) {
+                            translate([
+                                fixture_shim_width / -2,
+                                fixture_inner_diameter / 2 - fixture_shim_length,
+                                0
+                            ]) {
+                                cube([
+                                    fixture_shim_width,
+                                    fixture_shim_length,
+                                    fixture_height
+                                ]);
+                            }
+                        }
+                    }
                 }
 
                 translate([speaker_position.x, speaker_position.y, lightpipe_position.z - e]) {
