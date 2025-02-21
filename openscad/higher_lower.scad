@@ -16,9 +16,8 @@ include <pcb.scad>;
 SCOUT_DEFAULT_GUTTER = 3.4;
 OUTER_GUTTER = 5;
 
-// A quarter inch of standard "1/4" glue stick
-LIGHTPIPE_DIAMETER = 7;
-LIGHTPIPE_LENGTH = 25.4 / 4;
+LIGHTPIPE_DIAMETER = 7; // standard "1/4" glue stick
+LIGHTPIPE_LENGTH = 25.4 / 8;
 
 module higher_lower(
     width = 25.4 * 3,
@@ -53,7 +52,7 @@ module higher_lower(
 
     accessory_fillet = 1,
 
-    pcb_component_to_outer_part_clearance = 1,
+    pcb_component_to_outer_part_clearance = 2,
     pcb_bottom_clearance = PCB_BOTTOM_CLEARANCE,
 
     pcb_post_hole_positions = [
@@ -127,8 +126,8 @@ module higher_lower(
                 speaker_position.z
                     - (pcb_component_to_outer_part_clearance + PCB_TOP_CLEARANCE_UNDER_SPEAKER)
                     - PCB_HEIGHT,
-                height - ENCLOSURE_FLOOR_CEILING
-                    - LIGHTPIPE_LENGTH - pcb_component_to_outer_part_clearance
+                lightpipe_position.z
+                    - pcb_component_to_outer_part_clearance
                     - LED_HEIGHT - PCB_Z_OFF_PCB
                     - PCB_HEIGHT
             )
@@ -152,6 +151,7 @@ module higher_lower(
 
     echo("Enclosure", width / 25.4, length / 25.4, height / 25.4);
     echo("PCB", pcb_width / 25.4, pcb_length / 25.4);
+    echo("PCB bottom clearance", pcb_position.z - ENCLOSURE_FLOOR_CEILING);
     echo("Button", button_width / 25.4, button_length / 25.4);
     echo("Speaker",
         SPEAKER_DIAMETER / 2,
@@ -293,6 +293,11 @@ module higher_lower(
                 speaker_position.y - pcb_position.y
             ],
             side_switch_position = side_switch_position,
+
+            top_clearance_beyond_speaker = pcb_component_to_outer_part_clearance
+                + PCB_TOP_CLEARANCE_BEYOND_SPEAKER,
+            top_clearance_under_speaker = pcb_component_to_outer_part_clearance
+                + PCB_TOP_CLEARANCE_UNDER_SPEAKER,
 
             tolerance = tolerance,
 

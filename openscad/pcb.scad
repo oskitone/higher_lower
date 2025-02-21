@@ -24,18 +24,21 @@ PCB_HOLE_POSITIONS = [
 ];
 PCB_HOLE_DIAMETER = 3.2;
 
+PCB_SWITCH_Y = 16.54;
+
+PCB_LED_POSITION = get_translated_xy([102.746 + 2.4, 78.742 + .75]);
+PCB_Z_OFF_PCB = 3.5;
+
 PCB_BIG_CAP_HEIGHT = 12.2;
 PCB_SOCKET_HEIGHT = 8.4;
-PCB_TOP_CLEARANCE_BEYOND_SPEAKER = PCB_BIG_CAP_HEIGHT;
+PCB_TOP_CLEARANCE_BEYOND_SPEAKER = max(
+    PCB_Z_OFF_PCB + LED_HEIGHT,
+    PCB_BIG_CAP_HEIGHT
+);
 PCB_TOP_CLEARANCE_UNDER_SPEAKER = PCB_SOCKET_HEIGHT;
 
 // ie, trimmed leads and solder joints on bottom
 PCB_BOTTOM_CLEARANCE = 2;
-
-PCB_SWITCH_Y = 16.54;
-
-PCB_LED_POSITION = get_translated_xy([102.746 + 2.4, 78.742 + .75]);
-PCB_Z_OFF_PCB = 2.3;
 
 PCB_SWITCH_POSITONS = [
     get_translated_xy([154.150992, 91.14089]),
@@ -87,8 +90,8 @@ module pcb(
     }
 
     if (show_led) {
-        _translate(led_position, z = PCB_HEIGHT + PCB_Z_OFF_PCB) {
-            # led();
+        _translate(led_position) {
+            # led(exposed_leads_height = PCB_Z_OFF_PCB);
         }
     }
 
@@ -153,12 +156,11 @@ module pcb(
             );
         }
 
-        translate([e, e, height - e]) {
-            % ghost_cube([
-                width - e * 2,
-                length - e * 2,
-                top_clearance_beyond_speaker + e
-            ]);
+        _translate(led_position) {
+            % ghost_cylinder(
+                LED_DIAMETER,
+                top_clearance_beyond_speaker
+            );
         }
 
         translate([e, e, -bottom_clearance]) {
