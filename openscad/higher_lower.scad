@@ -11,7 +11,9 @@ include <button_rocker.scad>;
 include <enclosure.scad>;
 include <pcb.scad>;
 
-SCOUT_DEFAULT_GUTTER = 3.4; // default_gutter = keys_x = ENCLOSURE_WALL + key_gutter
+// The Scout derives its default_gutter/keys_x as ENCLOSURE_WALL + key_gutter
+// Here, we'll just use it statically to match.
+SCOUT_DEFAULT_GUTTER = 3.4;
 OUTER_GUTTER = 5;
 
 // A quarter inch of standard "1/4" glue stick
