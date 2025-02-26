@@ -43,10 +43,10 @@ const int preIntervalPause = themeNoteLength / 2;
 const int midIntervalPause = preIntervalPause / 2;
 
 const int intervalChunk = ((maxTone - minTone) / tonesPerRound);
-const int minInterval = 5;
+const int minInterval = 2;
 
 const float intervalDiminish = .65;
-const float durationDiminish = .9;
+const float durationDiminish = .8;
 const float themeMotifSpeedup = 1.125;
 
 const int minStartingDifficulty = 0;
