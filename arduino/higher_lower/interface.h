@@ -6,8 +6,6 @@
 Arduboy2 arduboy;
 #endif
 
-bool isPlayingSound = false;
-
 void setupInterface() {
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, HIGH);
@@ -20,7 +18,7 @@ void setupInterface() {
 #endif
 }
 
-void updateDisplay(bool isPlayingSound = false, Intent intent = Intent::NONE) {
+void updateDisplay(Intent intent = Intent::NONE, bool isPlayingSound = false) {
 #ifndef __AVR_ATtiny85__
   arduboy.clear();
 
@@ -46,14 +44,19 @@ void updateDisplay(bool isPlayingSound = false, Intent intent = Intent::NONE) {
 // HACK: Work around delay blocking display updates...
 // This would be lousy for more complex graphics, but
 // seems fine here.
-void _delay(int16_t duration, Intent intent = Intent::NONE) {
+void _delay(int16_t duration, Intent intent = Intent::NONE,
+            bool isPlayingSound = false) {
   if (duration == 0) {
     return;
   }
 
-  updateDisplay(isPlayingSound, intent);
+  updateDisplay(intent, isPlayingSound);
   delay(duration);
-  updateDisplay(isPlayingSound);
+  updateDisplay();
+}
+
+void _delay(int16_t duration, bool &isPlayingSound) {
+  _delay(duration, Intent::NONE, isPlayingSound);
 }
 
 uint8_t getStartingDifficulty() {

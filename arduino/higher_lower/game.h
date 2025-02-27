@@ -1,6 +1,16 @@
-inline uint8_t getProgress(uint8_t roundsWon, uint8_t difficulty) {
-  return roundsWon * difficulty;
-}
+int16_t tones[tonesPerRound];
+uint8_t index = startingIndex;
+uint8_t roundsWon = 0;
+
+uint8_t difficulty = defaultDifficulty;
+uint8_t consecutiveGamesWon = 0;
+
+bool isPlayingSound = false;
+
+void reset();
+void resetWithoutIntro();
+
+inline uint8_t getProgress() { return roundsWon * difficulty; }
 
 inline bool isBeyondMinMax(int16_t nextTone) {
   return nextTone < minTone || nextTone > maxTone;
@@ -10,69 +20,67 @@ int16_t getNextToneInFirstRound(uint8_t previousIndex) {
   return firstRoundTones[previousIndex + 1];
 }
 
-int16_t getNextTone(uint8_t previousIndex, int16_t *tones, uint8_t progress) {
+int16_t getNextTone(uint8_t previousIndex) {
   int8_t direction = random(0, 2) ? -1 : 1;
   int16_t nextTone = tones[previousIndex];
 
   for (uint8_t i = 0; i < (guessesPerRound - previousIndex); i++) {
-    nextTone +=
-        direction *
-        random(minInterval, intervalChunk * pow(intervalDiminish, progress));
+    nextTone += direction *
+                random(minInterval,
+                       intervalChunk * pow(intervalDiminish, getProgress()));
   }
 
   if (nextTone == tones[previousIndex]) {
-    return getNextTone(previousIndex, tones, progress);
+    return getNextTone(previousIndex);
   }
 
   if (isBeyondMinMax(nextTone)) {
-    return getNextTone(previousIndex, tones, progress);
+    return getNextTone(previousIndex);
   }
 
   return nextTone;
 }
 
-void randomize(uint8_t roundsWon, int16_t *tones, uint8_t progress) {
+void randomize() {
   tones[0] = roundsWon == 0 || isBeyondMinMax(tones[tonesPerRound - 1])
                  ? NOTE_C5
                  : tones[tonesPerRound - 1];
 
   for (uint8_t i = 1; i < tonesPerRound; i++) {
-    tones[i] = roundsWon == 0 ? getNextToneInFirstRound(i - 1)
-                              : getNextTone(i - 1, tones, progress);
+    tones[i] =
+        roundsWon == 0 ? getNextToneInFirstRound(i - 1) : getNextTone(i - 1);
   }
 }
 
-void playNextInterval(uint8_t index, int16_t *tones, uint8_t progress) {
+void playNextInterval() {
   printIntervalToSerial(index, tones);
-  playInterval(tones[index - 1], tones[index], progress);
+  playInterval(tones[index - 1], tones[index], getProgress(), isPlayingSound);
   updateDisplay();
 }
 
-void handleGameWon(uint8_t &consecutiveGamesWon, uint8_t &difficulty) {
+void handleGameOver() {
+  playGameOverSound(roundsWon, isPlayingSound);
+  _delay(resetPause);
+
+  reset();
+}
+
+void handleGameWon() {
   consecutiveGamesWon += 1;
   difficulty += 1;
 
-  playWinnerSong(difficulty);
+  playWinnerSong(difficulty, isPlayingSound);
   _delay(resetPause);
 
   printGameToSerial(consecutiveGamesWon, difficulty);
+  resetWithoutIntro();
 }
 
-void handleGameOver(uint8_t roundsWon) {
-  playGameOverSound(roundsWon);
-  _delay(resetPause);
-}
-
-void resetWithoutIntro(uint8_t &index, uint8_t &roundsWon, int16_t *tones,
-                       uint8_t difficulty, uint8_t consecutiveGamesWon);
-
-void setRoundsWon(uint8_t &index, uint8_t r, uint8_t &roundsWon, int16_t *tones,
-                  uint8_t difficulty, uint8_t consecutiveGamesWon) {
+void setRoundsWon(uint8_t r) {
   roundsWon = r;
 
   if (roundsWon >= roundsPerGame) {
-    handleGameWon(consecutiveGamesWon, difficulty);
-    resetWithoutIntro(index, roundsWon, tones, difficulty, consecutiveGamesWon);
+    handleGameWon();
     return;
   }
 
@@ -80,43 +88,47 @@ void setRoundsWon(uint8_t &index, uint8_t r, uint8_t &roundsWon, int16_t *tones,
     initRandomSeed();
   }
 
-  randomize(roundsWon, tones, getProgress(roundsWon, difficulty));
+  randomize();
   index = startingIndex;
 
   printRoundToSerial(r, tones);
 
-  playNextInterval(index, tones, getProgress(roundsWon, difficulty));
+  playNextInterval();
 }
 
-void resetWithoutIntro(uint8_t &index, uint8_t &roundsWon, int16_t *tones,
-                       uint8_t difficulty, uint8_t consecutiveGamesWon) {
-  setRoundsWon(index, 0, roundsWon, tones, difficulty, consecutiveGamesWon);
+void resetWithoutIntro() { setRoundsWon(0); }
+
+void reset() {
+  consecutiveGamesWon = 0;
+  difficulty = getStartingDifficulty();
+
+  printGameToSerial(consecutiveGamesWon, difficulty);
+
+  playIntro(difficulty, isPlayingSound);
+  _delay(newRoundPause);
+
+  resetWithoutIntro();
 }
 
-void reset();
-
-void handleGuess(uint8_t &index, uint8_t &roundsWon, int16_t *tones,
-                 uint8_t difficulty, uint8_t consecutiveGamesWon, Intent intent,
-                 bool guessSuccess, bool roundSuccess) {
+void handleGuess(Intent intent, bool guessSuccess,
+                 bool roundSuccess = index == tonesPerRound - 1) {
   _delay(postButtonPressPause, intent);
 
   if (guessSuccess) {
     if (roundSuccess) {
-      playSuccessSound(roundsWon + 1);
+      playSuccessSound(roundsWon + 1, isPlayingSound);
       _delay(newRoundPause);
-      setRoundsWon(index, roundsWon + 1, roundsWon, tones, difficulty,
-                   consecutiveGamesWon);
+      setRoundsWon(roundsWon + 1);
 
       return;
     }
 
     index = index + 1;
 
-    playNextInterval(index, tones, getProgress(roundsWon, difficulty));
+    playNextInterval();
 
     return;
   }
 
-  handleGameOver(roundsWon);
-  reset();
+  handleGameOver();
 }
