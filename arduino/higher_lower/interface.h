@@ -6,6 +6,8 @@
 Arduboy2 arduboy;
 #endif
 
+bool isPlayingSound = false;
+
 void setupInterface() {
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, HIGH);
@@ -18,7 +20,7 @@ void setupInterface() {
 #endif
 }
 
-void updateDisplay(Intent intent = Intent::NONE) {
+void updateDisplay(bool isPlayingSound = false, Intent intent = Intent::NONE) {
 #ifndef __AVR_ATtiny85__
   arduboy.clear();
 
@@ -49,9 +51,9 @@ void _delay(int16_t duration, Intent intent = Intent::NONE) {
     return;
   }
 
-  updateDisplay(intent);
+  updateDisplay(isPlayingSound, intent);
   delay(duration);
-  updateDisplay();
+  updateDisplay(isPlayingSound);
 }
 
 uint8_t getStartingDifficulty() {

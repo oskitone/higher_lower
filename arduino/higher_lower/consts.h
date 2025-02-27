@@ -56,5 +56,3 @@ const int maxStartingDifficulty = 4;
 const int defaultDifficulty = 0;
 
 enum Intent { NONE, UP, DOWN, SKIP };
-
-bool isPlayingSound = false;
