@@ -96,7 +96,6 @@ void playIntro(uint8_t count) {
   playThemeMotifEnd();
 }
 
-// KNOWN ISSUE: This is super gnarly (but not broken!) in emulator.
 void playWinnerSong(uint8_t count) {
   playThemeCountInWithDescent(4);
   for (uint8_t i = 0; i < 255; i++) {

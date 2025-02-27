@@ -45,6 +45,10 @@ void updateDisplay(Intent intent = Intent::NONE) {
 // This would be lousy for more complex graphics, but
 // seems fine here.
 void _delay(int16_t duration, Intent intent = Intent::NONE) {
+  if (duration == 0) {
+    return;
+  }
+
   updateDisplay(intent);
   delay(duration);
   updateDisplay();
