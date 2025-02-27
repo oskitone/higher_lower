@@ -46,7 +46,7 @@ const int intervalChunk = ((maxTone - minTone) / tonesPerRound);
 const int minInterval = 2;
 
 const float intervalDiminish = .65;
-const float durationDiminish = .8;
+const float durationDiminish = .85;
 const float themeMotifSpeedup = 1.125;
 
 const int minStartingDifficulty = 0;
