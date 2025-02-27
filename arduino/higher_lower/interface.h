@@ -18,7 +18,7 @@ void setupInterface() {
 #endif
 }
 
-void updateDisplay(Button buttonPressed = Button::NONE) {
+void updateDisplay(Intent intent = Intent::NONE) {
 #ifndef __AVR_ATtiny85__
   arduboy.clear();
 
@@ -29,11 +29,11 @@ void updateDisplay(Button buttonPressed = Button::NONE) {
     arduboy.fillRect(39, 8, 2, 2);
   }
 
-  if (buttonPressed == Button::UP) {
+  if (intent == Intent::UP) {
     arduboy.fillRect(77, 14, 4, 3);
   }
 
-  if (buttonPressed == Button::DOWN) {
+  if (intent == Intent::DOWN) {
     arduboy.fillRect(77, 24, 4, 3);
   }
 
@@ -44,8 +44,8 @@ void updateDisplay(Button buttonPressed = Button::NONE) {
 // HACK: Work around delay blocking display updates...
 // This would be lousy for more complex graphics, but
 // seems fine here.
-void _delay(int16_t duration, Button buttonPressed = Button::NONE) {
-  updateDisplay(buttonPressed);
+void _delay(int16_t duration, Intent intent = Intent::NONE) {
+  updateDisplay(intent);
   delay(duration);
   updateDisplay();
 }
@@ -70,9 +70,25 @@ void initRandomSeed() {
   randomSeed(ms);
 }
 
-inline bool justPressed(uint8_t button) {
+inline bool justPressed(Intent intent) {
   // HACK: relying on tone delay to skip debouncing
-  return digitalRead(button) == LOW;
+
+  if (intent == Intent::DOWN) {
+    return digitalRead(downPin) == LOW;
+  }
+
+  if (intent == Intent::UP) {
+    return digitalRead(upPin) == LOW;
+  }
+
+#ifndef __AVR_ATtiny85__
+  if (intent == Intent::SKIP) {
+    return (digitalRead(skipPins[0]) == LOW &&
+            digitalRead(skipPins[1]) == LOW && digitalRead(skipPins[2]) == LOW);
+  }
+#endif
+
+  return false;
 }
 
 void setupSerial() {

@@ -119,9 +119,9 @@ void setup() {
   reset();
 }
 
-void handleGuess(Button button, bool guessSuccess,
+void handleGuess(Intent intent, bool guessSuccess,
                  bool roundSuccess = index == tonesPerRound - 1) {
-  _delay(postButtonPressPause, button);
+  _delay(postButtonPressPause, intent);
 
   if (guessSuccess) {
     if (roundSuccess) {
@@ -143,15 +143,15 @@ void handleGuess(Button button, bool guessSuccess,
 }
 
 void loop() {
-  if (justPressed(downPin)) {
-    handleGuess(Button::DOWN, tones[index] < tones[index - 1]);
+  if (justPressed(Intent::DOWN)) {
+    handleGuess(Intent::DOWN, tones[index] < tones[index - 1]);
   }
 
-  if (justPressed(upPin)) {
-    handleGuess(Button::UP, tones[index] > tones[index - 1]);
+  if (justPressed(Intent::UP)) {
+    handleGuess(Intent::UP, tones[index] > tones[index - 1]);
   }
 
-  if (justPressed(skipPin)) {
-    handleGuess(Button::NONE, true, true);
+  if (justPressed(Intent::SKIP)) {
+    handleGuess(Intent::NONE, true, true);
   }
 }
