@@ -4,12 +4,9 @@
 
 A handheld electronic game you can play with your eyes closed.
 
-Finalizing development. Kits coming soon!
+PCB is finalized. Kits and assembly documentation coming soon!
 
-## TODO
-
-- Finalize PCB
-- Assembly documentation
+Obviously, I'd prefer you buy the kit from me. But, if circumstances prohibit, I've uploaded the [Higher Lower PCB to OSH Park](https://oshpark.com/shared_projects/yGNulCRo); please buy it from them with my blessing.
 
 ## Assembly Instructions
 
