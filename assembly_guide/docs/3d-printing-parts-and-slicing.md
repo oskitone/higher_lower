@@ -1,7 +1,7 @@
 ---
 id: 3d-printing-parts-and-slicing
 title: 3D-Printing Parts and Slicing
-description: How to 3D-print your Scout's parts.
+description: How to 3D-print your Higher Lower's parts.
 sidebar_label: Parts and Slicing
 slug: /3d-printing-parts-and-slicing
 ---
@@ -12,21 +12,30 @@ If you bought a kit with 3D-printed parts included, you can skip this section, b
 
 ## Download
 
-TODO: picture
-
-TODO Download STLs of the models on [Thingiverse](https://www.thingiverse.com/thing:4933700) or [PrusaPrinters](https://www.prusaprinters.org/prints/76472-scout-synth).
+TODO Download STLs of the models on [Thingiverse](TODO) or [PrusaPrinters](TODO).
 
 ## Slicing
 
-There are TODO files to print, taking about TODO hours total.
+There are five files to print, taking about four hours total.
 
-TODO
+| Part             | Layer Height | Supports? | Estimated Time |
+| ---------------- | ------------ | --------- | -------------- |
+| battery_holder   | .2mm         | No        | 30min          |
+| enclosure_bottom | .2mm         | No        | 1.5hr          |
+| enclosure_top    | .2mm         | No        | 1.5hr          |
+| print_test       | .2mm         | No        | 15min          |
+| rocker           | .2mm         | No        | 30min          |
+| switch_clutch    | .2mm         | No        | 10min          |
 
-| Part | Layer Height | Supports? | Estimated Time |
-| ---- | ------------ | --------- | -------------- |
-| TODO | .2mm         | No        | TODO           |
+:::info Recommended
+A `print_test` STL is included to verify your slicer settings before committing to the rest of the prints. It takes about 15m to print.
+:::
 
-**Notes:**
+The enclosure has engravings that print on the build plate and bridge on top. Adjust your slicer's bridging angle so they run up and down with the text:
+
+[![bridging angle set correct](/img/bridging-angle.png)](/img/bridging-angle.png)
+
+**Other notes:**
 
 - Models assume Fused Deposition Modeling with a standard .4mm nozzle. Using a bigger nozzle will likely result in a loss of detail.
 - The 3D-printed parts were designed using PLA. Other filament types like ABS are not recommended and will likely have fit or tolerance issues. (If you find that you need to drill or file your prints, that's a good sign there'll be other problems too.)

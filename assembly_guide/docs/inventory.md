@@ -8,15 +8,21 @@ slug: /inventory
 
 #### Required
 
-- The [Oskitone Scout Synth DIY Electronics Kit](http://www.oskitone.com/product/scout-synth-diy-electronics-kit) and its 3D-printed parts
+- The [Higher Lower Game DIY Electronics Kit](https://www.oskitone.com/product/higher-lower-game-diy-electronics-kit)
+- 3D-printed parts
+  - battery holder
+  - enclosure bottom
+  - enclosure top
+  - rocker
+  - switch clutch
 - Soldering iron and solder specifically for electronics
 - Wire stripper or cutters
-- 3 AAA batteries
-- Headphones
+- 2 AAA batteries
 
 #### Recommended
 
 - Multimeter for debugging
 - PCB vice or “helping hands” holder
 - “Solder sucker” or desoldering braid
+- Black electrical tape
 - Patience, patience, patience

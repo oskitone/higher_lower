@@ -1,12 +1,10 @@
 ---
 id: general-tips
 title: General tips and getting started
-description: Things to keep in mind as you solder your Scout. Take your time and be patient!
+description: Things to keep in mind as you solder your Higher Lower game
 sidebar_label: General tips and getting started
 slug: /general-tips
 ---
-
-TODO: timelapse?
 
 :::note
 Take your time and be patient! If you run into a problem, try to keep a cool head and refer to the [PCB troubleshooting](pcb-troubleshooting.md) section. If your problem remains unfixed and you can't figure it out, [please _email_ me to let me know](https://www.oskitone.com/contact)! I'll do my best to help you, and your feedback will help improve the guide and other future Oskitone designs.
@@ -37,7 +35,7 @@ TODO: picture
 
 ### How this guide is organized
 
-Each group of steps in the Scout's assembly has a test at the end to make sure everything you just did is working as expected, ie: "Make sure the LED lights up", "Make sure the microcontroller works", "Make sure the speaker has sound", etc.
+Each group of steps in this guide has a test at the end to make sure everything you just did is working as expected, ie: "Make sure the LED lights up", "Make sure the microcontroller works", "Make sure the speaker has sound", etc.
 
 If it doesn't work, don't fret! Look over the [PCB troubleshooting](pcb-troubleshooting.md) tips. Don't move on in the instructions until you've got the test working.
 

@@ -15,15 +15,26 @@ slug: /
 
 ## What You'll Be Making
 
-TODO: intro copy
+Higher Lower is a 3D-printed, screen-free, handheld electronic game about arbitrary musical intervals.
 
-TODO: demo video
+> Two tones play. Is the second one higher or lower than the first? The more guesses you get right, the harder it gets!
 
-TODO: blog link
+Four guesses per round, ten rounds per game. Any wrong guess and the game resets.
+
+<!--
+TODO:
+* this copy could be better but I don't wanna copy verbatim from the Scout guide
+* demo video
+* blog link
+-->
 
 ### Disclaimers
 
 You've been warned!
+
+:::note
+This kit requires through-hole soldering and takes about 30min to assemble. If you bought it without 3D-printed parts, you will need to print them yourself.
+:::
 
 :::warning
 Not a toy. Choking hazard. Small parts. Not for children under 3 years.
