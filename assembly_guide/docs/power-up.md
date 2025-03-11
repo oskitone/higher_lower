@@ -1,7 +1,7 @@
 ---
 id: power-up
 title: Power up
-description: Getting power to Scout's PCB and toggling an LED.
+description: Getting power to Higher Lower's PCB and toggling an LED
 sidebar_label: Power up
 slug: /power-up
 ---
@@ -13,7 +13,7 @@ slug: /power-up
       TODO: picture
    2. Get the LED as vertically close to the PCB as reasonable; it doesn't have to be flat against PCB but does need to be straight up and down -- no leaning!
       TODO: picture
-2. Solder sliding toggle switch **SW1** and resistor **R1** (220, Red Red Brown).
+2. Solder sliding toggle switch **SW1** and resistor **R1** (1k, Brown Black Red).
    - Make sure the switch is flat against the PCB and its actuator is pointing left, away from the PCB.
    - You can use a bit of tape or "Blu-Tack" adhesive to hold the switch in place as you solder.
 3. Wire battery pack to **BT1**
@@ -21,7 +21,7 @@ slug: /power-up
 
 ## Test
 
-Add the batteries back. Toggling **SW1** should now light one color of the LED! Yes, it is bright!! Power off before continuing soldering.
+Add the batteries back into the battery holder. Toggling **SW1** should now light one color of the LED! Power off before continuing soldering.
 
 TODO: picture
 

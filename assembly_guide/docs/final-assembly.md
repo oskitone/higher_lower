@@ -1,39 +1,42 @@
 ---
 id: final-assembly
 title: Final assembly
-description: How to assemble finish the Scout's assembly.
+description: How to assemble finish the Higher Lower's assembly.
 sidebar_label: Final assembly
 slug: /final-assembly
 ---
 
 :::note
 You're almost done! Take your time to follow the directions in order.
+:::
 
-And check out the [Assembly troubleshooting](assembly-troubleshooting.md) section if you run into any trouble.
+:::optional
+If you've got some electrical tape, now's a great time to take an inch or so of it and wrap it around the LED, so its light only shines up and not out. This will help to block it from lighting up the enclosure instead of just the lightpipe.
 :::
 
 ## Steps
 
-### 1. Snap enclosure together
+1. Insert the **lightpipe** (1/8" length of standard 1/4" diameter hot glue stick) into its cavity on the **enclosure top**.
+2. Insert PCB into the **enclosure bottom**, nestled into its posts.
+3. Insert **battery holder** into its hitch on the **enclosure bottom**.
+4. Pop **speaker** into place on the **enclosure top**.
+5. Place the **switch clutch** into the **enclosure bottom** onto **SW1**'s actuator, along the left edge of PCB.
+6. Pop the **button rocker** into its cavity on the **enclosure top**. Its fixture is intentionally a little loose and that's okay.
+7. Snap enclosure top and bottom together.
 
-Align **enclosure top** onto **enclosure bottom** and snap the two halves together. Try to make sure the **keys mount rail** and **keys** stay aligned as you do this. It's an intentionally tight fit; be brave!
+Slide the **switch clutch** to turn the power on and check that the **button rocker** isn't unintentionally holding either of its switches down.
 
-TODO: picture
-
-### 2. Quick test
-
-With the **enclosure** together, try turning the Scout on and pressing each key.
-
-You should find that:
-
-1. No notes are playing unless you intentionally press them.
-2. Some notes are kind of finicky and require more pressure. Don't worry, we'll fix those in a second!
-
-If not, [pop the enclosure open](opening-the-enclosure.md) and revisit adding the keys in the [Assemble Top](assemble-top.md) step.
-
-## All done!
+If that works, you're all done!
 
 TODO: picture
+
+## Assembly troubleshooting
+
+[Pop the enclosure open](opening-the-enclosure.md) and check:
+
+- Are any wires in the way?
+- Is the rocker all the way into its fixture?
+- Is the PCB functioning as expected? If not, go back through the soldering instructions and verify each step's test passes.
 
 ## What's next
 
@@ -44,19 +47,22 @@ When you can, please [let me know](https://www.oskitone.com/contact) how it went
 - **What did you like?** Did you have fun?!
 - Not including printing time, about **how long did it take?**
 - **How'd the kit show up?** Were there any parts missing or damaged? Or any **problems with the instructions**?
-- The Scout is intentionally simple, but that doesn't mean future kits will be too. Any **feature requests** for the next Oskitone instrument?
 
 I act and rely on customers' feedback to make the next products even better. Even just knowing that you got it done successfully is valuable feedback, so I do want to hear from you. Thank you so much!
 
 ### Share your make
 
-Like your Scout? I'd love to have you share that!
+Like Higher Lower? I'd love to have you share that!
 
-- If you 3D-printed it at home, share your make on the [Thingiverse](https://www.thingiverse.com/thing:4933700) or [PrusaPrinters](https://www.prusaprinters.org/prints/76472-scout-synth) page where you downloaded the models. It's a good signal to other potential makers to see successful makes.
+TODO: links
+
+- If you 3D-printed it at home, share your make on the [Thingiverse](TODO) or [PrusaPrinters](TODO) page where you downloaded the models. It's a good signal to other potential makers to see successful makes.
 - Tell your friends, post on social, etc. You know the deal!
 
 ### Further reading
 
-For the curious, I've written [a blog post where you can read more about the Scout's development and history](https://blog.tommy.sh/posts/scout/).
+TODO: links
+
+For the curious, I've written [a blog post where you can read more about TODO](TODO).
 
 Each Oskitone product gets it's own blog post, so dig around in there and see if there's anything else you find interesting.
