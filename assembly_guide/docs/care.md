@@ -2,6 +2,7 @@
 id: care
 title: Care
 sidebar_label: Care
+image: /img/final_product_1-004.jpg
 ---
 
 - 3D-printed plastic is susceptible to warping under hot temperatures. Keep it out of prolonged direct sunlight.

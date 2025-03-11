@@ -1,25 +1,35 @@
 ---
 id: make-some-noise
 title: Make some noise
-description: How to start getting noises out of the Scout.
+description: How to start getting noises out of Higher Lower
 sidebar_label: Make some noise
+image: /img/test_speaker-022.jpg
 slug: /make-some-noise
 ---
 
 ## Steps
 
-1. Solder volume potentiometer (aka "pot") **RV1**, resistor **R3** (10k), and headphone jack **J1**.
-   - A trick to get the pot to snap in better is to _gently_ push its tabs inward before popping it onto the PCB.
-   - Make sure **RV1** and **J1** are pushed all the way into PCB before soldering all the way.
-   - You can use a bit of tape or "Blu-Tack" adhesive to hold **J1** in place as you solder.
-2. Connect your headphones into the headphone jack. _Push firmly until it clicks in all the way._
+1. Solder trim potentiometer (aka "trimpot") **RV2** (1k, marked "102").
+   - Make sure **RV2** is pushed all the way into PCB before soldering all of its pins.
+     [![rv2](/img/rv2-004.jpg)](/img/rv2-004.jpg)
+2. Wire speaker to **LS1**.
+   1. Thread remaining piece of ribbon cable through the hole by **LS1**.
+   2. Separate wires and strip 1/4" of insulation, then solder to **LS1**.
+      [![thread strip solder ls1 wires](/img/thread_strip_solder_ls1_wires-014.jpg)](/img/thread_strip_solder_ls1_wires-014.jpg)
+   3. Strip and solder the other ends to the speaker, matching the "+" and "-" sides.
+      [![solder speaker](/img/solder_speaker-028.jpg)](/img/solder_speaker-028.jpg)
+3. Solder capacitor **C2** (220uF).
+   - **C2** has polarity. Match its white side to the white side of its footprint.
+     [![c2](/img/c2-028.jpg)](/img/c2-028.jpg)
 
 ## Test
 
-With power on, turn up the volume with the potentiometer and press **SW2**. You should hear a tone from the headphones in both the left and right channels. Power off.
+Sliding **SW1** to power the board, a little tune plays out of the speaker. This is the "Higher Lower" game theme song!
 
-TODO: picture
+[![test speaker](/img/test_speaker-022.jpg)](/img/test_speaker-022.jpg)
 
-If only one side of the headphones is making noise, check to see that the headphone jack is pushed all the way in.
+Adjust **RV2** with a screwdriver for volume control.
 
-Still working as expected? Check the [PCB troubleshooting](pcb-troubleshooting.md) section. Otherwise, continue to the next step.
+[![screwdriver to adjust rv2](/img/screwdriver_to_adjust_rv2-022.jpg)](/img/screwdriver_to_adjust_rv2-022.jpg)
+
+Not working as expected? Check the [PCB troubleshooting](pcb-troubleshooting.md) section. Otherwise, continue to the next step.

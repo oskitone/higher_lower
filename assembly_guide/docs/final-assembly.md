@@ -1,39 +1,52 @@
 ---
 id: final-assembly
 title: Final assembly
-description: How to assemble finish the Scout's assembly.
+description: How to assemble finish the Higher Lower's assembly.
 sidebar_label: Final assembly
+image: /img/enclosure_bottom_switch_clutch-025.jpg
 slug: /final-assembly
 ---
 
 :::note
 You're almost done! Take your time to follow the directions in order.
+:::
 
-And check out the [Assembly troubleshooting](assembly-troubleshooting.md) section if you run into any trouble.
+:::tip Optional
+It's not pictured in the guide, but you might like to wrap some electrical tape around the LED so it shines _up_ but not _out_. This will prevent it from lighting up the enclosure instead of just its lightpipe.
 :::
 
 ## Steps
 
-### 1. Snap enclosure together
+1. Insert the **lightpipe** into its cavity on the **enclosure top**. A pair of pliers can help get it in there.
+   [![enclosure top insert lightpipe](/img/enclosure_top_insert_lightpipe-007.jpg)](/img/enclosure_top_insert_lightpipe-007.jpg)
+2. Insert PCB into the **enclosure bottom**, nestled onto its posts.
+   [![enclosure top insert pcb](/img/enclosure_top_insert_pcb-005.jpg)](/img/enclosure_top_insert_pcb-005.jpg)
+3. Insert **battery holder** into its hitch on the **enclosure bottom**.
+   [![enclosure bottom battery holder](/img/enclosure_bottom_battery_holder-027.jpg)](/img/enclosure_bottom_battery_holder-027.jpg)
+   The holder can go in either way, with the batteries facing up or down.
+4. Pop **speaker** into place on the **enclosure top**.
+   [![enclosure top speaker](/img/enclosure_top_speaker-026.jpg)](/img/enclosure_top_speaker-026.jpg)
+5. Place the **switch clutch** into the **enclosure bottom** onto **SW1**'s actuator, along the left edge of PCB.
+   [![enclosure bottom switch clutch](/img/enclosure_bottom_switch_clutch-025.jpg)](/img/enclosure_bottom_switch_clutch-025.jpg)
+6. Pop the **button rocker** into its cavity on the **enclosure top**. Its fixture is intentionally a little loose and that's okay.
+   [![enclosure top rocker](/img/enclosure_top_rocker-005.jpg)](/img/enclosure_top_rocker-005.jpg)
+7. Align enclosure top and bottom, then firmly squeeze til the enclosure snaps shut. It's a tight fit; be brave!
+   [![enclosure_snap_shut](/img/enclosure_snap_shut-1-022-60.gif)](/img/enclosure_snap_shut-1-022-60.gif)
+8. Slide the **switch clutch** to turn the power on and check that the **button rocker** isn't unintentionally holding either of its switches down.
 
-Align **enclosure top** onto **enclosure bottom** and snap the two halves together. Try to make sure the **keys mount rail** and **keys** stay aligned as you do this. It's an intentionally tight fit; be brave!
+If that works, you're all done!
 
-TODO: picture
+[![Higher Lower, final product](/img/final_product_1-004.jpg)](/img/final_product_1-004.jpg)
 
-### 2. Quick test
+## Assembly troubleshooting
 
-With the **enclosure** together, try turning the Scout on and pressing each key.
-
-You should find that:
-
-1. No notes are playing unless you intentionally press them.
-2. Some notes are kind of finicky and require more pressure. Don't worry, we'll fix those in a second!
-
-If not, [pop the enclosure open](opening-the-enclosure.md) and revisit adding the keys in the [Assemble Top](assemble-top.md) step.
-
-## All done!
-
-TODO: picture
+- Enclosure halves don't fit together well? [Pop the enclosure open](opening-the-enclosure.md) and check...
+  - Are any wires in the way?
+  - Is the rocker all the way into its fixture?
+  - A gap near the lightpipe could mean the lightpipe is too long or isn't in all the way. Push it in, trim the excess, etc.
+- Other oddities
+  - Is the PCB functioning as expected? If not, go back through the soldering instructions and verify each step's test passes.
+  - Something else? [Ask](https://www.oskitone.com/contact)!
 
 ## What's next
 
@@ -44,19 +57,22 @@ When you can, please [let me know](https://www.oskitone.com/contact) how it went
 - **What did you like?** Did you have fun?!
 - Not including printing time, about **how long did it take?**
 - **How'd the kit show up?** Were there any parts missing or damaged? Or any **problems with the instructions**?
-- The Scout is intentionally simple, but that doesn't mean future kits will be too. Any **feature requests** for the next Oskitone instrument?
 
 I act and rely on customers' feedback to make the next products even better. Even just knowing that you got it done successfully is valuable feedback, so I do want to hear from you. Thank you so much!
 
 ### Share your make
 
-Like your Scout? I'd love to have you share that!
+Like Higher Lower? I'd love to have you share that!
 
-- If you 3D-printed it at home, share your make on the [Thingiverse](https://www.thingiverse.com/thing:4933700) or [PrusaPrinters](https://www.prusaprinters.org/prints/76472-scout-synth) page where you downloaded the models. It's a good signal to other potential makers to see successful makes.
+<!-- TODO: links -->
+
+- If you 3D-printed it at home, share your make on the Thingiverse or PrusaPrinters page where you downloaded the models. It's a good signal to other potential makers to see successful makes.
 - Tell your friends, post on social, etc. You know the deal!
 
-### Further reading
+<!-- ### Further reading
 
-For the curious, I've written [a blog post where you can read more about the Scout's development and history](https://blog.tommy.sh/posts/scout/).
+TODO: links
 
-Each Oskitone product gets it's own blog post, so dig around in there and see if there's anything else you find interesting.
+For the curious, I've written [a blog post where you can read more about TODO](TODO).
+
+Each Oskitone product gets it's own blog post, so dig around in there and see if there's anything else you find interesting. -->

@@ -1,8 +1,9 @@
 ---
 id: 3d-printing-parts-and-slicing
-title: 3D-Printing Parts and Slicing
-description: How to 3D-print your Scout's parts.
-sidebar_label: Parts and Slicing
+title: 3D-Printing
+description: How to 3D-print your Higher Lower's parts.
+sidebar_label: 3D-Printing
+image: /img/3d_printed_parts.jpg
 slug: /3d-printing-parts-and-slicing
 ---
 
@@ -10,23 +11,36 @@ slug: /3d-printing-parts-and-slicing
 If you bought a kit with 3D-printed parts included, you can skip this section, but do [open up the enclosure](opening-the-enclosure.md) and confirm you have all the right pieces ready before continuing.
 :::
 
-## Download
+<!-- ## Download
 
-TODO: picture
+TODO Download STLs of the models on [Thingiverse](TODO) or [PrusaPrinters](TODO).
 
-TODO Download STLs of the models on [Thingiverse](https://www.thingiverse.com/thing:4933700) or [PrusaPrinters](https://www.prusaprinters.org/prints/76472-scout-synth).
+![Higher Lower](/img/header-960-100.gif) -->
 
 ## Slicing
 
-There are TODO files to print, taking about TODO hours total.
+[![3D-printed parts](/img/3d_printed_parts.jpg)](/img/3d_printed_parts.jpg)
 
-TODO
+There are six files to print, but only five are required. They'll take a little over four hours total.
 
-| Part | Layer Height | Supports? | Estimated Time |
-| ---- | ------------ | --------- | -------------- |
-| TODO | .2mm         | No        | TODO           |
+| Part                  | Layer Height | Supports? | Estimated Time |
+| --------------------- | ------------ | --------- | -------------- |
+| enclosure_top         | .2mm         | No        | 1.5hr          |
+| enclosure_bottom      | .2mm         | No        | 1.5hr          |
+| battery_holder        | .2mm         | No        | 30min          |
+| print_test (optional) | .2mm         | No        | 15min          |
+| rocker                | .2mm         | No        | 30min          |
+| switch_clutch         | .2mm         | No        | 10min          |
 
-**Notes:**
+:::info Optional but recommended
+The `print_test` STL isn't used in assembly but is included to verify your printer's calibration and slicer settings. It's recommended to print it first before committing to the rest of the parts.
+:::
+
+The enclosure has engravings that print on the build plate and bridge on top. Adjust your slicer's bridging angle so they run up and down with the text:
+
+[![bridging angle set correct](/img/bridging-angle.png)](/img/bridging-angle.png)
+
+**Other notes:**
 
 - Models assume Fused Deposition Modeling with a standard .4mm nozzle. Using a bigger nozzle will likely result in a loss of detail.
 - The 3D-printed parts were designed using PLA. Other filament types like ABS are not recommended and will likely have fit or tolerance issues. (If you find that you need to drill or file your prints, that's a good sign there'll be other problems too.)
