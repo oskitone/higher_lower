@@ -6,49 +6,25 @@
 
 const sidebars = {
   docsSidebar: {
-    "Getting Starfted": [
-      "what-youll-be-making",
-      // "inventory"
-    ],
-    "3D-Printing": [
-      "todo",
-      // "3d-printing-parts-and-slicing",
-      // "3d-printing-post-processing"
-    ],
+    "Getting Starfted": ["what-youll-be-making", "inventory"],
+    "3D-Printing": ["3d-printing-parts-and-slicing"],
     "PCB Assembly": [
-      "todo",
-      // "general-tips",
-      // "assemble-battery-pack",
-      // "power-up",
-      // "boot-the-microcontroller",
-      // "get-logical",
-      // "make-some-noise",
-      // "get-loud",
-      // "more-notes",
-      // "get-louder",
-      // "prep-for-hacking"
+      "general-tips",
+      "assemble-battery-pack",
+      "power-up",
+      "boot-the-microcontroller",
+      "get-logical",
+      "make-some-noise",
+      "prep-for-hacking",
     ],
-    Assembly: [
-      "todo",
-      // "assemble-top",
-      // "assemble-bottom",
-      // "final-assembly",
-      // "care"
-    ],
-    Hacking: [
-      "todo",
-      // "change-the-arduino-code",
-      // "community-hacks"
-    ],
+    Assembly: ["final-assembly", "care"],
+    Hacking: ["change-the-arduino-code"],
     Appendix: [
-      "todo",
-      // "bom",
-      // "pcb-troubleshooting",
-      // "assembly-troubleshooting",
-      // "opening-the-enclosure",
-      // "the-chord-problem",
-      // "schematics",
-      // "source-and-license"
+      "bom",
+      "pcb-troubleshooting",
+      "opening-the-enclosure",
+      "schematics",
+      "source-and-license",
     ],
   },
 };
