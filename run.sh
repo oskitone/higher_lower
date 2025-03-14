@@ -12,8 +12,6 @@ avrdude_config="${_packages}/ATTinyCore/hardware/avr/1.5.2/avrdude.conf"
 
 ardens="/Applications/Ardens/Ardens.app/Contents/MacOS/Ardens"
 
-port="/dev/cu.usbmodem143101"
-
 stub=$(ls arduino | xargs)
 input_path="$PWD/arduino/${stub}"
 
@@ -32,9 +30,7 @@ Usage:
 ./run.sh dev                Compile and emuluate
                             Looped! Quit emulator to refresh
 ./run.sh deploy             Compile and upload
-                            Default port: $port
-./run.sh deploy -p PORT     ^ with arbitrary port
-                            Run 'arduino-cli board list' for list
+./run.sh upload             Upload without compilation
 
 "
 }
@@ -107,11 +103,13 @@ if [ "$1" == 'emulate' ]; then
 fi
 
 if [ "$1" == 'deploy' ]; then
-    if [ "$2" == '-p' ]; then
-        port="$3"
-    fi
-
     compile_for_attiny85
+    upload_with_programmer
+
+    exit
+fi
+
+if [ "$1" == 'upload' ]; then
     upload_with_programmer
 
     exit
