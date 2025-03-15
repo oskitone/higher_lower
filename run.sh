@@ -35,11 +35,6 @@ Usage:
 "
 }
 
-if [ "$1" == '-h' ]; then
-    help
-    exit
-fi
-
 function compile_for_arduboy() {
     echo "COMPILING FOR ARDUBOY"
     echo
