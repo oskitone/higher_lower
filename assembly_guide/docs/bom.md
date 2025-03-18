@@ -32,7 +32,7 @@ Also:
   - 1 tabbed spring contact (Keystone 5204)
   - 1 tabbed button contact (Keystone 5226)
 - LED lightpipe
-  - Hot glue stick, standard 1/4" diameter, cut to 1/4" length
+  - Hot glue stick, standard 1/4" diameter, cut to 1/8" length
   - An inch or so of electrical tape
 
 Alternate speakers for the AZ40R:
