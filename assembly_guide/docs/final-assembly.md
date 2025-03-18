@@ -32,11 +32,13 @@ TODO: picture
 
 ## Assembly troubleshooting
 
-[Pop the enclosure open](opening-the-enclosure.md) and check:
-
-- Are any wires in the way?
-- Is the rocker all the way into its fixture?
-- Is the PCB functioning as expected? If not, go back through the soldering instructions and verify each step's test passes.
+- Enclosure halves don't fit together well? [Pop the enclosure open](opening-the-enclosure.md) and check...
+  - Are any wires in the way?
+  - Is the rocker all the way into its fixture?
+  - A gap near the lightpipe could mean the lightpipe is too long or isn't in all the way. Push it in, trim the excess, etc.
+- Other oddities
+  - Is the PCB functioning as expected? If not, go back through the soldering instructions and verify each step's test passes.
+  - Something else? [Ask](https://www.oskitone.com/contact)!
 
 ## What's next
 
