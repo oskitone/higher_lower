@@ -26,3 +26,7 @@ Add the batteries back into the battery holder. Toggling **SW1** should now ligh
 TODO: picture
 
 Not working as expected? Check the [PCB troubleshooting](pcb-troubleshooting.md) section. Otherwise, continue to the next step.
+
+:::tip
+Wrap some electrical tape around the LED so it shines _up_ but not _out_. This will help to block it from lighting up the enclosure instead of just the lightpipe.
+:::
