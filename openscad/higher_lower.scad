@@ -1,6 +1,7 @@
 include <../../parts_cafe/openscad/batteries-aaa.scad>;
 include <../../parts_cafe/openscad/battery_holder.scad>;
 include <../../parts_cafe/openscad/console.scad>;
+include <../../parts_cafe/openscad/lightpipe.scad>;
 include <../../parts_cafe/openscad/print_test.scad>;
 include <../../parts_cafe/openscad/socket-35PM2A.scad>;
 include <../../parts_cafe/openscad/speaker-AZ40R.scad>;
@@ -15,9 +16,6 @@ include <pcb.scad>;
 // Here, we'll just use it statically to match.
 SCOUT_DEFAULT_GUTTER = 3.4;
 OUTER_GUTTER = 5;
-
-LIGHTPIPE_DIAMETER = 7; // standard "1/4" glue stick
-LIGHTPIPE_LENGTH = 25.4 / 8;
 
 module higher_lower(
     width = 25.4 * 3,
@@ -351,11 +349,7 @@ module higher_lower(
 
     if (show_lightpipe) {
         % translate(lightpipe_position) translate([0,0,-e]) {
-            % cylinder(
-                d = LIGHTPIPE_DIAMETER,
-                h = LIGHTPIPE_LENGTH,
-                $fn = 12
-            );
+            % lightpipe($fn = 12);
         }
     }
 
