@@ -10,10 +10,6 @@ slug: /final-assembly
 You're almost done! Take your time to follow the directions in order.
 :::
 
-:::optional
-If you've got some electrical tape, now's a great time to take an inch or so of it and wrap it around the LED, so its light only shines up and not out. This will help to block it from lighting up the enclosure instead of just the lightpipe.
-:::
-
 ## Steps
 
 1. Insert the **lightpipe** (1/8" length of standard 1/4" diameter hot glue stick) into its cavity on the **enclosure top**.
