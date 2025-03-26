@@ -3,6 +3,7 @@ id: assemble-battery-pack
 title: Assemble battery pack
 description: How to assemble Higher Lower's battery pack
 sidebar_label: Assemble battery pack
+image: /img/battery_terminal_dual_contact-003.jpg
 slug: /assemble-battery-pack
 ---
 

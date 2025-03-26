@@ -3,14 +3,15 @@ id: control-difficulty
 title: Control difficulty
 description: Add a pot to control Higher Lower's difficulty setting
 sidebar_label: Control difficulty
+image: /img/rv1-021.jpg
 slug: /control-difficulty
 ---
 
 ## Steps
 
 1. Solder trimpot **RV1** (10k, marked "103")
-   - Again, make sure **RV1** is pushed all the way into PCB before fully soldering.
-     [![rv1](/img/rv1-021.jpg)](/img/rv1-021.jpg)
+   [![rv1](/img/rv1-021.jpg)](/img/rv1-021.jpg)
+   Make sure it's pushed all the way into PCB before fully soldering.
 
 ## Test
 

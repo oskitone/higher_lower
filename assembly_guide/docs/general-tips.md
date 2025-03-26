@@ -3,6 +3,7 @@ id: general-tips
 title: General tips and getting started
 description: Things to keep in mind as you solder your Higher Lower game
 sidebar_label: General tips and getting started
+image: /img/dip_socket_tape-021.jpg
 slug: /general-tips
 ---
 
@@ -28,6 +29,8 @@ Take your time and be patient! If you run into a problem, try to keep a cool hea
   Components with short leads can be hard to get to stay on the PCB, because you can't really bend their leads to get them to stay put. But there are tricks! Try using tape or "Blu-Tack" adhesive to hold them.
   [![dip socket tape](/img/dip_socket_tape-021.jpg)](/img/dip_socket_tape-021.jpg)
   Or, clip the solder into your "holding hands", and try bringing the _board to the solder_ (instead of the typical reverse of solder to board).
+- **Components flat against PCB**<br />
+  Many of the PCB's components need to be perfectly flat against the board for the final assembly. You'll see extra callouts in the instructions when that's important.
 
 ## Let's get started!
 

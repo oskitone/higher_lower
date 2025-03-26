@@ -3,6 +3,7 @@ id: opening-the-enclosure
 title: Opening the enclosure
 description: How to open up the Higher Lower's enclosure after it's snapped together
 sidebar_label: Opening the enclosure
+image: /img/enclosure_open_wedge-027.jpg
 slug: /opening-the-enclosure
 ---
 

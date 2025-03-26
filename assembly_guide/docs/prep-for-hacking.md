@@ -3,6 +3,7 @@ id: prep-for-hacking
 title: Prep for hacking
 description: Optionally solder the parts required to change the Higher Lower's code
 sidebar_label: Prep for hacking
+image: /img/tape_on_j1_header-003.jpg
 slug: /prep-for-hacking
 ---
 

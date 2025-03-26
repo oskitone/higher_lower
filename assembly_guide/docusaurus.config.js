@@ -47,13 +47,12 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // TODO: replace
-      // image: "img/docusaurus-social-card.jpg",
+      image: "img/assembly-4-40-500.gif",
       navbar: {
         title: "Oskitone Higher Lower Assembly Guide",
       },
       announcementBar: {
-        content: "TODO TODO TODO",
+        content: `These docs are brand new! Please <a href="https://www.oskitone.com/contact">contact me</a> if it any of it seems wrong or needs more clarification. Thanks!`,
         isCloseable: false,
       },
       footer: {

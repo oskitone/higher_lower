@@ -2,6 +2,7 @@
 id: source-and-license
 title: "Source and License"
 description: Higher Lower is open-source hardware.
+image: /img/final_product_1-004.jpg
 sidebar_label: Source and License
 ---
 

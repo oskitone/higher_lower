@@ -4,6 +4,7 @@ title: Annotated BOM
 description: Bill of Materials, annotated.
 sidebar_label: Annotated BOM
 slug: /bom
+image: /img/kit_parts.jpg
 hide_table_of_contents: true
 ---
 

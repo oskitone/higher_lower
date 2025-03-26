@@ -1,8 +1,9 @@
 ---
 id: 3d-printing-parts-and-slicing
-title: 3D-Printing Parts and Slicing
+title: 3D-Printing
 description: How to 3D-print your Higher Lower's parts.
-sidebar_label: Parts and Slicing
+sidebar_label: 3D-Printing
+image: /img/3d_printed_parts.jpg
 slug: /3d-printing-parts-and-slicing
 ---
 
@@ -10,25 +11,29 @@ slug: /3d-printing-parts-and-slicing
 If you bought a kit with 3D-printed parts included, you can skip this section, but do [open up the enclosure](opening-the-enclosure.md) and confirm you have all the right pieces ready before continuing.
 :::
 
-## Download
+<!-- ## Download
 
 TODO Download STLs of the models on [Thingiverse](TODO) or [PrusaPrinters](TODO).
 
+![Higher Lower](/img/header-960-100.gif) -->
+
 ## Slicing
 
-There are five files to print, taking about four hours total.
+[![3D-printed parts](/img/3d_printed_parts.jpg)](/img/3d_printed_parts.jpg)
 
-| Part             | Layer Height | Supports? | Estimated Time |
-| ---------------- | ------------ | --------- | -------------- |
-| battery_holder   | .2mm         | No        | 30min          |
-| enclosure_bottom | .2mm         | No        | 1.5hr          |
-| enclosure_top    | .2mm         | No        | 1.5hr          |
-| print_test       | .2mm         | No        | 15min          |
-| rocker           | .2mm         | No        | 30min          |
-| switch_clutch    | .2mm         | No        | 10min          |
+There are six files to print, but only five are required. They'll take a little over four hours total.
 
-:::info Recommended
-A `print_test` STL is included to verify your slicer settings before committing to the rest of the prints. It takes about 15m to print.
+| Part                  | Layer Height | Supports? | Estimated Time |
+| --------------------- | ------------ | --------- | -------------- |
+| enclosure_top         | .2mm         | No        | 1.5hr          |
+| enclosure_bottom      | .2mm         | No        | 1.5hr          |
+| battery_holder        | .2mm         | No        | 30min          |
+| print_test (optional) | .2mm         | No        | 15min          |
+| rocker                | .2mm         | No        | 30min          |
+| switch_clutch         | .2mm         | No        | 10min          |
+
+:::info Optional but recommended
+The `print_test` STL isn't used in assembly but is included to verify your printer's calibration and slicer settings. It's recommended to print it first before committing to the rest of the parts.
 :::
 
 The enclosure has engravings that print on the build plate and bridge on top. Adjust your slicer's bridging angle so they run up and down with the text:
