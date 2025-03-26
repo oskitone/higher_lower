@@ -7,11 +7,11 @@ image: /img/header-960-100.gif
 slug: /
 ---
 
+<!-- TODO: assembly gif here and in meta above instead -->
+
 ![Higher Lower](/img/header-960-100.gif)
 
-**Purchase:**
-
-- [Higher Lower Game DIY Electronics Kit](https://www.oskitone.com/product/higher-lower-game-diy-electronics-kit)
+**Purchase:** [Higher Lower Game DIY Electronics Kit](https://www.oskitone.com/product/higher-lower-game-diy-electronics-kit)
 
 ## What You'll Be Making
 
@@ -27,6 +27,8 @@ TODO:
 * demo video
 * blog link
 -->
+
+<!-- TODO: how to play -->
 
 ### Disclaimers
 

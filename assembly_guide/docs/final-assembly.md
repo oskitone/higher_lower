@@ -10,21 +10,31 @@ slug: /final-assembly
 You're almost done! Take your time to follow the directions in order.
 :::
 
+:::tip Optional
+It's not pictured in the guide, but you might like to wrap some electrical tape around the LED so it shines _up_ but not _out_. This will prevent it from lighting up the enclosure instead of just its lightpipe.
+:::
+
 ## Steps
 
-1. Insert the **lightpipe** (1/8" length of standard 1/4" diameter hot glue stick) into its cavity on the **enclosure top**.
+1. Insert the **lightpipe** into its cavity on the **enclosure top**.
+   [![enclosure top insert lightpipe](/img/enclosure_top_insert_lightpipe-007.jpg)](/img/enclosure_top_insert_lightpipe-007.jpg)
 2. Insert PCB into the **enclosure bottom**, nestled into its posts.
+   [![enclosure top insert pcb](/img/enclosure_top_insert_pcb-005.jpg)](/img/enclosure_top_insert_pcb-005.jpg)
 3. Insert **battery holder** into its hitch on the **enclosure bottom**.
+   [![enclosure bottom battery holder](/img/enclosure_bottom_battery_holder-027.jpg)](/img/enclosure_bottom_battery_holder-027.jpg)
 4. Pop **speaker** into place on the **enclosure top**.
+   [![enclosure top speaker](/img/enclosure_top_speaker-026.jpg)](/img/enclosure_top_speaker-026.jpg)
 5. Place the **switch clutch** into the **enclosure bottom** onto **SW1**'s actuator, along the left edge of PCB.
+   [![enclosure bottom switch clutch](/img/enclosure_bottom_switch_clutch-025.jpg)](/img/enclosure_bottom_switch_clutch-025.jpg)
 6. Pop the **button rocker** into its cavity on the **enclosure top**. Its fixture is intentionally a little loose and that's okay.
+   [![enclosure top rocker](/img/enclosure_top_rocker-005.jpg)](/img/enclosure_top_rocker-005.jpg)
 7. Snap enclosure top and bottom together.
-
-Slide the **switch clutch** to turn the power on and check that the **button rocker** isn't unintentionally holding either of its switches down.
+   [![enclosure_snap_shut](/img/enclosure_snap_shut-1-022-60.gif)](/img/enclosure_snap_shut-1-022-60.gif)
+8. Slide the **switch clutch** to turn the power on and check that the **button rocker** isn't unintentionally holding either of its switches down.
 
 If that works, you're all done!
 
-TODO: picture
+[![Higher Lower, final product](/img/final_product_1-004.jpg)](/img/final_product_1-004.jpg)
 
 ## Assembly troubleshooting
 

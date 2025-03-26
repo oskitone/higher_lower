@@ -13,8 +13,15 @@ If you have no intention of ever changing the game's code, you can skip this par
 ## Steps
 
 1. Solder **J1** header.
-   - Try to get it flat against PCB, as usual...
+   - Try to get it flat against PCB, as usual. Here, I'm using some tape to hold in in place.
+     [![tape on j1 header](/img/tape_on_j1_header-003.jpg)](/img/tape_on_j1_header-003.jpg)
 
-## Test
+## <del>Test</del> All done?!
 
-Code and basic programming are described in the [project's github repo](https://github.com/oskitone/higher_lower). Please [please _email_ me to let me know](https://www.oskitone.com/contact) how it goes or if you need any help. I'll use your feedback to improve this guide.
+This one is harder to test, but if you've got it soldered and all the previous steps' tests passed, you're good to go!
+
+:::note No but really
+J1 is a header that connects to a programmer, letting you upload new code to the microcontroller. Code and basic usage are described in the [project's github repo](https://github.com/oskitone/higher_lower). It's a bit advanced, so, for now, I've left it out of the assembly guide.
+
+Please [_email_ me to let me know](https://www.oskitone.com/contact) how it goes or if you need any help.
+:::

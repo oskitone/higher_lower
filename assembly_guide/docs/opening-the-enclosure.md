@@ -9,6 +9,6 @@ slug: /opening-the-enclosure
 There are two ways to do this:
 
 - Insert a flathead screwdriver (or similar flat tool) into one of the horizontal gaps where the enclosure's halves meet, then twist and wedge apart.
+  [![enclosure open wedge](/img/enclosure_open_wedge-027.jpg)](/img/enclosure_open_wedge-027.jpg)
 - Squeeze the sides of the enclosure bottom, as indicated by the dimple marks, then pull apart.
-
-TODO: picture or video
+  [![enclosure open dimple](/img/enclosure_open_dimple-022.jpg)](/img/enclosure_open_dimple-022.jpg)

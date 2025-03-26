@@ -52,6 +52,10 @@ const config = {
       navbar: {
         title: "Oskitone Higher Lower Assembly Guide",
       },
+      announcementBar: {
+        content: "TODO TODO TODO",
+        isCloseable: false,
+      },
       footer: {
         style: "dark",
         copyright: `Copyright © ${new Date().getFullYear()} Oskitone. Built with Docusaurus.`,
