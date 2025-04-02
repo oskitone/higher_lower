@@ -2,7 +2,7 @@
 
 ![Higher Lower game model animation](/misc/header-960-100.gif)
 
-A handheld electronic game you can play with your eyes closed.
+Higher Lower is a 3D-printed, screen-free, handheld electronic game about arbitrary musical intervals.
 
 PCB is finalized. Kits and assembly documentation coming soon!
 
@@ -10,7 +10,22 @@ Obviously, I'd prefer you buy the kit from me. But, if circumstances prohibit, I
 
 Assembly guide: [https://oskitone.github.io/higher_lower](https://oskitone.github.io/higher_lower)
 
-### Schematic
+## TODO
+
+- Nice demo video
+- "How it works" sections in assembly guide
+
+## How to play "Higher Lower"
+
+Two different tones play. Is the second tone _higher_ or _lower_ than the first? The more guesses you get right, the harder it gets!
+
+- Four guesses per round, ten rounds per game. Any wrong guess and the game resets.
+- Your score is how many rounds have passed, and it's announced after each round as series of happy trill noises.
+- For a multiplayer game, hand off to the next player after each round. The last player to successfully complete their round wins.
+- At the start of each new game, the "Higher Lower" theme song plays. It is a very good song.
+- Adjust volume and game difficulty by turning trim potentiometers on the PCB.
+
+## Schematic
 
 ![Higher Lower schematic](assembly_guide/static/img/higher_lower-schematic.svg)
 

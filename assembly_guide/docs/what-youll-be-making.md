@@ -21,14 +21,15 @@ This guide walks you through how to solder and assemble it, step by step. It wil
 
 <!-- TODO: blog link -->
 
-### How to play
+### How to play "Higher Lower"
 
-Two different tones play. Is the second one _higher_ or _lower_ than the first? The more guesses you get right, the harder it gets!
+Two different tones play. Is the second tone _higher_ or _lower_ than the first? The more guesses you get right, the harder it gets!
 
 - Four guesses per round, ten rounds per game. Any wrong guess and the game resets.
 - Your score is how many rounds have passed, and it's announced after each round as series of happy trill noises.
 - For a multiplayer game, hand off to the next player after each round. The last player to successfully complete their round wins.
 - At the start of each new game, the "Higher Lower" theme song plays. It is a very good song.
+- Adjust volume and game difficulty by turning trim potentiometers on the PCB.
 
 ### Disclaimers
 
