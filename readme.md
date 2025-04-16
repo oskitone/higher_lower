@@ -8,11 +8,12 @@ PCB is finalized. Kits and assembly documentation coming soon!
 
 Obviously, I'd prefer you buy the kit from me. But, if circumstances prohibit, I've uploaded the [Higher Lower PCB to OSH Park](https://oshpark.com/shared_projects/yGNulCRo); please buy it from them with my blessing.
 
+Gameplay demo: [https://vimeo.com/1075918437](https://vimeo.com/1075918437)
+
 Assembly guide: [https://oskitone.github.io/higher_lower](https://oskitone.github.io/higher_lower)
 
 ## TODO
 
-- Nice demo video
 - "How it works" sections in assembly guide
 
 ## How to play "Higher Lower"
