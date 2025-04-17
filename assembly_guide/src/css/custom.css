@@ -33,3 +33,8 @@ li img {
   display: block;
   margin: var(--ifm-list-item-margin) 0;
 }
+
+article p,
+article li {
+  text-wrap: pretty;
+}

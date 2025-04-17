@@ -49,4 +49,20 @@ After testing, remove one or both batteries to prevent accidentally draining the
 
 If you're having trouble with your multimeter, try measuring each battery individually and see if they have voltage individually as you expect. Then install them into the battery pack and check their combined voltage.
 
-Not working as expected? Check the [PCB troubleshooting](pcb-troubleshooting.md) section. Otherwise, continue to the next step.
+Not working as expected? Check the [PCB troubleshooting](pcb-troubleshooting.md) section. Otherwise, continue.
+
+## How it works
+
+In this battery holder, the ribbon cable connects to two sides of the two different batteries with the tabbed terminals, which are connected to each other with the wire terminal.
+
+Connecting batteries like this adds their voltages together. So if one fully charged AAA battery has 1.5 volts, then two will have 3v (shorthand for 3 volts), three will have 4.5v, and so on.
+
+The game uses two AAA batteries, and the rechargeable Ni–MH ones I'm using in the picture have about 1.25v each, so the final output voltage is around 2.5v (1.25 &times; 2). Yours may add up to 3v or maybe even a little more, depending on the batteries' chemistry.
+
+This kind of wiring is called "in serial." Think "one after the other," like episodes of a show or trains on a car. It's the most common way you'll see battery packs.
+
+In contrast to serial wiring is "parallel," where all the "+" sides of the batteries connect and all the "-" sides separately connect. The output voltage is the same as just one of the batteries, but they last much longer. Parallel-wired battery packs are much less common.
+
+<!-- Schematically, the battery pack you just made looks like this:
+
+TODO -->

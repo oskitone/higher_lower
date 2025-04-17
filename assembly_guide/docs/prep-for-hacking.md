@@ -22,7 +22,11 @@ If you have no intention of ever changing the game's code, you can skip this par
 This one is harder to test, but if you've got it soldered and all the previous steps' tests passed, you're good to go!
 
 :::note No but really
-J1 is a header that connects to a programmer, letting you upload new code to the microcontroller. Code and basic usage are described in the [project's github repo](https://github.com/oskitone/higher_lower). It's a bit advanced, so, for now, I've left it out of the assembly guide.
+J1 is a header that connects to a programmer, letting you upload new code to the microcontroller. Code and basic usage are described in the [project's github repo](https://github.com/oskitone/higher_lower). It's a bit advanced, so, for now, it's been left out of the assembly guide.
 
 Please [_email_ me to let me know](https://www.oskitone.com/contact) how it goes or if you need any help.
 :::
+
+## How it works
+
+The 2x3 header at J1 connects to six pins on the ATtiny85 used for In-Circuit Serial Programming (ICSP), a method for updating a chip's functionality without having to send it back to the factory.

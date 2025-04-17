@@ -18,3 +18,4 @@ Any of these problems can cause a variety of "just not working right" errors in 
 - If there’s buzzing, check for any metal scraps stuck to the speaker.
 - If the buttons are touchy or behaving weird, check to see that their switches are inserted all the way and perfectly flat against the PCB.
 - If you're hearing an unwanted hum from the speaker when the game isn't being played, verify C1 cap is soldered well. It may also be from noise added by long wires, so do use the recommended wire lengths in this guide.
+- If the volume or difficulty trimpots aren't behaving as expected, check to see that they're both in the right place and not swapped.

@@ -12,10 +12,6 @@ Gameplay demo: [https://vimeo.com/1075918437](https://vimeo.com/1075918437)
 
 Assembly guide: [https://oskitone.github.io/higher_lower](https://oskitone.github.io/higher_lower)
 
-## TODO
-
-- "How it works" sections in assembly guide
-
 ## How to play "Higher Lower"
 
 Two different tones play. Is the second tone _higher_ or _lower_ than the first? The more guesses you get right, the harder it gets!

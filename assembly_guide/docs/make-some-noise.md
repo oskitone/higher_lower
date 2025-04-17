@@ -32,4 +32,16 @@ Adjust **RV2** with a screwdriver for volume control.
 
 [![screwdriver to adjust rv2](/img/screwdriver_to_adjust_rv2-022.jpg)](/img/screwdriver_to_adjust_rv2-022.jpg)
 
-Not working as expected? Check the [PCB troubleshooting](pcb-troubleshooting.md) section. Otherwise, continue to the next step.
+Not working as expected? Check the [PCB troubleshooting](pcb-troubleshooting.md) section. Otherwise, continue.
+
+## How it works
+
+One of the pins on the **ATtiny85** is tasked with outputting square waves by quickly alternating between low and high voltage.
+
+It connects to variable resistor **RV2**, which works the same way that the **R1** resistor did when you lit the LED: it limits current. The _variable_ part of **RV2** means that how much it limits is set by turning its dial. A higher resistance (measured in Ω or "ohms") means a smaller current which means a quieter sound from the speaker.
+
+Variable resistors are called potentiometers (or "pots"), and small potentiometers like these are trimmers (or, adorably, "trimpots").
+
+**C2** is a coupling capacitor. Think of it like a big bucket that fills up with voltage before dumping it at the speaker.
+
+When that voltage drives an electromagnet that vibrates a cone inside the speaker, it creates ripples in the air that eventually reach your ears as sound waves.

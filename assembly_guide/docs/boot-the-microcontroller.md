@@ -25,4 +25,16 @@ Turn the power switch back on, and the LED should flash a new color. This lets y
 
 [![test_microcontroller-028-60](/img/test_microcontroller-028-60.gif)](/img/test_microcontroller-028-60.gif)
 
-Not working as expected? Check the [PCB troubleshooting](pcb-troubleshooting.md) section. Otherwise, continue to the next step.
+Not working as expected? Check the [PCB troubleshooting](pcb-troubleshooting.md) section. Otherwise, continue.
+
+## How it works
+
+The **ATtiny85** is a microcontroller chip. Think of it like a small computer that's programmed to only do a very specific job.
+
+This **ATtiny85**'s job is to perform the logic to play "Higher Lower." It's the brains of the operation. A small part of that operation is to flash the red color on the RGB LED, newly connected by **R2**.
+
+(If you're curious if _all_ **ATtiny85**s can play "Higher Lower", the answer unfortunately is that they do not. The one in your kit came preprogrammed just for this game.)
+
+**C1** is a decoupling capacitor, also known as a bypass cap. It smooths out the power for the ATtiny85 so it's less affected by spurious voltage changes as the circuit operates. Bypass caps are used a lot in electronics near components that use/make bursts of voltage, which would otherwise result in audible noise or random logical glitches. They're often not practically necessary but are a good preventative measure.
+
+Similarly, the socket that the chip plugs into isn't _strictly_ necessary. The **ATtiny85** could just as well be soldered directly to the board. But what happens if the chip gets damaged from excessive heat during the soldering process or somehow gets fried from bad a connection? A socket lets you swap chips without melting any solder.
