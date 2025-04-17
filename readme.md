@@ -43,6 +43,8 @@ You can also deploy to an [Arduboy](https://www.arduboy.com/) using the Arduino 
 
 ![Higher Lower on Arduboy](/misc/arduboy.gif)
 
+(And you can play an online emulation of "Higher Lower" on the Arduboy [here](https://tiberiusbrown.github.io/Ardens/player.html?file=https://github.com/oskitone/higher_lower/raw/main/misc/higher_lower.ino.hex)!)
+
 ## 3D Models
 
 higher_lower's 3D-printed models are written in OpenSCAD.
