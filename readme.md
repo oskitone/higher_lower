@@ -17,10 +17,11 @@ Assembly guide: [https://oskitone.github.io/higher_lower](https://oskitone.githu
 Two different tones play. Is the second tone _higher_ or _lower_ than the first? The more guesses you get right, the harder it gets!
 
 - Four guesses per round, ten rounds per game. Any wrong guess and the game resets.
-- Your score is how many rounds have passed, and it's announced after each round as series of happy trill noises.
+- Your score is how many rounds have passed, and it's announced after each round as a series of happy trill noises.
 - For a multiplayer game, hand off to the next player after each round. The last player to successfully complete their round wins.
 - At the start of each new game, the "Higher Lower" theme song plays. It is a very good song.
-- Adjust volume and game difficulty by turning trim potentiometers on the PCB.
+- Upon completing all ten rounds of guesses and winning the game, the theme plays again, faster and _faster_ and **_faster_** until the machine finally resets into a new game at a harder difficulty setting.
+- Adjust volume and game difficulty by opening the enclosure and adjusting trim potentiometers on the PCB.
 
 ## Schematic
 

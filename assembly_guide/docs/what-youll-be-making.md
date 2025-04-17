@@ -27,7 +27,7 @@ Two different tones play. Is the second tone _higher_ or _lower_ than the first?
 - Your score is how many rounds have passed, and it's announced after each round as a series of happy trill noises.
 - For a multiplayer game, hand off to the next player after each round. The last player to successfully complete their round wins.
 - At the start of each new game, the "Higher Lower" theme song plays. It is a very good song.
-- Upon completing all ten rounds of guesses and winning the game, the theme plays again, faster and _faster_ and **_faster_** until the machine finally resets into a new game.
+- Upon completing all ten rounds of guesses and winning the game, the theme plays again, faster and _faster_ and **_faster_** until the machine finally resets into a new game at a harder difficulty setting.
 - Adjust volume and game difficulty by opening the enclosure and adjusting trim potentiometers on the PCB.
 
 <div style={{padding:"56.25% 0 0 0",position:"relative"}}><iframe src="https://player.vimeo.com/video/1075918437?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" style={{position:"absolute",top:0,left:0,width:"100%",height:"100%"}} allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"  title="Higher Lower game demo"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
