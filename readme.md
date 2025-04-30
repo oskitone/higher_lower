@@ -27,6 +27,11 @@ Two different tones play. Is the second tone _higher_ or _lower_ than the first?
 
 ![Higher Lower schematic](assembly_guide/static/img/higher_lower-schematic.svg)
 
+In pursuit of a small BOM and quick assembly, there are a few concessions:
+
+- There's no amplifier, just the IC to volume pot to cap to speaker. In theory, the speaker can draw more current than the chip can supply, causing it to overheat. In practice, it hasn't been an issue.
+- There's a small .1uF bypass cap to smooth out power supply noise. Normally there's a big one too like the Scout's 220uF electrolytic cap. Again, in practice, its absence hasn't been an issue.
+
 ## Running, deploying
 
     ./run.sh -h

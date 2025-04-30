@@ -23,7 +23,7 @@ It's not pictured in the guide, but you might like to wrap some electrical tape 
    [![enclosure top insert pcb](/img/enclosure_top_insert_pcb-005.jpg)](/img/enclosure_top_insert_pcb-005.jpg)
 3. Insert **battery holder** into its hitch on the **enclosure bottom**.
    [![enclosure bottom battery holder](/img/enclosure_bottom_battery_holder-027.jpg)](/img/enclosure_bottom_battery_holder-027.jpg)
-   The holder can go in either way, with the batteries facing up or down.
+   Rotate the holder so its wires are on the right side and the batteries are facing down. (The batteries can face up too, but they might pop out of the holder if the game is dropped.)
 4. Pop **speaker** into place on the **enclosure top**.
    [![enclosure top speaker](/img/enclosure_top_speaker-026.jpg)](/img/enclosure_top_speaker-026.jpg)
 5. Place the **switch clutch** into the **enclosure bottom** onto **SW1**'s actuator, along the left edge of PCB.
