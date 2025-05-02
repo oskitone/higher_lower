@@ -4,13 +4,11 @@
 
 Higher Lower is a 3D-printed, screen-free, handheld electronic game about arbitrary musical intervals.
 
-PCB is finalized. Kits and assembly documentation coming soon!
+**DIY electronics kit:** [https://www.oskitone.com/product/higher-lower-game-diy-electronics-kit](https://www.oskitone.com/product/higher-lower-game-diy-electronics-kit)  
+**Gameplay demo:** [https://vimeo.com/1075918437](https://vimeo.com/1075918437)  
+**Assembly guide:** [https://oskitone.github.io/higher_lower](https://oskitone.github.io/higher_lower)
 
 Obviously, I'd prefer you buy the kit from me. But, if circumstances prohibit, I've uploaded the [Higher Lower PCB to OSH Park](https://oshpark.com/shared_projects/yGNulCRo); please buy it from them with my blessing.
-
-Gameplay demo: [https://vimeo.com/1075918437](https://vimeo.com/1075918437)
-
-Assembly guide: [https://oskitone.github.io/higher_lower](https://oskitone.github.io/higher_lower)
 
 ## How to play "Higher Lower"
 

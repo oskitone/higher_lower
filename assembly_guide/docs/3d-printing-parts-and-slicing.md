@@ -11,11 +11,11 @@ slug: /3d-printing-parts-and-slicing
 If you bought a kit with 3D-printed parts included, you can skip this section, but do [open up the enclosure](opening-the-enclosure.md) and confirm you have all the right pieces ready before continuing.
 :::
 
-<!-- ## Download
+## Download
 
-TODO Download STLs of the models on [Thingiverse](TODO) or [PrusaPrinters](TODO).
+Download STLs of the models from [Printables](https://www.printables.com/model/1283695-higher-lower-handheld-electronic-game) or [Thingiverse](https://www.thingiverse.com/thing:7027239).
 
-![Higher Lower](/img/header-960-100.gif) -->
+![Higher Lower](/img/header-960-100.gif)
 
 ## Slicing
 
