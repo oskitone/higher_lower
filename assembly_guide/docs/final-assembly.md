@@ -69,10 +69,8 @@ Like Higher Lower? I'd love to have you share that!
 - If you 3D-printed it at home, share your make on the Thingiverse or PrusaPrinters page where you downloaded the models. It's a good signal to other potential makers to see successful makes.
 - Tell your friends, post on social, etc. You know the deal!
 
-<!-- ### Further reading
+### Further reading
 
-TODO: links
+For the curious, I've written [a blog post where you can read more about Higher Lower and its development process](https://blog.tommy.sh/posts/higher-lower/).
 
-For the curious, I've written [a blog post where you can read more about TODO](TODO).
-
-Each Oskitone product gets it's own blog post, so dig around in there and see if there's anything else you find interesting. -->
+Each Oskitone product gets its own blog post, so dig around in there and see if there's anything else you find interesting.

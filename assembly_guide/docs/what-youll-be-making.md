@@ -17,7 +17,7 @@ Higher Lower is a 3D-printed, screen-free, handheld electronic game about arbitr
 
 This guide walks you through how to solder and assemble it, step by step. It will take 30 minutes or so, not counting 3D-printing time.
 
-<!-- TODO: blog link -->
+More behind-the-scenes info on Higher Lower and its development process: [https://blog.tommy.sh/posts/higher-lower/](https://blog.tommy.sh/posts/higher-lower/).
 
 ### How to play "Higher Lower"
 
