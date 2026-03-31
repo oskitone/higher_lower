@@ -67,6 +67,20 @@ Like Higher Lower? I'd love to have you share that!
 - If you 3D-printed it at home, share your make on the [Printables](https://www.printables.com/model/1283695-higher-lower-handheld-electronic-game) or [Thingiverse](https://www.thingiverse.com/thing:7027239) page where you downloaded the models. It's a good signal to other potential makers to see successful makes.
 - Tell your friends, post on social, etc. You know the deal!
 
+### Follow along
+
+I run an informal [email list](https://www.oskitone.com/mailing-list) to update folks on projects, notify when new products hit the store, and get early feedback and share ideas. If you're interested in what's next with Oskitone, it's the best way to stay updated.
+
+<iframe
+  scrolling="no"
+  style={{width: "100%", height: "135px", border: "none"}}
+  src="https://buttondown.com/oskitone?as_embed=true"
+></iframe>
+
+Powered by [Buttondown](https://buttondown.com/refer/oskitone). Read previous emails in the archive [here](https://buttondown.com/oskitone/archive/).
+
+And, of course, follow [@oskitone on Instagram](https://www.instagram.com/oskitone).
+
 ### Further reading
 
 For the curious, I've written [a blog post where you can read more about Higher Lower and its development process](https://blog.tommy.sh/posts/higher-lower/).
