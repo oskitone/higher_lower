@@ -64,9 +64,7 @@ I act and rely on customers' feedback to make the next products even better. Eve
 
 Like Higher Lower? I'd love to have you share that!
 
-<!-- TODO: links -->
-
-- If you 3D-printed it at home, share your make on the Thingiverse or PrusaPrinters page where you downloaded the models. It's a good signal to other potential makers to see successful makes.
+- If you 3D-printed it at home, share your make on the [Printables](https://www.printables.com/model/1283695-higher-lower-handheld-electronic-game) or [Thingiverse](https://www.thingiverse.com/thing:7027239) page where you downloaded the models. It's a good signal to other potential makers to see successful makes.
 - Tell your friends, post on social, etc. You know the deal!
 
 ### Further reading
